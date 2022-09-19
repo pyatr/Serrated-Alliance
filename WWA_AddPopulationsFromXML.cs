@@ -56,7 +56,7 @@ namespace XRL
                                             {
                                                 case "Blueprint": popObject.Blueprint = attribute.Value; break;
                                                 case "Number": popObject.Number = attribute.Value; break;
-                                                case "Weight": popObject.Weight = Convert.ToInt32(attribute.Value); break;
+                                                case "Weight": popObject.Weight = Convert.ToUInt32(attribute.Value); break;
                                                 default: break;
                                             }
                                         }
