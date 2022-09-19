@@ -1,0 +1,100 @@
+<encountertables Load="Merge">
+  <encountertable Name="Ammo 4" Load="Merge">
+    <objects>
+      <object Chance="20" Number="3d9" Blueprint="WWA_MediumLeadSlug"></object>
+      <object Chance="1" Number="2d6" Blueprint="WWA_HighCalibreLeadSlug"></object>
+    </objects>
+  </encountertable>
+
+  <encountertable Name="Ammo 5" Load="Merge">
+    <objects>
+      <object Chance="25" Number="3d12" Blueprint="WWA_MediumLeadSlug"></object>
+      <object Chance="5" Number="2d9" Blueprint="WWA_HighCalibreLeadSlug"></object>
+    </objects>
+  </encountertable>
+
+  <encountertable Name="Ammo 6" Load="Merge">
+    <objects>
+      <object Chance="30" Number="5d6" Blueprint="WWA_MediumLeadSlug"></object>
+      <object Chance="15" Number="3d6" Blueprint="WWA_HighCalibreLeadSlug"></object>
+    </objects>
+  </encountertable>
+
+  <encountertable Name="Ammo 7" Load="Merge">
+    <objects>
+      <object Chance="25" Number="6d8" Blueprint="WWA_MediumLeadSlug"></object>
+      <object Chance="20" Number="3d8" Blueprint="WWA_HighCalibreLeadSlug"></object>
+    </objects>
+  </encountertable>
+
+  <encountertable Name="Ammo 8" Load="Merge">
+    <objects>
+      <object Chance="25" Number="6d8" Blueprint="WWA_MediumLeadSlug"></object>
+      <object Chance="25" Number="4d8" Blueprint="WWA_HighCalibreLeadSlug"></object>
+    </objects>
+  </encountertable>
+
+  <encountertable Name="Missile 2" Load="Merge">
+    <objects>
+      <object Chance="3" Number="1d1" Blueprint="WWA_SMG"></object>
+      <object Chance="3" Number="1d1" Blueprint="WWA_AutoPistol"></object>
+    </objects>
+  </encountertable>
+
+  <encountertable Name="Missile 3" Load="Merge">
+    <objects>
+      <object Chance="10" Blueprint="WWA_BattleRifle" Number="1d1"></object>
+      <object Chance="5" Blueprint="WWA_HeavyAssaultRifle" Number="1d1"></object>
+      <object Chance="2" Blueprint="WWA_GPMG" Number="1d1"></object>
+      <object Chance="5" Blueprint="WWA_LSW" Number="1d1"></object>
+      <object Chance="10" Blueprint="WWA_AssaultRevolver" Number="1d1"></object>      
+    </objects>
+  </encountertable>
+
+  <encountertable Name="Missile 4" Load="Merge">
+    <objects>
+      <object Chance="5" Blueprint="WWA_BattleRifle" Number="1d1"></object>
+      <object Chance="5" Blueprint="WWA_HeavyAssaultRifle" Number="1d1"></object>
+      <object Chance="10" Blueprint="WWA_GPMG" Number="1d1"></object>
+      <object Chance="10" Blueprint="WWA_AntitankRifle" Number="1d1"></object>
+      <object Chance="10" Blueprint="WWA_AntiMaterielRifle" Number="1d1"></object>
+      <object Chance="10" Blueprint="WWA_HVMG" Number="1d1"></object>
+      <object Chance="10" Blueprint="WWA_DoubleBarrelMG" Number="1d1"></object>
+      <object Chance="10" Blueprint="WWA_AutoShotgun" Number="1d1"></object>
+    </objects>
+  </encountertable>
+
+  <encountertable Name="Missile 5" Load="Merge">
+    <objects>
+      <object Chance="5" Blueprint="WWA_GPMG" Number="1d1"></object>
+      <object Chance="5" Blueprint="WWA_AntitankRifle" Number="1d1"></object>
+      <object Chance="5" Blueprint="WWA_AntiMaterielRifle" Number="1d1"></object>
+      <object Chance="5" Blueprint="WWA_HVMG" Number="1d1"></object>
+    </objects>
+  </encountertable>
+
+  <encountertable Name="Missile 6" Load="Merge">
+    <objects>
+      <object Chance="3" Blueprint="WWA_GPMG" Number="1d1"></object>
+      <object Chance="3" Blueprint="WWA_AntiMaterielRifle" Number="1d1"></object>
+      <object Chance="1" Blueprint="WWA_AntitankRifle" Number="1d1"></object>
+      <object Chance="3" Blueprint="WWA_HVMG" Number="1d1"></object>
+    </objects>
+  </encountertable>
+
+  <encountertable Name="Missile 7" Load="Merge">
+    <objects>
+      <object Chance="2" Blueprint="WWA_GPMG" Number="1d1"></object>
+      <object Chance="3" Blueprint="WWA_AntiMaterielRifle" Number="1d1"></object>
+      <object Chance="3" Blueprint="WWA_HVMG" Number="1d1"></object>
+    </objects>
+  </encountertable>
+
+  <encountertable Name="Missile 8" Load="Merge">
+    <objects>
+      <object Chance="1" Blueprint="WWA_GPMG" Number="1d1"></object>
+      <object Chance="1" Blueprint="WWA_AntiMaterielRifle" Number="1d1"></object>
+      <object Chance="1" Blueprint="WWA_HVMG" Number="1d1"></object>
+    </objects>
+  </encountertable>
+</encountertables>

@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mods>  
+  <!--<mod Part="WWA_ModUniversalMount" Tables="UniversalMount" Rarity="U" TinkerTier="3" TinkerDisplayName="unimount" Value="1.4" Description="Universal attachment mount: This weapon has more attachment slots." />-->
+
+  <mod Part="WWA_ModDrumLoaded" Tables="MagazineMods" Rarity="U" TinkerTier="3" TinkerDisplayName="drum-loaded" Value="1.4" Description="Drum-loaded: This weapon may hold about 3x more additional ammo." />
+  <mod Part="WWA_ModHiCapMag" Tables="MagazineMods" Rarity="U" TinkerTier="2" TinkerDisplayName="hi-cap magazine" Value="1.2" Description="High capacity magazine: This weapon may hold about 1.5x more additional ammo." />
+  
+  <!--<mod Part="WWA_ModSemiauto" Tables="SemiautoMod" Rarity="R" TinkerTier="2" TinkerDisplayName="semi-auto" Value="1.2" Description="Semi-automatic mode: This weapon has a semi-automatic fire mode resulting in higher fire rate but lower accuracy." />-->
+  <!--<mod Part="WWA_ModSemiautoAutomatic" Tables="SemiautoModA" Rarity="U" TinkerTier="2" TinkerDisplayName="semi-auto (A)" Value="1.1" Description="Semi-automatic mode: This weapon has a semi-automatic fire." />-->
+  <!--<mod Part="WWA_ModAutomaticFire" Tables="AutomaticFireMod" Rarity="R" TinkerTier="2" TinkerDisplayName="automatic" Value="1.4" Description="Automatic mode: This weapon can fire bursts of 3 bullets." />-->
+  
+  <!--<mod Part="WWA_ModEnergySocket" Tables="EnergySocketMod" Rarity="R" TinkerTier="3" TinkerDisplayName="energy socket" Value="1.3" Description="Energy cell socket: This weapon has energy cell socket allowing the use of powered attachments." />-->
+</mods>

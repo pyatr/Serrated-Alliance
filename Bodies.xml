@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<bodies>  
+  <bodyparttypevariants>
+    <bodyparttypevariant VariantOf="Missile Weapon" Type="Underbarrel Weapon" Abstract="true" Plural="false" UsuallyOn="Body" />
+    <bodyparttypevariant VariantOf="Hand" Type="Bayonet" DefaultBehavior="" Abstract="true" Plural="false"  UsuallyOn="Body" />
+    <bodyparttypevariant VariantOf="Hand" Type="Glowsphere" DefaultBehavior="" Abstract="true" Plural="false"  UsuallyOn="Body" />
+    <!--<bodyparttypevariant VariantOf="Hand" Type="Attachment Power Source" Abstract="true" Plural="false" UsuallyOn="Body" />-->
+  </bodyparttypevariants>
+</bodies>

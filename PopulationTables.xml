@@ -1,0 +1,155 @@
+<populations Load="Merge">
+  <population Name="StartingGear_Testman_Guns">
+    <group Name="Items" Style="pickeach">
+      <object Blueprint="WWA_ScopeAttachment" Number="2"></object>
+      <object Blueprint="WWA_ReflexSightAttachment" Number="2"></object>
+
+      <object Blueprint="WWA_ForegripAttachment" Number="2"></object>
+      <object Blueprint="WWA_BipodAttachment" Number="2"></object>
+      <object Blueprint="WWA_UBGLAttachment" Number="2"></object>
+      <object Blueprint="WWA_UBShotgunAttachment" Number="2"></object>
+      <object Blueprint="WWA_BayonetAttachment" Number="2"></object>
+
+      <object Blueprint="WWA_MuzzleBrakeAttachment" Number="2"></object>
+      <object Blueprint="WWA_MuzzleBoosterAttachment" Number="2"></object>
+      <object Blueprint="WWA_ShotgunChokeAttachment" Number="2"></object>
+
+      <object Blueprint="WWA_ExtendedBarrelAttachment" Number="2"></object>
+      <object Blueprint="WWA_HeavyBarrelAttachment" Number="2"></object>
+      <object Blueprint="WWA_ExtendedHeavyBarrelAttachment" Number="2"></object>
+
+      <object Blueprint="WWA_PistolStockAttachment" Number="2"></object>
+      <object Blueprint="WWA_CollapsingPistolStockAttachment" Number="2"></object>
+
+      <object Blueprint="WWA_LAMAttachment" Number="2"></object>
+      <object Blueprint="WWA_MagneticAcceleratorAttachment" Number="2"></object>
+      <object Blueprint="WWA_GlowSphereSlotAttachment" Number="2"></object>
+
+      <object Blueprint="Lead Slug" Number="1000"></object>
+      <object Blueprint="Shotgun Shell" Number="1000"></object>
+      <object Blueprint="WWA_MediumLeadSlug" Number="1000"></object>
+      <object Blueprint="WWA_HighCalibreLeadSlug" Number="1000"></object>
+
+      <object Blueprint="Carbine" Number="1"></object>
+      <object Blueprint="Sniper Rifle" Number="1"></object>
+      <object Blueprint="Chaingun" Number="1"></object>
+      <object Blueprint="Semi-Automatic Pistol" Number="2"></object>
+      <object Blueprint="Borderlands Revolver" Number="2"></object>
+      <object Blueprint="Desert Rifle" Number="1"></object>
+      <object Blueprint="Chain Pistol" Number="2"></object>
+      <object Blueprint="Pump Shotgun" Number="1"></object>
+      <object Blueprint="Combat Shotgun" Number="1"></object>
+
+      <object Blueprint="WWA_BattleRifle" Number="1"></object>
+      <object Blueprint="WWA_HeavyAssaultRifle" Number="1"></object>
+      <object Blueprint="WWA_LMG" Number="1"></object>
+      <object Blueprint="WWA_GPMG" Number="1"></object>
+      <object Blueprint="WWA_AntitankRifle" Number="1"></object>
+      <object Blueprint="WWA_AntiMaterielRifle" Number="1"></object>
+      <object Blueprint="WWA_HVMG" Number="1"></object>
+      <object Blueprint="WWA_SMG" Number="1"></object>
+      <object Blueprint="WWA_LSW" Number="1"></object>
+      <object Blueprint="WWA_DoubleBarrelMG" Number="1"></object>
+      <object Blueprint="WWA_AutoShotgun" Number="1"></object>
+      <object Blueprint="WWA_AutoPistol" Number="2"></object>
+      <object Blueprint="WWA_AssaultRevolver" Number="2"></object>
+      <object Blueprint="WWA_SmokeGrenade1" Number="6"></object>
+      <object Blueprint="WWA_SmokeGrenade2" Number="6"></object>
+      <object Blueprint="WWA_WPGrenade1" Number="6"></object>
+      <object Blueprint="WWA_WPGrenade2" Number="6"></object>
+      <object Blueprint="SalveTonic" Number="2d2+1"></object>
+      <object Blueprint="HalfFullWaterskin" Number="3"></object>
+      <object Blueprint="Nanoweave Vest" Number="1"></object>
+      <object Blueprint="Crimson Hood" Number="1"></object>
+      <object Blueprint="Mirrorshades" Number="1"></object>
+      <object Blueprint="Leather Boots" Number="1"></object>
+      <object Blueprint="Steel Dagger" Number="1"></object>
+
+      <table Name="#Injectors" Number="1d3+1"></table>
+      <table Name="#Cells" Number="1d2"></table>
+      <table Name="#Trinkets 1" Number="1d3"></table>
+      <table Name="#Artifact 1" Number="1d2"></table>
+      <table Name="#Artifact 2" Number="1d2"></table>
+      <table Name="#Artifact 3" Number="1d1"></table>
+    </group>
+  </population>
+
+  <population Name="WWA_GunsmithAdditionalGuns">
+    <group Name="Items" Style="pickone">
+      <object Blueprint="WWA_LMG" Weight="45"></object>
+      <object Blueprint="WWA_BattleRifle" Weight="45"></object>
+      <!--<object Blueprint="WWA_HeavyAssaultRifle" Weight="35"></object>-->
+      <!--<object Blueprint="WWA_AssaultRevolver" Weight="30"></object>-->
+      <object Blueprint="WWA_AntitankRifle" Weight="25"></object>
+      <object Blueprint="WWA_GPMG" Weight="35"></object>
+      <!--<object Blueprint="WWA_AntiMaterielRifle" Weight="10"></object>-->
+      <!--<object Blueprint="WWA_HVMG" Weight="20"></object>-->
+      <!--<object Blueprint="WWA_DoubleBarrelMG" Weight="30"></object>-->
+      <!--<object Blueprint="WWA_AutoShotgun" Weight="35"></object>-->
+    </group>
+  </population>
+
+  <population Name="WWA_GunsmithGunsHighTier">
+    <group Name="Items" Style="pickone">
+      <object Blueprint="WWA_LMG" Weight="10"></object>
+      <object Blueprint="WWA_BattleRifle" Weight="40"></object>
+      <object Blueprint="WWA_HeavyAssaultRifle" Weight="15"></object>
+      <object Blueprint="WWA_AssaultRevolver" Weight="20"></object>
+      <object Blueprint="WWA_AntitankRifle" Weight="45"></object>
+      <object Blueprint="WWA_GPMG" Weight="55"></object>
+      <object Blueprint="WWA_AntiMaterielRifle" Weight="45"></object>
+      <object Blueprint="WWA_HVMG" Weight="40"></object>
+      <object Blueprint="WWA_DoubleBarrelMG" Weight="20"></object>
+      <object Blueprint="WWA_AutoShotgun" Weight="10"></object>
+    </group>
+  </population>
+
+  <population Name="WWA_GunsmithAdditionalAmmo">
+    <group Name="Items" Style="pickeach">
+      <object Blueprint="WWA_MediumLeadSlug" Number="30-45"></object>
+      <object Blueprint="WWA_HighCalibreLeadSlug" Number="20-25"></object>
+    </group>
+  </population>
+
+  <population Name="WWA_GunsmithAttachmentsLowTier">
+    <group Name="Items" Style="pickone">
+      <object Blueprint="WWA_PistolStockAttachment" Number="1"></object>
+      <object Blueprint="WWA_ShotgunChokeAttachment" Number="1" Weight="5"></object>
+      <object Blueprint="WWA_ScopeAttachment" Number="1" Weight="5"></object>
+      <object Blueprint="WWA_ReflexSightAttachment" Number="1" Weight="4"></object>
+      <object Blueprint="WWA_ForegripAttachment" Number="1" Weight="5"></object>
+      <object Blueprint="WWA_BipodAttachment" Number="1" Weight="5"></object>
+      <object Blueprint="WWA_UBGLAttachment" Number="1" Weight="1"></object>
+      <object Blueprint="WWA_UBShotgunAttachment" Number="1" Weight="1"></object>
+      <object Blueprint="WWA_BayonetAttachment" Number="1" Weight="5"></object>
+      <object Blueprint="WWA_MuzzleBrakeAttachment" Number="1" Weight="3"></object>
+      <object Blueprint="WWA_MuzzleBoosterAttachment" Number="1" Weight="3"></object>
+      <object Blueprint="WWA_ExtendedBarrelAttachment" Number="1" Weight="4"></object>
+      <object Blueprint="WWA_HeavyBarrelAttachment" Number="1" Weight="4"></object>
+      <object Blueprint="WWA_GlowSphereSlotAttachment" Number="1" Weight="3"></object>
+    </group>
+  </population>
+
+  <population Name="WWA_GunsmithAttachments">
+    <group Name="Items" Style="pickone">
+      <object Blueprint="WWA_PistolStockAttachment" Number="1"></object>
+      <object Blueprint="WWA_CollapsingPistolStockAttachment" Number="1"></object>
+      <object Blueprint="WWA_ShotgunChokeAttachment" Number="1" Weight="5"></object>
+      <object Blueprint="WWA_ScopeAttachment" Number="1"></object>
+      <object Blueprint="WWA_ReflexSightAttachment" Number="1"></object>
+      <object Blueprint="WWA_ForegripAttachment" Number="1"></object>
+      <object Blueprint="WWA_BipodAttachment" Number="1"></object>
+      <object Blueprint="WWA_UBGLAttachment" Number="1"></object>
+      <object Blueprint="WWA_UBShotgunAttachment" Number="1"></object>
+      <object Blueprint="WWA_BayonetAttachment" Number="1"></object>
+      <object Blueprint="WWA_MuzzleBrakeAttachment" Number="1"></object>
+      <object Blueprint="WWA_MuzzleBoosterAttachment" Number="1"></object>
+      <object Blueprint="WWA_ExtendedBarrelAttachment" Number="1"></object>
+      <object Blueprint="WWA_HeavyBarrelAttachment" Number="1"></object>
+      <object Blueprint="WWA_ExtendedHeavyBarrelAttachment" Number="1"></object>
+      <object Blueprint="WWA_LAMAttachment" Number="1"></object>
+      <object Blueprint="WWA_MagneticAcceleratorAttachment" Number="1"></object>
+      <object Blueprint="WWA_GlowSphereSlotAttachment" Number="1"></object>
+    </group>
+  </population>
+</populations>

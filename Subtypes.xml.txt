@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<subtypes>
+  <class ID="Castes" ChargenTitle="Choose Arcology &amp;&amp; Caste" SingularTitle="caste" StatBoxDisplay="true">
+    <category Name="Testers" DisplayName="&amp;KThe People of Test">
+      <subtype Name="Testman" Code="a" Gear="StartingGear_Testman_Guns" Tile="creatures/caste_10.bmp" DetailColor="g">
+        <stat Name="Strength" Bonus="24" />
+        <stat Name="Agility" Bonus="6" />
+        <stat Name="Toughness" Bonus="6" />
+        <stat Name="Intelligence" Bonus="6" />
+        <stat Name="Willpower" Bonus="6" />
+        <stat Name="Ego" Bonus="6" />
+        <skills>          
+          <skill Name="HeavyWeapons" />
+          <skill Name="Pistol" />
+          <skill Name="Rifles" />          
+        </skills>
+      </subtype>
+    </category>
+  </class>
+</subtypes>

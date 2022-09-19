@@ -1,0 +1,845 @@
+<?xml version="1.0" encoding="utf-8"?>
+<objects>
+  <!--Technical-->
+  <object Name="BaseFirearm" Load="Merge">
+    <part Name="WWA_GunFeatures"></part>
+    <tag Name="IsFirearm" Value="true"></tag>
+    <tag Name="AutomaticOnly" Value="false"></tag>
+    <!-- -1 = default to 1.5/3.0 mag size-->
+    <intproperty Name="ExtendedMagCapacity" Value="-1" />
+    <intproperty Name="DrumMagCapacity" Value="-1" />
+  </object>
+
+  <object Name="BasePistol" Load="Merge">
+    <tag Name="AttachmentSlot:scope:Scope mount" Value="reflex sight"></tag>
+    <tag Name="AttachmentSlot:barrelside:Barrel side" Value="laser aiming module"></tag>
+  </object>
+
+  <object Name="BaseRifle" Load="Merge">
+    <tag Name="AttachmentSlot:scope:Scope mount" Value="scope,reflex sight"></tag>
+    <tag Name="AttachmentSlot:underbarrel:Under barrel" Value="foregrip,bipod"></tag>
+  </object>
+
+  <object Name="BaseMagazineRifle" Load="Merge">
+  </object>
+
+  <object Name="Creature" Load="Merge">
+    <part Name="WWA_TacticalAbilities"></part>
+  </object>
+
+  <!--Attachments-->
+  <object Name="WWA_ScopeAttachment" Inherits="Item">
+    <part Name="Render" Tile="items/WWA_Scope.png" DisplayName="scope" ColorString="&amp;K" DetailColor="y"></part>
+    <part Name="Description" Short="Telescopic sight with moderate magnification ratio."></part>
+    <part Name="Physics" Weight="1" Category="Weapon Attachments"></part>
+    <part Name="WWA_Scope" AttachmentBlueprintName="WWA_ScopeAttachment"></part>
+    <part Name="Commerce" Value="70"></part>
+  </object>
+  <object Name="WWA_ReflexSightAttachment" Inherits="Item">
+    <part Name="Render" Tile="items/WWA_ReflexSight.png"  DisplayName="reflex sight" ColorString="&amp;K" DetailColor="y"></part>
+    <part Name="Description" Short="Sight used for faster target acquisition."></part>
+    <part Name="Physics" Weight="0" Category="Weapon Attachments"></part>
+    <part Name="WWA_ReflexSight" AttachmentBlueprintName="WWA_ReflexSightAttachment"></part>
+    <part Name="Commerce" Value="60"></part>
+  </object>
+
+  <object Name="WWA_ForegripAttachment" Inherits="Item">
+    <part Name="Render" Tile="items/WWA_Foregrip.png"  DisplayName="foregrip" ColorString="&amp;K" DetailColor="y"></part>
+    <part Name="Description" Short="Pistol grip, designed for grasping by off hand."></part>
+    <part Name="Physics" Weight="0" Category="Weapon Attachments"></part>
+    <part Name="WWA_Foregrip" AttachmentBlueprintName="WWA_ForegripAttachment"></part>
+    <part Name="Commerce" Value="35"></part>
+  </object>
+  <object Name="WWA_BipodAttachment" Inherits="Item">
+    <part Name="Render" Tile="items/WWA_Bipod.png"  DisplayName="bipod" ColorString="&amp;K" DetailColor="y"></part>
+    <part Name="Description" Short="Two metal legs help provide stability to a weapon."></part>
+    <part Name="Physics" Weight="1" Category="Weapon Attachments"></part>
+    <part Name="WWA_Bipod" AttachmentBlueprintName="WWA_BipodAttachment"></part>
+    <part Name="Commerce" Value="32"></part>
+  </object>
+  <object Name="WWA_UBGLAttachment" Inherits="Item">
+    <part Name="Render" DisplayName="underbarrel grenade launcher" Tile="items/WWA_UBGL.png" ColorString="&amp;K"></part>
+    <part Name="Description" Short="Short front loaded grenade launcher which can be attached to most guns."></part>
+    <part Name="Physics" Weight="5" Category="Weapon Attachments"></part>
+    <part Name="WWA_UBWeapon" WeaponBlueprintName="WWA_UBGLWeapon" displayName="underbarrel grenade launcher" Description="this weapon can fire grenades." AttachmentBlueprintName="WWA_UBGLAttachment"></part>
+    <part Name="Commerce" Value="95"></part>
+  </object>
+  <object Name="WWA_UBShotgunAttachment" Inherits="Item">
+    <part Name="Render" DisplayName="underbarrel shotgun" Tile="items/WWA_UBShotgun.png" ColorString="&amp;K"></part>
+    <part Name="Description" Short=" "></part>
+    <part Name="Physics" Weight="6" Category="Weapon Attachments"></part>
+    <part Name="WWA_UBWeapon" WeaponBlueprintName="WWA_UnderbarrelShotgun" displayName="underbarrel shotgun" Description="this weapon can fire shotgun shells." AttachmentBlueprintName="WWA_UBShotgunAttachment"></part>
+    <part Name="Commerce" Value="88"></part>
+  </object>
+  <object Name="WWA_BayonetAttachment" Inherits="Item">
+    <part Name="Render" Tile="items/WWA_BayonetLug.png" DisplayName="bayonet lug" ColorString="&amp;K" DetailColor="y"></part>
+    <part Name="Description" Short="A front lug which allows installement of short blades on a gun."></part>
+    <part Name="Physics" Weight="1" Category="Weapon Attachments"></part>
+    <part Name="WWA_Bayonet" AttachmentBlueprintName="WWA_BayonetAttachment"></part>
+    <part Name="Commerce" Value="23"></part>
+  </object>
+
+  <object Name="WWA_MuzzleBrakeAttachment" Inherits="Item">
+    <part Name="Render" Tile="items/WWA_MuzzleBrake.png" DisplayName="recoil compensator" ColorString="&amp;K" DetailColor="y"></part>
+    <part Name="Description" Short="Device intended to redirect a portion of propellant gases to counter recoil and unwanted muzzle rise."></part>
+    <part Name="Physics" Weight="0" Category="Weapon Attachments"></part>
+    <part Name="WWA_MuzzleBrake" AttachmentBlueprintName="WWA_MuzzleBrakeAttachment"></part>
+    <part Name="Commerce" Value="40"></part>
+  </object>
+  <object Name="WWA_MuzzleBoosterAttachment" Inherits="Item">
+    <part Name="Render" Tile="items/WWA_MuzzleBooster.png" DisplayName="muzzle booster" ColorString="&amp;K" DetailColor="y"></part>
+    <part Name="Description" Short="Device fixed to the muzzle of a firearm, intended to harness the energy of the escaping propellant to augment the force of recoil."></part>
+    <part Name="Physics" Weight="0" Category="Weapon Attachments"></part>
+    <part Name="WWA_MuzzleBooster" AttachmentBlueprintName="WWA_MuzzleBoosterAttachment"></part>
+    <part Name="Commerce" Value="37"></part>
+  </object>
+  <object Name="WWA_ShotgunChokeAttachment" Inherits="Item">
+    <part Name="Render" Tile="items/WWA_ShotgunChoke.png" DisplayName="choke" ColorString="&amp;K" DetailColor="y"></part>
+    <part Name="Description" Short="Barrel of shotgun is constricted at the end of muzzle to reduce pellet spread."></part>
+    <part Name="Physics" Weight="0" Category="Weapon Attachments"></part>
+    <part Name="WWA_Choke" AttachmentBlueprintName="WWA_ShotgunChokeAttachment"></part>
+    <part Name="Commerce" Value="33"></part>
+  </object>
+
+  <object Name="WWA_ExtendedBarrelAttachment" Inherits="Item">
+    <part Name="Render" Tile="items/WWA_ExtendedBarrel.png" DisplayName="extended barrel" ColorString="&amp;K" DetailColor="y"></part>
+    <part Name="Description" Short=" "></part>
+    <part Name="Physics" Weight="1" Category="Weapon Attachments"></part>
+    <part Name="WWA_ExtendedBarrel" AttachmentBlueprintName="WWA_ExtendedBarrelAttachment"></part>
+    <part Name="Commerce" Value="25"></part>
+  </object>
+  <object Name="WWA_HeavyBarrelAttachment" Inherits="Item">
+    <part Name="Render" Tile="items/WWA_HeavyBarrel.png" DisplayName="heavy barrel" ColorString="&amp;K" DetailColor="y"></part>
+    <part Name="Description" Short=" "></part>
+    <part Name="Physics" Weight="1" Category="Weapon Attachments"></part>
+    <part Name="WWA_HeavyBarrel" AttachmentBlueprintName="WWA_HeavyBarrelAttachment"></part>
+    <part Name="Commerce" Value="23"></part>
+  </object>
+  <object Name="WWA_ExtendedHeavyBarrelAttachment" Inherits="Item">
+    <part Name="Render" Tile="items/WWA_ExtendedHeavyBarrel.png"  DisplayName="extended heavy barrel" ColorString="&amp;K" DetailColor="y"></part>
+    <part Name="Description" Short=" "></part>
+    <part Name="Physics" Weight="1" Category="Weapon Attachments"></part>
+    <part Name="WWA_ExtendedHeavyBarrel" AttachmentBlueprintName="WWA_ExtendedHeavyBarrelAttachment"></part>
+    <part Name="Commerce" Value="37"></part>
+  </object>
+
+  <object Name="WWA_PistolStockAttachment" Inherits="Item">
+    <part Name="Render" Tile="items/WWA_PistolStock.png" DisplayName="pistol stock" ColorString="&amp;K" DetailColor="y"></part>
+    <part Name="Description" Short="A wooden stock which aids your pistol aim but requires both hands to be used."></part>
+    <part Name="Physics" Weight="2" Category="Weapon Attachments"></part>
+    <part Name="WWA_PistolStock" AttachmentBlueprintName="WWA_PistolStockAttachment"></part>
+    <part Name="Commerce" Value="23"></part>
+  </object>
+  <object Name="WWA_CollapsingPistolStockAttachment" Inherits="Item">
+    <part Name="Render" Tile="items/WWA_CollapsingPistolStock.png" DisplayName="collapsing pistol stock" ColorString="&amp;K" DetailColor="y"></part>
+    <part Name="Description" Short="A metallic stock which aids your pistol aim. It is able to quickly retract and collapse."></part>
+    <part Name="Physics" Weight="1" Category="Weapon Attachments"></part>
+    <part Name="WWA_CollapsingPistolStock" AttachmentBlueprintName="WWA_CollapsingPistolStockAttachment"></part>
+    <part Name="Commerce" Value="28"></part>
+  </object>
+
+  <object Name="WWA_LAMAttachment" Inherits="Item">
+    <part Name="Render" Tile="items/WWA_LAM.png" DisplayName="laser aiming module" ColorString="&amp;K" DetailColor="y"></part>
+    <part Name="Description" Short=" "></part>
+    <part Name="Physics" Weight="0" Category="Weapon Attachments"></part>
+    <part Name="WWA_LAM" AttachmentBlueprintName="WWA_LAMAttachment"></part>
+    <part Name="Commerce" Value="99"></part>
+  </object>
+  <object Name="WWA_MagneticAcceleratorAttachment" Inherits="Item">
+    <part Name="Render" Tile="items/WWA_MagneticAccelerator.png" DisplayName="magnetic accelerator" ColorString="&amp;K" DetailColor="y"></part>
+    <part Name="Description" Short="Several powered coils increase projectile velocity and penetration."></part>
+    <part Name="Physics" Weight="1" Category="Weapon Attachments"></part>
+    <part Name="WWA_MagneticAccelerator" AttachmentBlueprintName="WWA_MagneticAcceleratorAttachment"></part>
+    <part Name="Commerce" Value="160"></part>
+  </object>
+  <object Name="WWA_GlowSphereSlotAttachment" Inherits="Item">
+    <part Name="Render" Tile="items/WWA_GlowsphereSlot.png" DisplayName="glowsphere slot" ColorString="&amp;K" DetailColor="y"></part>
+    <part Name="Description" Short="Half-sphere to be mounted on side of a gun."></part>
+    <part Name="Physics" Weight="0" Category="Weapon Attachments"></part>
+    <part Name="WWA_GlowsphereSlot" AttachmentBlueprintName="WWA_GlowSphereSlotAttachment"></part>
+    <part Name="Commerce" Value="40"></part>
+  </object>
+  <!--Weapon additions-->
+  <object Name="Desert Rifle" Load="Merge">
+    <tag Name="MissileFireSound" Value="desert_rifle_single"></tag>
+    <tag Name="ReloadSound" Value="reload_generic"></tag>
+
+    <tag Name="AttachmentSlot:scope:Scope mount" Value="scope,reflex sight"></tag>
+    <tag Name="AttachmentSlot:underbarrel:Under barrel" Value="foregrip,bipod,bayonet lug"></tag>
+    <tag Name="AttachmentSlot:barrel:Barrel" Value="extended barrel"></tag>
+
+    <intproperty Name="ExtendedMagCapacity" Value="20" />
+  </object>
+  <object Name="Sniper Rifle" Load="Merge">
+    <part Name="WWA_Scope" integral="true"></part>
+
+    <tag Name="MissileFireSound" Value="sniper_rifle_single"></tag>
+    <tag Name="ReloadSound" Value="sniper_rifle_reload"></tag>
+
+    <tag Name="AttachmentSlot:scope:Scope mount" Value="scope"></tag>
+    <tag Name="AttachmentSlot:underbarrel:Under barrel" Value="foregrip,bipod"></tag>
+    <tag Name="AttachmentSlot:barrelside:Barrel side" Value="laser aiming module,magnetic accelerator"></tag>
+  </object>
+  <object Name="Musket" Load="Merge">
+    <part Name="TinkerItem" Bits="001" CanDisassemble="true" CanBuild="true" CanRepair="true"></part>
+
+    <tag Name="MissileFireSound" Value="rifles_regularSingleShot"></tag>
+
+    <tag Name="AttachmentSlot:underbarrel:Under barrel" Value="foregrip"></tag>
+  </object>
+  <object Name="Carbine" Load="Merge">
+    <part Name="Render" DisplayName="carbine" Tile="items/WWA_Carbine.png" RenderString=")" />
+    <tag Name="MissileFireSound" Value="none"></tag>
+    <tag Name="FireSoundSingle" Value="carbine_single"></tag>
+    <tag Name="FireBurstSound" Value="carbine_burst"></tag>
+    <tag Name="FireBurstHighRateSound" Value="carbine_burst_high_rate"></tag>
+    <tag Name="ReloadSound" Value="reload_generic"></tag>
+    <part Name="Commerce" Value="170"></part>
+
+    <tag Name="AttachmentSlot:scope:Scope mount" Value="scope,reflex sight"></tag>
+    <tag Name="AttachmentSlot:underbarrel:Under barrel" Value="foregrip,bipod,underbarrel grenade launcher,underbarrel shotgun,bayonet lug"></tag>
+    <tag Name="AttachmentSlot:muzzle:Muzzle" Value="muzzle booster,recoil compensator"></tag>
+    <tag Name="AttachmentSlot:barrel:Barrel" Value="extended barrel,heavy barrel,extended heavy barrel"></tag>
+    <tag Name="AttachmentSlot:barrelside:Barrel side" Value="laser aiming module,magnetic accelerator,glowsphere slot"></tag>
+    <!--Attachment slot with empty values will not be included-->
+    <!--<tag Name="AttachmentSlot:stocklug:Stock" Value="common stock,collapsing stock,bump stock"></tag>-->
+
+    <intproperty Name="ExtendedMagCapacity" Value="42" />
+    <intproperty Name="DrumMagCapacity" Value="75" />
+  </object>
+  <object Name="MasterworkCarbine" Load="Merge">
+    <removepart Name="ModScoped"></removepart>
+    <part Name="Commerce" Value="195"></part>
+    <part Name="WWA_Scope" integral="true" aimingBonus="3"></part>
+    <part Name="WWA_ExtendedHeavyBarrel" integral="true"></part>
+    <tag Name="AttachmentSlot:barrel:Barrel" Value="extended heavy barrel"></tag>
+  </object>
+
+  <object Name="Borderlands Revolver" Load="Merge">
+    <tag Name="MissileFireSound" Value="borderlands_revolver_single"></tag>
+    <tag Name="ReloadSound" Value="revolver_reload"></tag>
+
+    <tag Name="AttachmentSlot:stocklug:Stock" Value="pistol stock"></tag>
+  </object>
+  <object Name="Semi-Automatic Pistol" Load="Merge">
+    <tag Name="MissileFireSound" Value="semiautopistol_single"></tag>
+    <tag Name="ReloadSound" Value="reload_generic"></tag>
+  </object>
+  <object Name="Chain Pistol" Load="Merge">
+    <part Name="WWA_CollapsingPistolStock" integral="true"></part>
+
+    <tag Name="MissileFireSound" Value="none"></tag>
+    <tag Name="FireSoundSingle" Value="chain_pistol_single"></tag>
+    <tag Name="FireBurstSound" Value="chain_pistol_burst"></tag>
+    <tag Name="FireBurstHighRateSound" Value="chain_pistol_burst_high_rate"></tag>
+    <tag Name="ReloadSound" Value="reload_generic"></tag>
+
+    <tag Name="AttachmentSlot:stocklug:Stock" Value="collapsing pistol stock"></tag>
+
+    <intproperty Name="ExtendedMagCapacity" Value="32" />
+  </object>
+
+  <object Name="Chaingun" Load="Merge">
+    <part Name="MagazineAmmoLoader" ProjectileObject="ProjectileChaingunBullet" AmmoPart="AmmoSlug" MaxAmmo="100"></part>
+
+    <tag Name="MissileFireSound" Value="none"></tag>
+    <tag Name="FireSoundSingle" Value="chaingun_single"></tag>
+    <tag Name="FireBurstSound" Value="chaingun_burst"></tag>
+    <tag Name="FireBurstHighRateSound" Value="chaingun_burst_high_rate"></tag>
+    <tag Name="ReloadSound" Value="reload_belt"></tag>
+
+    <tag Name="AttachmentSlot:scope:Scope mount" Value="scope,reflex sight"></tag>
+    <tag Name="AttachmentSlot:underbarrel:Under barrel" Value="foregrip,bipod"></tag>
+    <tag Name="AttachmentSlot:muzzle:Muzzle" Value="muzzle booster,recoil compensator"></tag>
+    <tag Name="AttachmentSlot:barrel:Barrel" Value="extended barrel,heavy barrel,extended heavy barrel"></tag>
+    <tag Name="AttachmentSlot:barrelside:Barrel side" Value="laser aiming module,magnetic accelerator,glowsphere slot"></tag>
+    <tag Name="AutomaticOnly" Value="true"></tag>
+  </object>
+
+  <object Name="Pump Shotgun" Load="Merge">
+    <part Name="Render" DisplayName="pump shotgun" RenderString=")" Tile="items/WWA_Shotgun.png" />
+    <part Name="Commerce" Value="120"></part>
+
+    <tag Name="MissileFireSound" Value="shotgun_single"></tag>
+    <tag Name="ReloadSound" Value="shotgun_reload"></tag>
+
+    <tag Name="AttachmentSlot:scope:Scope mount" Value="reflex sight"></tag>
+    <tag Name="AttachmentSlot:underbarrel:Under barrel" Value="foregrip"></tag>
+    <tag Name="AttachmentSlot:muzzle:Muzzle" Value="choke"></tag>
+  </object>
+
+  <object Name="Combat Shotgun" Load="Merge">
+    <part Name="Render" DisplayName="combat shotgun" RenderString=")" Tile="items/WWA_CombatShotgun.png" ColorString="&amp;K" DetailColor="y"/>
+    <tag Name="MissileFireSound" Value="combat_shotgun_single"></tag>
+    <tag Name="ReloadSound" Value="reload_generic"></tag>
+
+    <tag Name="AttachmentSlot:scope:Scope mount" Value="reflex sight,scope"></tag>
+    <tag Name="AttachmentSlot:underbarrel:Under barrel" Value="foregrip,underbarrel grenade launcher,underbarrel shotgun,bayonet lug"></tag>
+    <tag Name="AttachmentSlot:muzzle:Muzzle" Value="choke"></tag>
+  </object>
+
+  <object Name="Grenade Launcher" Load="Merge">
+    <tag Name="AttachmentSlot:scope:Scope mount" Value=""></tag>
+    <tag Name="AttachmentSlot:underbarrel:Under barrel" Value=""></tag>
+
+    <intproperty Name="ExtendedMagCapacity" Value="12" />
+    <intproperty Name="DrumMagCapacity" Value="20" />
+  </object>
+  <!--New weapons-->
+  <object Name="WWA_AutoPistol" Inherits="BaseMagazinePistol">
+    <part Name="Render" DisplayName="automatic pistol" RenderString=")" Tile="items/WWA_AutomaticPistol.png"></part>
+    <part Name="Physics" Weight="7"></part>
+    <part Name="Commerce" Value="140"></part>
+    <part Name="MissileWeapon" AnimationDelay="1" Skill="Pistol" ShotsPerAction="3" AmmoPerAction="3" ShotsPerAnimation="1" WeaponAccuracy="13" RangeIncrement="6"></part>
+    <part Name="MagazineAmmoLoader" ProjectileObject="WWA_AutoPistolShell" AmmoPart="AmmoSlug" MaxAmmo="20"></part>
+    <part Name="Description" Short="Pistol with decent accuracy and both semi-automatic and automatic fire modes."></part>
+    <part Name="Metal"></part>
+    <part Name="TinkerItem" Bits="0023" CanDisassemble="true" CanBuild="true" CanRepair="true"></part>
+    <part Name="Examiner" AlternateDisplayName="pistol" Complexity="4"></part>
+    <tag Name="DynamicObjectsTable:Guns"></tag>
+    <tag Name="Tier" Value="4"></tag>
+
+    <tag Name="MissileFireSound" Value="none"></tag>
+    <tag Name="FireSoundSingle" Value="autopistol_single"></tag>
+    <tag Name="FireBurstSound" Value="autopistol_burst"></tag>
+    <tag Name="FireBurstHighRateSound" Value="autopistol_burst_high_rate"></tag>
+    <tag Name="ReloadSound" Value="reload_generic"></tag>
+
+    <intproperty Name="ExtendedMagCapacity" Value="30" />
+    <intproperty Name="DrumMagCapacity" Value="60" />
+  </object>
+  <object Name="WWA_AutoPistolShell" Inherits="BaseLeadSlugProjectile">
+    <part Name="Projectile" BasePenetration="4" BaseDamage="1d6"></part>
+  </object>
+
+  <object Name="WWA_AssaultRevolver" Inherits="BaseMagazinePistol">
+    <part Name="Render" DisplayName="assault revolver" RenderString=")" Tile="items/WWA_AssaultRevolver.png"  ColorString="&amp;K"></part>
+    <part Name="Physics" Weight="8"></part>
+    <part Name="Commerce" Value="260"></part>
+    <part Name="MissileWeapon" AnimationDelay="1" Skill="Pistol" ShotsPerAction="1" AmmoPerAction="1" ShotsPerAnimation="1" WeaponAccuracy="12" RangeIncrement="6"></part>
+    <part Name="MagazineAmmoLoader" ProjectileObject="WWA_AssaultRevolverShell" AmmoPart="WWA_MediumAmmoSlug" MaxAmmo="6"></part>
+    <part Name="Description" Short="A hefty revolver."></part>
+    <part Name="Metal"></part>
+    <part Name="TinkerItem" Bits="0024" CanDisassemble="true" CanBuild="true" CanRepair="true"></part>
+    <part Name="Examiner" AlternateDisplayName="pistol" Complexity="5" Difficulty="3"></part>
+    <tag Name="DynamicObjectsTable:Guns"></tag>
+    <tag Name="Tier" Value="4"></tag>
+
+    <tag Name="MissileFireSound" Value="assault_revolver_single"></tag>
+    <tag Name="ReloadSound" Value="revolver_reload"></tag>
+
+    <tag Name="AttachmentSlot:stocklug:Stock" Value="pistol stock"></tag>
+  </object>
+  <object Name="WWA_AssaultRevolverShell" Inherits="BaseLeadSlugProjectile">
+    <part Name="Projectile" BasePenetration="5" BaseDamage="2d6"></part>
+  </object>
+
+  <object Name="WWA_SMG" Inherits="BaseMagazineRifle">
+    <part Name="Render" DisplayName="submachinegun" RenderString=")" Tile="items/WWA_SMG.png" ColorString="&amp;K"/>
+    <part Name="Physics" Weight="8" UsesTwoSlots="true" />
+    <part Name="Commerce" Value="140" />
+    <part Name="MissileWeapon" AnimationDelay="1" Skill="Rifle" ShotsPerAction="5" AmmoPerAction="5" ShotsPerAnimation="1" WeaponAccuracy="15" RangeIncrement="6" />
+    <part Name="MagazineAmmoLoader" ProjectileObject="WWA_SMG_slug" AmmoPart="AmmoSlug" MaxAmmo="30" />
+    <part Name="Description" Short="Simple rugged automatic carbine." />
+    <part Name="Metal" />
+    <part Name="TinkerItem" Bits="0013" CanDisassemble="true" CanBuild="true" CanRepair="true" />
+    <part Name="Examiner" AlternateDisplayName="rifle" Complexity="4" />
+    <tag Name="Tier" Value="4" />
+    <tag Name="DynamicObjectsTable:Guns"></tag>
+    <tag Name="AutomaticOnly" Value="true"></tag>
+
+    <tag Name="MissileFireSound" Value="none"></tag>
+    <tag Name="FireSoundSingle" Value="SMG_single"></tag>
+    <tag Name="FireBurstSound" Value="SMG_burst"></tag>
+    <tag Name="FireBurstHighRateSound" Value="SMG_burst_high_rate"></tag>
+    <tag Name="ReloadSound" Value="reload_generic"></tag>
+
+    <tag Name="AttachmentSlot:scope:Scope mount" Value="reflex sight"></tag>
+    <tag Name="AttachmentSlot:underbarrel:Under barrel" Value="foregrip"></tag>
+    <tag Name="AttachmentSlot:barrelside:Barrel side" Value="laser aiming module"></tag>
+
+    <intproperty Name="ExtendedMagCapacity" Value="45" />
+  </object>
+  <object Name="WWA_SMG_slug" Inherits="BaseLeadSlugProjectile">
+    <part Name="Projectile" BasePenetration="3" BaseDamage="1d6" />
+  </object>
+
+  <object Name="WWA_LSW" Inherits="BaseMagazineRifle">
+    <part Name="Render" DisplayName="light support weapon" Tile="items/WWA_LSW.png" RenderString=")"></part>
+    <part Name="Physics" Weight="15" UsesTwoSlots="true"></part>
+    <part Name="Commerce" Value="190"></part>
+    <part Name="MissileWeapon" Skill="Rifle" ShotsPerAction="5" AmmoPerAction="5" ShotsPerAnimation="1" WeaponAccuracy="9"></part>
+    <part Name="MagazineAmmoLoader" ProjectileObject="WWA_LSWShell" AmmoPart="AmmoSlug" MaxAmmo="30"></part>
+    <part Name="Description" Short="Common carbine in bull-pup configuration fitted with longer heavier barrel, bipod and scope."></part>
+    <part Name="Metal"></part>
+    <part Name="TinkerItem" Bits="0024" CanDisassemble="true" CanBuild="true" CanRepair="true"></part>
+    <part Name="Examiner" AlternateDisplayName="rifle" Complexity="5" Difficulty="4"></part>
+    <part Name="WWA_Scope" integral="true"></part>
+    <part Name="WWA_Bipod" integral="true"></part>
+    <part Name="WWA_ExtendedHeavyBarrel" integral="true"></part>
+    <tag Name="DynamicObjectsTable:Guns"></tag>
+    <tag Name="Tier" Value="4"></tag>
+
+    <tag Name="MissileFireSound" Value="none"></tag>
+    <tag Name="FireSoundSingle" Value="LSW_single"></tag>
+    <tag Name="FireBurstSound" Value="LSW_burst"></tag>
+    <tag Name="FireBurstHighRateSound" Value="LSW_burst_high_rate"></tag>
+    <tag Name="ReloadSound" Value="reload_generic"></tag>
+
+    <tag Name="AttachmentSlot:scope:Scope mount" Value="scope"></tag>
+    <tag Name="AttachmentSlot:underbarrel:Under barrel" Value="foregrip"></tag>
+    <tag Name="AttachmentSlot:barrel:Barrel" Value="extended heavy barrel"></tag>
+    <tag Name="AttachmentSlot:bipod:Bipod" Value="bipod"></tag>
+    <tag Name="AttachmentSlot:muzzle:Muzzle" Value="muzzle booster,recoil compensator"></tag>
+    <tag Name="AttachmentSlot:barrelside:Barrel side" Value="laser aiming module,magnetic accelerator"></tag>
+
+    <intproperty Name="DrumMagCapacity" Value="90" />
+  </object>
+  <object Name="WWA_LSWShell" Inherits="BaseLeadSlugProjectile">
+    <part Name="Projectile" BasePenetration="4" BaseDamage="1d8"></part>
+  </object>
+
+  <object Name="WWA_DoubleBarrelMG" Inherits="BaseMagazineRifle">
+    <part Name="Render" DisplayName="double barreled machinegun" Tile="items/WWA_DBMG.png" RenderString=")" ColorString="&amp;K" DetailColor="y"></part>
+    <part Name="Physics" Weight="19" UsesTwoSlots="true"></part>
+    <part Name="Commerce" Value="470"></part>
+    <part Name="MissileWeapon" Skill="Rifle" ShotsPerAction="8" AmmoPerAction="2" ShotsPerAnimation="2" WeaponAccuracy="12"></part>
+    <part Name="MagazineAmmoLoader" ProjectileObject="WWA_DBMGShell" AmmoPart="AmmoSlug" MaxAmmo="90"></part>
+    <part Name="Description" Short="Double barreled machinegun."></part>
+    <part Name="Metal"></part>
+    <part Name="TinkerItem" Bits="00334" CanDisassemble="true" CanBuild="true" CanRepair="true"></part>
+    <part Name="Examiner" AlternateDisplayName="rifle" Complexity="4" Difficulty="3"></part>
+    <part Name="WWA_Bipod" integral="true"></part>
+    <tag Name="DynamicObjectsTable:Guns"></tag>
+    <tag Name="Tier" Value="5"></tag>
+    <tag Name="AutomaticOnly" Value="true"></tag>
+
+    <tag Name="MissileFireSound" Value="none"></tag>
+    <tag Name="FireSoundSingle" Value="dbmg_single"></tag>
+    <tag Name="FireBurstSound" Value="dbmg_burst"></tag>
+    <tag Name="FireBurstHighRateSound" Value="dbmg_burst_high_rate"></tag>
+    <tag Name="ReloadSound" Value="reload_generic"></tag>
+
+    <tag Name="AttachmentSlot:scope:Scope mount" Value="scope,reflex sight"></tag>
+    <tag Name="AttachmentSlot:bipod:Bipod" Value="bipod"></tag>
+    <tag Name="AttachmentSlot:barrelside:Barrel side" Value="laser aiming module,magnetic accelerator"></tag>
+  </object>
+  <object Name="WWA_DBMGShell" Inherits="BaseLeadSlugProjectile">
+    <part Name="Projectile" BasePenetration="4" BaseDamage="1d8"></part>
+  </object>
+
+  <object Name="WWA_AutoShotgun" Inherits="BaseMagazineRifle">
+    <part Name="Render" DisplayName="automatic shotgun" RenderString=")" Tile="items/WWA_AutoShotgun.png" ColorString="&amp;K" DetailColor="y"/>
+    <part Name="Physics" UsesTwoSlots="true" Weight="18" />
+    <part Name="Commerce" Value="210" />
+    <part Name="MissileWeapon" Skill="Rifle" NoWildfire="true" ShotsPerAction="8" AmmoPerAction="3" ShotsPerAnimation="8" WeaponAccuracy="39" RangeIncrement="6" />
+    <part Name="MagazineAmmoLoader" ProjectileObject="WWA_ProjectileAutoShotgunPellet" AmmoPart="AmmoShotgunShell" MaxAmmo="6" />
+    <part Name="Description" Short="A hefty automatic shotgun with a large drum magazine." />
+    <part Name="Metal" />
+    <part Name="TinkerItem" Bits="00224" CanDisassemble="true" CanBuild="true" />
+    <tag Name="Tier" Value="3" />
+    <part Name="Examiner" AlternateDisplayName="rifle" Complexity="4" Difficulty="2" />
+    <tag Name="DynamicObjectsTable:Guns" />
+
+    <tag Name="MissileFireSound" Value="none"></tag>
+    <tag Name="FireSoundSingle" Value="autoshotgun_single"></tag>
+    <tag Name="FireBurstSound" Value="autoshotgun_burst"></tag>
+    <tag Name="FireBurstHighRateSound" Value="autoshotgun_burst_high_rate"></tag>
+    <tag Name="ReloadSound" Value="reload_generic"></tag>
+    <tag Name="AutomaticOnly" Value="true"></tag>
+
+    <tag Name="AttachmentSlot:scope:Scope mount" Value="reflex sight,scope"></tag>
+    <tag Name="AttachmentSlot:underbarrel:Under barrel" Value="foregrip,underbarrel grenade launcher"></tag>
+    <tag Name="AttachmentSlot:muzzle:Muzzle" Value="choke"></tag>
+  </object>
+  <object Name="WWA_ProjectileAutoShotgunPellet" Inherits="BaseShotgunProjectile">
+    <part Name="Projectile" BasePenetration="4" BaseDamage="1d2" />
+  </object>
+
+  <object Name="WWA_BattleRifle" Inherits="BaseMagazineRifle">
+    <part Name="Render" DisplayName="battle rifle" Tile="items/WWA_BattleRifle.png" RenderString=")" ColorString="&amp;K"></part>
+    <part Name="Physics" Weight="15" UsesTwoSlots="true"></part>
+    <part Name="Commerce" Value="230"></part>
+    <part Name="MissileWeapon" Skill="Rifle" ShotsPerAction="3" AmmoPerAction="3" ShotsPerAnimation="1" WeaponAccuracy="6"></part>
+    <part Name="MagazineAmmoLoader" ProjectileObject="WWA_BattleRifleSlug" AmmoPart="WWA_MediumAmmoSlug" MaxAmmo="15"></part>
+    <part Name="Description" Short="Accurate automatic rifle loaded with full-powered cartriges."></part>
+    <part Name="Metal"></part>
+    <part Name="TinkerItem" Bits="00134" CanDisassemble="true" CanBuild="true" CanRepair="true"></part>
+    <part Name="Examiner" AlternateDisplayName="rifle" Complexity="6" Difficulty="4"></part>
+    <tag Name="Tier" Value="5"></tag>
+    <tag Name="DynamicObjectsTable:Guns"></tag>
+
+    <tag Name="MissileFireSound" Value="none"></tag>
+    <tag Name="FireSoundSingle" Value="battle_rifle_single"></tag>
+    <tag Name="FireBurstSound" Value="battle_rifle_burst"></tag>
+    <tag Name="FireBurstHighRateSound" Value="battle_rifle_burst_high_rate"></tag>
+    <tag Name="ReloadSound" Value="reload_generic"></tag>
+
+    <tag Name="AttachmentSlot:scope:Scope mount" Value="scope,reflex sight"></tag>
+    <tag Name="AttachmentSlot:underbarrel:Under barrel" Value="foregrip,bipod,underbarrel grenade launcher,underbarrel shotgun,bayonet lug"></tag>
+    <tag Name="AttachmentSlot:muzzle:Muzzle" Value="muzzle booster,recoil compensator"></tag>
+    <!--<tag Name="AttachmentSlot:barrel:Barrel" Value="extended barrel,heavy barrel,extended heavy barrel"></tag>-->
+    <tag Name="AttachmentSlot:barrelside:Barrel side" Value="laser aiming module,magnetic accelerator,glowsphere slot"></tag>
+
+    <intproperty Name="ExtendedMagCapacity" Value="20" />
+    <intproperty Name="DrumMagCapacity" Value="50" />
+  </object>
+  <object Name="WWA_BattleRifleSlug" Inherits="TemporaryProjectile">
+    <part Name="Render" DisplayName="lead slug"></part>
+    <part Name="Projectile" BasePenetration="7" BaseDamage="1d10" ColorString="&amp;y" PassByVerb="whiz"></part>
+    <tag Name="Slug"></tag>
+  </object>
+
+  <object Name="WWA_HeavyAssaultRifle" Inherits="BaseMagazineRifle">
+    <part Name="Render" DisplayName="heavy assault rifle" Tile="items/WWA_HAR.png" RenderString=")" ColorString="&amp;K"></part>
+    <part Name="Physics" Weight="15" UsesTwoSlots="true"></part>
+    <part Name="Commerce" Value="250"></part>
+    <part Name="MissileWeapon" Skill="Rifle" ShotsPerAction="4" AmmoPerAction="4" ShotsPerAnimation="1" WeaponAccuracy="14"></part>
+    <part Name="MagazineAmmoLoader" ProjectileObject="WWA_HeavyAssaultRifleSlug" AmmoPart="WWA_MediumAmmoSlug" MaxAmmo="20"></part>
+    <part Name="Description" Short="Heavy assault rifle dedicated for close quarter combat."></part>
+    <part Name="Metal"></part>
+    <part Name="TinkerItem" Bits="00224" CanDisassemble="true" CanBuild="true" CanRepair="true"></part>
+    <part Name="Examiner" AlternateDisplayName="rifle" Complexity="7" Difficulty="4"></part>
+    <part Name="WWA_Foregrip" integral="true"></part>
+    <tag Name="Tier" Value="5"></tag>
+    <tag Name="DynamicObjectsTable:Guns"></tag>
+
+    <tag Name="MissileFireSound" Value="none"></tag>
+    <tag Name="FireSoundSingle" Value="heavy_assault_rifle_single"></tag>
+    <tag Name="FireBurstSound" Value="heavy_assault_rifle_burst"></tag>
+    <tag Name="FireBurstHighRateSound" Value="heavy_assault_rifle_burst_high_rate"></tag>
+    <tag Name="ReloadSound" Value="reload_generic"></tag>
+
+    <tag Name="AttachmentSlot:scope:Scope mount" Value="scope,reflex sight"></tag>
+    <tag Name="AttachmentSlot:underbarrel:Under barrel" Value="underbarrel grenade launcher,underbarrel shotgun"></tag>
+    <tag Name="AttachmentSlot:foregrip:Foregrip" Value="foregrip"/>
+    <tag Name="AttachmentSlot:barrelside:Barrel side" Value="laser aiming module,magnetic accelerator,glowsphere slot"></tag>
+
+    <intproperty Name="ExtendedMagCapacity" Value="30" />
+  </object>
+  <object Name="WWA_HeavyAssaultRifleSlug" Inherits="TemporaryProjectile">
+    <part Name="Render" DisplayName="lead slug"></part>
+    <part Name="Projectile" BasePenetration="6" BaseDamage="2d5" ColorString="&amp;y" PassByVerb="whiz"></part>
+    <tag Name="Slug"></tag>
+  </object>
+
+  <object Name="WWA_LMG" Inherits="BaseHeavyWeapon">
+    <part Name="Render" DisplayName="light machinegun" RenderString=")" Tile="items/WWA_LMG.png"></part>
+    <part Name="Physics" Weight="22" UsesTwoSlots="true"></part>
+    <part Name="Commerce" Value="200"></part>
+    <part Name="Examiner" AlternateDisplayName="strange tubes" UnknownTile="Items/sw_folding_chair.bmp" AlternateGender="plural" Complexity="2" Difficulty="2"></part>
+    <part Name="MissileWeapon" AnimationDelay="0" Skill="HeavyWeapons" ShotsPerAction="3" AmmoPerAction="3" ShotsPerAnimation="1" WeaponAccuracy="19" RangeIncrement="6"></part>
+    <part Name="MagazineAmmoLoader" ProjectileObject="WWA_LMGSlug" AmmoPart="WWA_MediumAmmoSlug" MaxAmmo="47"></part>
+    <part Name="Description" Short="Basic machinegun of old times with large air cooling shroud and pan style magazine."></part>
+    <part Name="Metal"></part>
+    <part Name="TinkerItem" Bits="0024" CanDisassemble="true" CanBuild="true" CanRepair="true"></part>
+    <part Name="WWA_Bipod" integral="true"></part>
+    <tag Name="Tier" Value="3"></tag>
+    <tag Name="DynamicObjectsTable:Guns"></tag>
+
+    <tag Name="MissileFireSound" Value="none"></tag>
+    <tag Name="FireSoundSingle" Value="LMG_single"></tag>
+    <tag Name="FireBurstSound" Value="LMG_burst"></tag>
+    <tag Name="FireBurstHighRateSound" Value="LMG_high_rate"></tag>
+    <tag Name="ReloadSound" Value="reload_generic"></tag>
+
+    <tag Name="AttachmentSlot:bipod:Bipod" Value="bipod"></tag>
+    <tag Name="AttachmentSlot:scope:Scope mount" Value=""></tag>
+    <tag Name="AttachmentSlot:underbarrel:Under barrel" Value=""></tag>
+    <tag Name="AutomaticOnly" Value="true"></tag>
+  </object>
+  <object Name="WWA_LMGSlug" Inherits="TemporaryProjectile">
+    <part Name="Render" DisplayName="lead slug"></part>
+    <part Name="Projectile" BasePenetration="5" BaseDamage="1d12" ColorString="&amp;y" PassByVerb="whiz"></part>
+    <tag Name="Slug"></tag>
+  </object>
+
+  <object Name="WWA_GPMG" Inherits="BaseHeavyWeapon">
+    <part Name="Render" DisplayName="general purpose machinegun" RenderString=")" Tile="items/WWA_GPMG.png" ColorString="&amp;K"></part>
+    <part Name="Physics" Weight="35" UsesTwoSlots="true"></part>
+    <part Name="Commerce" Value="390"></part>
+    <part Name="Examiner" AlternateDisplayName="strange tubes" UnknownTile="Items/sw_folding_chair.bmp" AlternateGender="plural" Complexity="8" Difficulty="5"></part>
+    <part Name="MissileWeapon" AnimationDelay="2" Skill="HeavyWeapons" ShotsPerAction="6" AmmoPerAction="6" ShotsPerAnimation="1" WeaponAccuracy="13" RangeIncrement="4"></part>
+    <!--not sure if RangeIncrement does anything-->
+    <part Name="MagazineAmmoLoader" ProjectileObject="WWA_GPMGSlug" AmmoPart="WWA_MediumAmmoSlug" MaxAmmo="100"></part>
+    <part Name="Description" Short="A universal machinegun, suitable both as light machinegun and as a mounted weapon."></part>
+    <part Name="Metal"></part>
+    <part Name="TinkerItem" Bits="003344" CanDisassemble="true" CanBuild="true" CanRepair="true"></part>
+    <part Name="WWA_Bipod" integral="true"></part>
+    <tag Name="Tier" Value="5"></tag>
+    <tag Name="DynamicObjectsTable:Guns"></tag>
+
+    <tag Name="MissileFireSound" Value="none"></tag>
+    <tag Name="FireSoundSingle" Value="GPMG_single"></tag>
+    <tag Name="FireBurstSound" Value="GPMG_burst"></tag>
+    <tag Name="FireBurstHighRateSound" Value="GPMG_high_rate"></tag>
+    <tag Name="ReloadSound" Value="reload_belt"></tag>
+
+    <tag Name="AttachmentSlot:scope:Scope mount" Value="scope,reflex sight"></tag>
+    <tag Name="AttachmentSlot:underbarrel:Under barrel" Value="foregrip"></tag>
+    <tag Name="AttachmentSlot:bipod:Bipod" Value="bipod"></tag>
+    <tag Name="AttachmentSlot:muzzle:Muzzle" Value="muzzle booster,recoil compensator"></tag>
+    <tag Name="AttachmentSlot:barrelside:Barrel side" Value="laser aiming module,magnetic accelerator,glowsphere slot"></tag>
+  </object>
+  <object Name="WWA_GPMGSlug" Inherits="TemporaryProjectile">
+    <part Name="Render" DisplayName="lead slug"></part>
+    <part Name="Projectile" BasePenetration="7" BaseDamage="2d6" ColorString="&amp;y" PassByVerb="whiz"></part>
+    <tag Name="Slug"></tag>
+  </object>
+
+  <object Name="WWA_AntitankRifle" Inherits="BaseHeavyWeapon">
+    <part Name="Render" DisplayName="anti-tank rifle" RenderString=")" Tile="items/WWA_AntiTankRifle.png" ColorString="&amp;K"></part>
+    <part Name="Physics" bUsesTwoSlots="true" Weight="38"></part>
+    <part Name="Commerce" Value="600"></part>
+    <part Name="MissileWeapon" Skill="HeavyWeapons" AnimationDelay="4" ShotsPerAction="1" AmmoPerAction="1" ShotsPerAnimation="1" WeaponAccuracy="10"></part>
+    <part Name="MagazineAmmoLoader" ProjectileObject="WWA_ProjectileAntiTankShell" AmmoPart="WWA_HighCalibreAmmoSlug" MaxAmmo="10"></part>
+    <part Name="Description" Short="A heavy rifle designed to pierce through armor."></part>
+    <part Name="Examiner" UnknownDisplayName="strange tubes" AlternateDisplayName="strange tubes" UnknownTile="Items/sw_folding_chair.bmp" Complexity="7" Difficulty ="5"></part>
+    <part Name="Metal"></part>
+    <part Name="TinkerItem" Bits="0005" CanDisassemble="true" CanBuild="true" CanRepair="true"></part>
+    <tag Name="Tier" Value="5"></tag>
+    <tag Name="DynamicObjectsTable:Guns"></tag>
+
+    <tag Name="MissileFireSound" Value="antitank_single"></tag>
+    <tag Name="ReloadSound" Value="reload_generic"></tag>
+
+    <tag Name="AttachmentSlot:scope:Scope mount" Value="scope"></tag>
+    <tag Name="AttachmentSlot:bipod:Bipod" Value="bipod"></tag>
+    <tag Name="AttachmentSlot:barrelside:Barrel side" Value="laser aiming module,magnetic accelerator"></tag>
+  </object>
+
+  <object Name="WWA_ProjectileAntiTankShell" Inherits="TemporaryProjectile">
+    <part Name="Projectile" BasePenetration="10" BaseDamage="2d6" ColorString="&amp;y"></part>
+    <part Name="Physics" IsReal="false"></part>
+  </object>
+
+  <object Name="WWA_AntiMaterielRifle" Inherits="BaseHeavyWeapon">
+    <part Name="Render" Tile="items/WWA_AntiMaterielRifle.png" DisplayName="anti-materiel rifle" RenderString=")" ColorString="&amp;K"></part>
+    <part Name="Physics" bUsesTwoSlots="true" Weight="20"></part>
+    <part Name="Commerce" Value="720"></part>
+    <part Name="MissileWeapon" Skill="Rifle" ShotsPerAction="1" AmmoPerAction="1" ShotsPerAnimation="1" WeaponAccuracy="1"></part>
+    <part Name="MagazineAmmoLoader" ProjectileObject="WWA_ProjectileAMRifleShell" AmmoPart="WWA_HighCalibreAmmoSlug" MaxAmmo="1"></part>
+    <part Name="Description" Short="Have you seen what one of those anti-materiel rifles can do to a rhinox?"></part>
+    <part Name="Metal"></part>
+    <part Name="TinkerItem" Bits="0026" CanDisassemble="true" CanBuild="true" CanRepair="true"></part>
+    <part Name="WWA_Scope" integral="true"></part>
+    <part Name="WWA_Bipod" integral="true"></part>
+    <tag Name="Tier" Value="6"></tag>
+    <part Name="Examiner" AlternateDisplayName="rifle" Complexity="9" UnknownTile="Items/sw_folding_chair.bmp" Difficulty="6"></part>
+    <tag Name="DynamicObjectsTable:Guns"></tag>
+
+    <tag Name="MissileFireSound" Value="AMR_fire"></tag>
+    <tag Name="ReloadSound" Value="AMR_reload"></tag>
+
+    <tag Name="AttachmentSlot:scope:Scope mount" Value="scope"></tag>
+    <tag Name="AttachmentSlot:underbarrel:Underbarrel" Value=""></tag>
+    <tag Name="AttachmentSlot:bipod:Bipod" Value="bipod"></tag>
+    <tag Name="AttachmentSlot:barrelside:Barrel side" Value="laser aiming module"></tag>
+  </object>
+
+  <object Name="WWA_ProjectileAMRifleShell" Inherits="TemporaryProjectile">
+    <part Name="Projectile" BasePenetration="11" BaseDamage="2d8" ColorString="&amp;y"></part>
+    <part Name="Physics" IsReal="false"></part>
+  </object>
+
+  <object Name="WWA_HVMG" Inherits="BaseHeavyWeapon">
+    <part Name="Render" DisplayName="heavy machinegun" RenderString=")" Tile="items/WWA_HMG.png" ColorString="&amp;K"></part>
+    <part Name="Physics" Weight="45" UsesTwoSlots="true"></part>
+    <part Name="Commerce" Value="690"></part>
+    <part Name="Examiner" AlternateDisplayName="strange tubes" UnknownTile="Items/sw_folding_chair.bmp" AlternateGender="plural" Complexity="8" Difficulty="5"></part>
+    <part Name="MissileWeapon" AnimationDelay="2" Skill="HeavyWeapons" ShotsPerAction="3" AmmoPerAction="3" ShotsPerAnimation="1" WeaponAccuracy="11" RangeIncrement="3"></part>
+    <part Name="MagazineAmmoLoader" ProjectileObject="WWA_HVMGSlug" AmmoPart="WWA_HighCalibreAmmoSlug" MaxAmmo="15"></part>
+    <part Name="Description" Short="Heavy machinegun with a magazine mounted on top."></part>
+    <part Name="Metal"></part>
+    <part Name="TinkerItem" Bits="00345" CanDisassemble="true" CanBuild="true" CanRepair="true"></part>
+    <part Name="WWA_Bipod" integral="true"></part>
+    <tag Name="Tier" Value="6"></tag>
+    <tag Name="DynamicObjectsTable:Guns"></tag>
+
+    <tag Name="MissileFireSound" Value="none"></tag>
+    <tag Name="FireSoundSingle" Value="HMG_single"></tag>
+    <tag Name="FireBurstSound" Value="HMG_burst"></tag>
+    <tag Name="FireBurstHighRateSound" Value="HMG_burst"></tag>
+    <tag Name="ReloadSound" Value="reload_generic"></tag>
+
+    <tag Name="AttachmentSlot:underbarrel:Under barrel" Value="bipod"></tag>
+    <tag Name="AttachmentSlot:foregrip:Foregrip" Value="foregrip"></tag>
+
+    <intproperty Name="ExtendedMagCapacity" Value="20" />
+  </object>
+  <object Name="WWA_HVMGSlug" Inherits="TemporaryProjectile">
+    <part Name="Render" DisplayName="lead slug"></part>
+    <part Name="Projectile" BasePenetration="9" BaseDamage="2d6" ColorString="&amp;y" PassByVerb="whiz"></part>
+  </object>
+
+  <object Name="WWA_UBGLWeapon" Inherits="BaseHeavyWeapon">
+    <part Name="Render" DisplayName="underbarrel grenade launcher" RenderString=")" Tile="items/WWA_UBGL.png" ColorString="&amp;K"/>
+    <part Name="Physics" UsesTwoSlots="false" Weight="5" />
+    <part Name="MissileWeapon" Skill="Rifles" NoWildfire="false" MaxRange="65" AnimationDelay="5" AmmoChar="ë" ShotsPerAction="1" AmmoPerAction="1" ShotsPerAnimation="1" WeaponAccuracy="8" FiresManually="false"/>
+    <part Name="Commerce" Value="1" />
+    <part Name="MagazineAmmoLoader" ProjectileObject="" AmmoPart="AmmoGrenade" MaxAmmo="1" />
+    <part Name="Description" Short="Short grenade launcher mounted under the barrel of a gun." />
+    <part Name="Metal" />
+    <tag Name="Mods" Value="" />
+    <removepart Name="WWA_GunFeatures"></removepart>
+
+    <tag Name="IsUnderbarrelWeapon" Value="true"></tag>
+    <tag Name="ExcludeFromDynamicEncounters" />
+    <tag Name="NoSparkingQuest" />
+    <part Name="NoBreak" />
+    <part Name="NoDamage" />
+
+    <tag Name="AttachmentSlot:scope:Scope mount" Value=""></tag>
+    <tag Name="AttachmentSlot:underbarrel:Under barrel" Value=""></tag>
+
+    <tag Name="MissileFireSound" Value="GrenadeLauncherFire"></tag>
+    <tag Name="ReloadSound" Value="underbarrel_GL_Reload"></tag>
+  </object>
+
+  <object Name="WWA_UnderbarrelShotgun" Inherits="BaseMagazineRifle">
+    <part Name="Render" DisplayName="underbarrel shotgun" RenderString=")" Tile="items/WWA_UBShotgun.png" ColorString="&amp;K"/>
+    <part Name="Physics" Weight="6" UsesTwoSlots="false" />
+    <part Name="Commerce" Value="80" />
+    <part Name="MissileWeapon" Skill="Rifle" NoWildfire="true" ShotsPerAction="8" AmmoPerAction="1" ShotsPerAnimation="8" WeaponAccuracy="50" RangeIncrement="6" />
+    <part Name="MagazineAmmoLoader" ProjectileObject="ProjectileShotgunPellet" AmmoPart="AmmoShotgunShell" MaxAmmo="4" />
+    <part Name="Description" Short="Underbarrel shotgun, useful in short distances." />
+    <part Name="Metal" />
+    <tag Name="Mods" Value="" />
+    <removepart Name="WWA_GunFeatures"></removepart>
+
+    <tag Name="IsUnderbarrelWeapon" Value="true"></tag>
+    <tag Name="ExcludeFromDynamicEncounters" />
+    <tag Name="NoSparkingQuest" />
+    <part Name="NoBreak" />
+    <part Name="NoDamage" />
+
+    <tag Name="AttachmentSlot:scope:Scope mount" Value=""></tag>
+    <tag Name="AttachmentSlot:underbarrel:Under barrel" Value=""></tag>
+
+    <tag Name="MissileFireSound" Value="shotgun_single"></tag>
+    <tag Name="ReloadSound" Value="shotgun_reload"></tag>
+  </object>
+  <!--
+  <object Name="WWA_AttachmentPowerSource" Inherits="Item">
+    <part Name="Render" DisplayName="attachment power source" RenderString="c" ColorString="&amp;O"/>
+    <part Name="Physics" Weight="0" UsesTwoSlots="false" />
+    <part Name="EnergyCellSocket" SlotType="EnergyCell" />    
+    <part Name="Description" Short="Power source for weapon attachments." />
+    <tag Name="Mods" Value="" />
+    <tag Name="ExcludeFromDynamicEncounters" />
+  </object>
+  -->
+  <!--Ammo-->
+  <object Name="WWA_MediumLeadSlug" Inherits="Projectile">
+    <part Name="Render" DisplayName="medium lead slug" ColorString="&amp;y"></part>
+    <part Name="WWA_MediumAmmoSlug" ProjectileObject="WWA_MediumAmmoSlugProjectile" />
+    <part Name="Physics" Category="Ammo"></part>
+    <part Name="Description" Short="A lump of lead."></part>
+    <part Name="TinkerItem" Bits="000" CanBuild="true" CanRepair="false" CanDisassemble="false" NumberMade="40"></part>
+    <part Name="Commerce" Value="0.06"></part>
+    <tag Name="DynamicObjectsTable:Ammo"></tag>
+    <tag Name="AlwaysStack" Value="Yes"></tag>
+  </object>
+  <object Name="WWA_MediumAmmoSlugProjectile" Inherits="BaseLeadSlugProjectile">
+    <part Name="Projectile" BasePenetration="1" BaseDamage="1d4" />
+  </object>
+
+  <object Name="WWA_HighCalibreLeadSlug" Inherits="Projectile">
+    <part Name="Render" DisplayName="high calibre lead slug" ColorString="&amp;w" DetailColor="y" Tile="items/sw_bullet.bmp" />
+    <part Name="WWA_HighCalibreAmmoSlug" ProjectileObject="WWA_HighCalibreLeadSlugProjectile" />
+    <part Name="Physics" Category="Ammo" />
+    <part Name="Description" Short="A sizable lump of lead." />
+    <part Name="TinkerItem" Bits="0000" CanBuild="true" CanRepair="false" CanDisassemble="false" NumberMade="20" />
+    <part Name="Commerce" Value="0.14"></part>
+    <tag Name="DynamicObjectsTable:Ammo" />
+    <tag Name="AlwaysStack" Value="Yes" />
+  </object>
+  <object Name="WWA_HighCalibreLeadSlugProjectile" Inherits="BaseLeadSlugProjectile">
+    <part Name="Projectile" BasePenetration="1" BaseDamage="1d4" />
+  </object>
+
+  <!--
+  <object Name="WWA_ExplosiveHighCalibreLeadSlug" Inherits="WWA_HighCalibreLeadSlug">
+    <part Name="Render" DisplayName="{{W|explosive}} high calibre lead slug" ColorString="&amp;w" DetailColor="W" Tile="items/sw_bullet.bmp" />
+    <part Name="WWA_HighCalibreAmmoSlug" ProjectileObject="WWA_ExplosiveHighCalibreLeadSlugProjectile" />
+    <part Name="Description" Short="A sizable lump of lead which explodes on impact." />
+    <part Name="TinkerItem" Bits="00002" CanBuild="true" CanRepair="false" CanDisassemble="false" NumberMade="10" />
+    <part Name="Commerce" Value="0.66"></part>
+  </object>
+  <object Name="WWA_ExplosiveHighCalibreLeadSlugProjectile" Inherits="BaseLeadSlugProjectile">
+    <part Name="Projectile" BasePenetration="6" BaseDamage="2d6" />
+    <part Name="ExplodeOnHit" Force="1300" Damage="2d12" />
+  </object>
+-->
+  <!--Grenades-->
+  <object Name="WWA_SmokeGrenade1" Inherits="Grenade">
+    <part Name="Render" DisplayName="{{c|{{K|smoke}} grenade mk I}}" />
+    <part Name="GasGrenade" Density="35" GasObject="WWA_Smoke" />
+    <part Name="Commerce" Value="16" />
+    <part Name="Description" Short="A dark grey cylinder with a pull ring." />
+    <tag Name="Mark" Value="1" />
+  </object>
+  <object Name="WWA_SmokeGrenade2" Inherits="Grenade">
+    <part Name="Render" DisplayName="{{c|{{K|smoke}} grenade mk II}}" />
+    <part Name="GasGrenade" Density="56" GasObject="WWA_Smoke" />
+    <part Name="Commerce" Value="41" />
+    <part Name="Description" Short="A dark grey cylinder with a pull ring." />
+    <tag Name="Mark" Value="1" />
+  </object>
+  <object Name="WWA_WPGrenade1" Inherits="Grenade">
+    <part Name="Render" DisplayName="&amp;Ywhite phosphorus &amp;Cgrenade mk I" />
+    <part Name="GasGrenade" Density="30" GasObject="WWA_PhosphorusObject" />
+    <part Name="Commerce" Value="16" />
+    <part Name="Description" Short="A dark grey cylinder with a pull ring." />
+    <tag Name="Mark" Value="1" />
+  </object>
+  <object Name="WWA_WPGrenade2" Inherits="Grenade">
+    <part Name="Render" DisplayName="&amp;Ywhite phosphorus &amp;Cgrenade mk II" />
+    <part Name="GasGrenade" Density="50" GasObject="WWA_PhosphorusObject" />
+    <part Name="Commerce" Value="41" />
+    <part Name="Description" Short="A dark grey cylinder with a pull ring." />
+    <tag Name="Mark" Value="1" />
+  </object>
+  <!--
+  <object Name="WWA_FragGrenade1" Inherits="Grenade">
+    <part Name="Render" DisplayName="{{c|{{r|frag}} grenade mk I}}" />
+    <part Name="HEGrenade" Force="1600" Damage="5d6" />
+    <part Name="Description" Short="Sphere-shaped ovoid with a pull ring." />
+    <tag Name="Mark" Value="1" />
+    <tag Name="TurretStockWeight" Value="4" />
+  </object>
+  <object Name="WWA_FragGrenade2" Inherits="Grenade">
+    <part Name="Render" DisplayName="{{c|{{W|frag}} grenade mk II}}" />
+    <part Name="HEGrenade" Force="3500" Damage="6d6" />
+    <part Name="Commerce" Value="34" />
+    <part Name="Description" Short="Sphere-shaped ovoid with a pull ring." />
+    <tag Name="Mark" Value="2" />
+    <tag Name="TurretStockWeight" Value="2" />
+  </object>
+  <object Name="WWA_FragGrenade3" Inherits="Grenade">
+    <part Name="Render" DisplayName="{{c|{{W|frag}} grenade mk III}}" />
+    <part Name="HEGrenade" Force="9500" Damage="7d6" />
+    <part Name="Commerce" Value="45" />
+    <part Name="Description" Short="Sphere-shaped ovoid with a pull ring." />
+    <part Name="TinkerItem" Bits="001" />
+    <tag Name="Mark" Value="3" />
+    <tag Name="ExcludeFromTurretStock" />
+  </object>
+  -->
+  <!--Gases-->
+  <object Name="WWA_Smoke" Inherits="Gas">
+    <part Name="Render" DisplayName="&amp;Ksmoke" Occluding="true" Visible="true"/>
+    <part Name="Gas" GasType="SightObstructionGas" ColorString="&amp;y"/>
+    <part Name="Description" Short="Cloud of smoke." />
+    <tag Name="LevelEffectDescription" Value="density"/>
+    <tag Name="ActivationColorString" Value="&amp;y"/>
+  </object>
+  <object Name="WWA_PhosphorusObject" Inherits="Gas">
+    <part Name="Render" DisplayName="white phosphorus"></part>
+    <part Name="Gas" GasType="White Phosphorus" ColorString="&amp;Y^y" Density="30"/>
+    <!--<part Name="GasDamaging" GasType="Phosphorus" Noun="white phosphorus" MessageColor="&amp;Y" DamageAttributes="Acid Heat" TargetPart="Physics" ExcludeTag="Item"/>-->
+    <part Name="WWA_Phosphorus" />
+    <part Name="Description" Short="Ignitious white phosphorus." />
+    <tag Name="ActivationColorString" Value="&amp;Y" />
+  </object>
+</objects>

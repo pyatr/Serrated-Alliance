@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<populations>
+  <population Name="GunsmithInventory">
+    <group Name="Items" Style="pickeach">
+      <table Name="WWA_GunsmithAdditionalGuns" Number="1"></table>
+      <table Name="WWA_GunsmithAdditionalAmmo" Number="1"></table>
+      <table Name="WWA_GunsmithAttachmentsLowTier" Number="2-10"></table>
+    </group>
+  </population>
+
+  <population Name="GunsmithInventory_Legendary">
+    <group Name="Items" Style="pickeach">
+      <table Name="WWA_GunsmithAttachments" Number="7-15"></table>
+      <table Name="WWA_GunsmithGunsHighTier" Number="1"></table>
+    </group>
+  </population>
+
+  <population Name="GunnerKnightTemplarGuns">
+    <group Name="Items" Style="pickone">
+      <object Blueprint="WWA_GPMG" Weight="50"></object>
+      <object Blueprint="WWA_HVMG" Weight="20"></object>
+      <object Blueprint="WWA_LSW" Weight="50"></object>
+      <object Blueprint="WWA_LMG" Weight="15"></object>
+      <object Blueprint="WWA_AntitankRifle" Weight="30"></object>
+      <object Blueprint="WWA_BattleRifle" Weight="90"></object>
+      <object Blueprint="WWA_HeavyAssaultRifle" Weight="50"></object>
+      <object Blueprint="WWA_DoubleBarrelMG" Weight="20"></object>
+      <object Blueprint="WWA_AutoShotgun" Weight="10"></object>
+    </group>
+  </population>
+
+  <!--
+  <population Name="Templar">
+    <group Style="pickone">
+      <object Blueprint="Knight Machinegunner"></object>
+      <object Blueprint="Knight Anti-armor"></object>
+    </group>
+  </population>
+  -->
+
+  <population Name="Guns 3">
+    <group Name="Items" Style="pickone">
+      <object Blueprint="WWA_AutoPistol" Weight="20"></object>
+      <object Blueprint="WWA_SMG" Weight="40"></object>
+      <object Blueprint="WWA_LSW" Weight="35"></object>
+      <object Blueprint="WWA_LMG" Weight="15"></object>
+      <object Blueprint="WWA_DoubleBarrelMG" Weight="5"></object>
+      <object Blueprint="WWA_AutoShotgun" Weight="5"></object>
+    </group>
+  </population>
+
+  <population Name="Guns 4">
+    <group Name="Items" Style="pickone">
+      <object Blueprint="WWA_LMG" Weight="45"></object>
+      <object Blueprint="WWA_BattleRifle" Weight="50"></object>
+      <object Blueprint="WWA_HeavyAssaultRifle" Weight="45"></object>
+      <object Blueprint="WWA_AssaultRevolver" Weight="30"></object>
+      <object Blueprint="WWA_AntitankRifle" Weight="40"></object>
+      <object Blueprint="WWA_DoubleBarrelMG" Weight="30"></object>
+      <object Blueprint="WWA_AutoShotgun" Weight="20"></object>
+    </group>
+  </population>
+
+  <population Name="Guns 5">
+    <group Name="Items" Style="pickone">
+      <object Blueprint="WWA_GPMG" Weight="45"></object>
+      <object Blueprint="WWA_AntiMaterielRifle" Weight="35"></object>
+    </group>
+  </population>
+
+  <population Name="Guns 6">
+    <group Name="Items" Style="pickone">
+      <object Blueprint="WWA_HVMG" Weight="40"></object>
+    </group>
+  </population>
+
+  <population Name="Pistols 5">
+    <group Name="Items" Style="pickone">
+      <object Blueprint="WWA_AssaultRevolver" Weight="45"></object>
+    </group>
+  </population>
+
+  <population Name="Pistols 6">
+    <group Name="Items" Style="pickone">
+      <object Blueprint="WWA_AssaultRevolver" Weight="30"></object>
+    </group>
+  </population>
+
+  <population Name="Rifles 5">
+    <group Name="Items" Style="pickone">
+      <object Blueprint="WWA_BattleRifle" Weight="60"></object>
+      <object Blueprint="WWA_HeavyAssaultRifle" Weight="60"></object>
+      <object Blueprint="WWA_AntitankRifle" Weight="50"></object>
+      <object Blueprint="WWA_AntiMaterielRifle" Weight="40"></object>
+      <object Blueprint="WWA_LSW" Weight="10"></object>
+      <object Blueprint="WWA_LMG" Weight="25"></object>
+      <object Blueprint="WWA_DoubleBarrelMG" Weight="10"></object>
+      <object Blueprint="WWA_AutoShotgun" Weight="10"></object>
+    </group>
+  </population>
+
+  <population Name="Rifles 6">
+    <group Name="Items" Style="pickone">
+      <object Blueprint="WWA_AntitankRifle" Weight="30"></object>
+      <object Blueprint="WWA_AntiMaterielRifle" Weight="30"></object>
+    </group>
+  </population>
+
+  <population Name="TombSupply">
+    <group Name="Items" Style="pickone">
+      <object Blueprint="WWA_HVMG" Weight="2"></object>
+      <object Blueprint="WWA_BattleRifle" Weight="2"></object>
+      <object Blueprint="WWA_HeavyAssaultRifle" Weight="1"></object>
+      <object Blueprint="WWA_AntiMaterielRifle" Weight="1"></object>
+      <object Blueprint="WWA_AntitankRifle" Weight="1"></object>
+    </group>
+    <group Name="Items" Style="each">
+      <object Blueprint="WWA_MediumLeadSlug" Number="80-100"></object>
+      <object Blueprint="WWA_HighCalibreLeadSlug" Number="30-50"></object>
+    </group>
+  </population>
+
+  <population Name="Ammo 2">
+    <group Name="Items" Style="pickone">
+      <object Blueprint="WWA_MediumLeadSlug" Number="40-60" Weight="50" Hint="Stack"></object>
+      <object Blueprint="WWA_HighCalibreLeadSlug" Number="30-40" Weight="40" Hint="Stack"></object>
+    </group>
+  </population>
+
+  <population Name="Explosives 1">
+    <group Name="Items" Style="pickone">
+      <object Blueprint="WWA_SmokeGrenade1" Number="1" Weight="50" />
+      <object Blueprint="WWA_WPGrenade1" Number="1" Weight="50" />
+    </group>
+  </population>
+
+  <population Name="Explosives 2">
+    <group Name="Items" Style="pickone">
+      <object Blueprint="WWA_SmokeGrenade2" Number="1" Weight="50" />
+      <object Blueprint="WWA_WPGrenade2" Number="1" Weight="50" />
+    </group>
+  </population>
+</populations>
