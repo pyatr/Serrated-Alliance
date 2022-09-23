@@ -26,21 +26,16 @@ namespace XRL.World.Parts
         public Guid GoProneID = Guid.Empty;
         public ActivatedAbilityEntry GoProne;
 
-        public int proneAimBonus = 1;
-        public int DVPenalty = 15;
+        public int ProneAimBonus = 1;
+        public int ProneDVPenalty = 15;
         public int IncomingProjectileToHitPenalty = 10;
-        public int minProneDVDistance = 5;
+        public int MinProneDVDistance = 5;
 
         public bool ProneBonusApplied = false;
 
         public WWA_TacticalAbilities()
         {
             this.activeWeapons = new List<GameObject>();
-        }
-
-        public override bool SameAs(IPart p)
-        {
-            return true;
         }
 
         public override void SaveData(SerializationWriter Writer)
@@ -86,7 +81,7 @@ namespace XRL.World.Parts
                 this.DeselectPrimaryWeapon.Enabled = false;
                 this.SwitchFireModeID = pAA.AddAbility("Switch fire mode", "CommandSwitchFireMode", "Tactics", "Choose between automatic and semi-automatic fire mode. Some weapons only have automatic fire mode.");
                 this.SwitchFireMode = pAA.AbilityByGuid[this.SwitchFireModeID];
-                this.GoProneID = pAA.AddAbility("Go prone", "CommandGoProne", "Tactics", "Go prone. If your current missile weapon is a firearm or energy rifle or a firearm heavy weapon, you shoot as if your agility was " + (proneAimBonus * 2).ToString() + " points higher.");
+                this.GoProneID = pAA.AddAbility("Go prone", "CommandGoProne", "Tactics", "Go prone. If your current missile weapon is a firearm or energy rifle or a firearm heavy weapon, you shoot as if your agility was " + (ProneAimBonus * 2).ToString() + " points higher.");
                 this.GoProne = pAA.AbilityByGuid[this.GoProneID];
             }
         }
@@ -329,10 +324,10 @@ namespace XRL.World.Parts
                     GameObject attackerWeapon = E.GetParameter("Weapon") as GameObject;
                     GameObject attacker = attackerWeapon.Equipped;
                     int dif = attacker.CurrentCell.DistanceTo(this.ParentObject);
-                    if (dif > minProneDVDistance)
+                    if (dif > MinProneDVDistance)
                     {
                         //MessageQueue.AddPlayerMessage(this.ParentObject.ShortDisplayName + " is far enough from " + attacker.ShortDisplayName + " to gain DV bonus. " + dif.ToString() + "/" + minProneDVDistance.ToString());
-                        E.SetParameter("Amount", (DVPenalty + IncomingProjectileToHitPenalty) * -1);
+                        E.SetParameter("Amount", (ProneDVPenalty + IncomingProjectileToHitPenalty) * -1);
                     }
                     else
                     {

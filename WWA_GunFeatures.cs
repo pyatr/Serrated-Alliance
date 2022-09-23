@@ -66,7 +66,7 @@ namespace XRL.World.Parts
         public int DrumMagCapacity = -1;
 
         [NonSerialized]
-        public GameObject inventoryViewer;
+        private GameObject inventoryViewer;
 
         public void ModFireRate(int mod)
         {
@@ -90,6 +90,11 @@ namespace XRL.World.Parts
             base.Register(Object);
         }
 
+        public override bool SameAs(IPart p)
+        {
+            return base.SameAs(p);
+        }
+
         public override bool WantEvent(int ID, int cascade)
         {
             if (!base.WantEvent(ID, cascade) && ID != GetInventoryActionsEvent.ID && ID != InventoryActionEvent.ID && ID != GetShortDescriptionEvent.ID)
@@ -102,7 +107,7 @@ namespace XRL.World.Parts
             if (!FireMode)
             {
                 if (DefaultFireRate > 1)
-                    E.Postfix.AppendRules("Fire mode: semi-automatic, +" + SemiAutoAccuracyBonus.ToString() + " to player accuracy\n");
+                    E.Postfix.AppendRules($"Fire mode: semi-automatic, +{SemiAutoAccuracyBonus} to player accuracy\n");
                 else
                     E.Postfix.AppendRules("Fire mode: semi-automatic\n");
             }
@@ -150,12 +155,7 @@ namespace XRL.World.Parts
             return true;
         }
 
-        public bool IsGunAutomatic()
-        {
-            if (DefaultFireRate > 1)
-                return true;
-            return false;
-        }
+        public bool IsGunAutomatic() => DefaultFireRate > 1;
 
         public void SwitchAutomatic()
         {
@@ -166,23 +166,23 @@ namespace XRL.World.Parts
                     MissileWeapon mw = this.ParentObject.GetPart<MissileWeapon>() as MissileWeapon;
                     if (mw != null)
                     {
-                        if (this.FireMode)
+                        this.FireMode = !this.FireMode;
+                        if (!this.FireMode)
                         {
-                            this.FireMode = false;
                             mw.ShotsPerAction = 1;
                             mw.AmmoPerAction = 1;
                             this.ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", SemiAutoAccuracyBonus, true);
-                            MessageQueue.AddPlayerMessage("Switched " + this.ParentObject.ShortDisplayName + " to semi-automatic mode.");
+                            Log($"Switched {this.ParentObject.ShortDisplayName} to semi-automatic mode.");
                         }
                         else
                         {
-                            this.FireMode = true;
                             if (mw.ShotsPerAction != DefaultFireRate + FireRate && mw.ShotsPerAction > 1)
-                                FireRate = mw.ShotsPerAction - DefaultFireRate;//New fire rate modifier if fire rate was changed by changing ShotsPerAction instead of FireRate
+                                //New fire rate modifier if fire rate was changed by changing ShotsPerAction instead of FireRate
+                                FireRate = mw.ShotsPerAction - DefaultFireRate;
                             mw.ShotsPerAction = DefaultFireRate + FireRate;
                             mw.AmmoPerAction = DefaultAmmoPerShot + FireRate;
                             this.ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", -SemiAutoAccuracyBonus, true);
-                            MessageQueue.AddPlayerMessage("Switched " + this.ParentObject.ShortDisplayName + " to automatic mode."/* + mw.ShotsPerAction.ToString() + "/" + DefaultFireRate.ToString() + "/" + FireRate.ToString()*/);
+                            Log($"Switched {this.ParentObject.ShortDisplayName} to automatic mode.");
                         }
                     }
                 }
@@ -216,7 +216,7 @@ namespace XRL.World.Parts
                         inventoryViewer.UseEnergy(1000, "Physical");
                     selectedAttachment.Destroy();
                     if (inventoryViewer.IsPlayer() && !Silent)
-                        MessageQueue.AddPlayerMessage(part.displayName + " installed on " + this.ParentObject.ShortDisplayName + ".");
+                        Log($"{part.displayName} installed on {this.ParentObject.ShortDisplayName}.");
                     if (this.GetCharacterAbilities().chosenWeapon == null || this.ParentObject == null)
                         return;
                     if (this.GetCharacterAbilities().chosenWeapon == this.ParentObject)
@@ -241,7 +241,7 @@ namespace XRL.World.Parts
                 this.ParentObject.RemovePart(name);
                 GameObject uninstalled = GameObject.create(blueprintName);
                 if (inventoryViewer.IsPlayer())
-                    MessageQueue.AddPlayerMessage("Removed " + uninstalled.ShortDisplayName + " from " + this.ParentObject.ShortDisplayName + ".");
+                    Log($"Removed {uninstalled.ShortDisplayName} from {this.ParentObject.ShortDisplayName}.");
                 if (uninstalled != null)
                     inventoryViewer.Inventory.AddObject(uninstalled, false, false, false);
                 inventoryViewer.UseEnergy(1000, "Physical");
@@ -249,7 +249,7 @@ namespace XRL.World.Parts
             else
             {
                 if (inventoryViewer.IsPlayer())
-                    MessageQueue.AddPlayerMessage("You can't remove integral attachments.");
+                    Log("You can't remove integral attachments.");
             }
 
         }
@@ -288,7 +288,10 @@ namespace XRL.World.Parts
             }
         }
 
-        public void UninstallAllAttachments(bool noEnergyUse = false, bool Silent = false)
+        /// <summary>
+        /// Uninstal all non-integral attachments from weapon
+        /// </summary>
+        public void UninstallAllAttachments()
         {
             string s;
             while (WeaponHasAttachment(out s, true))
@@ -296,10 +299,16 @@ namespace XRL.World.Parts
                 if (s != "none")
                     UninstallAttachmentFromSlot(s);
             }
-            MessageQueue.AddPlayerMessage("Uninstalled all attachments from " + this.ParentObject.ShortDisplayName + ".");
+            Log($"Uninstalled all attachments from {this.ParentObject.ShortDisplayName}.");
         }
 
-        bool WeaponHasAttachment(out string s, bool removeableOnly = false)
+        /// <summary>
+        /// Does weapon have an attachment in slot?
+        /// </summary>
+        /// <param name="s">Slot name</param>
+        /// <param name="removeableOnly">Can attachment be removed from weapon or is it integral?</param>
+        /// <returns></returns>
+        public bool WeaponHasAttachment(out string s, bool removeableOnly = false)
         {
             s = "none";
             List<IPart> parts = this.ParentObject.PartsList;
@@ -325,14 +334,9 @@ namespace XRL.World.Parts
             return false;
         }
 
-        bool PartIsAttachment(IPart part)
-        {
-            if (part.GetType().BaseType.Name == "WWA_Attachment")
-                return true;
-            return false;
-        }
+        public bool PartIsAttachment(IPart part) => part.GetType().BaseType.Name == "WWA_Attachment";        
 
-        Dictionary<string, GameObject> FindAttachmentsForSlot(string slot, List<string> possibleAttachments)
+        public Dictionary<string, GameObject> FindAttachmentsForSlot(string slot, List<string> possibleAttachments)
         {
             Dictionary<string, GameObject> attachments = new Dictionary<string, GameObject>();
             List<GameObject> inventory = inventoryViewer.GetInventory();
@@ -378,7 +382,8 @@ namespace XRL.World.Parts
 
         public void PlayAttackSound()
         {
-            if (DefaultFireRate > 1)//Single shot weapons use default MissileFireSound sound
+            //Single shot weapons use default MissileFireSound sound
+            if (DefaultFireRate > 1)
             {
                 if (!FireMode)
                     this.ParentObject.Equipped.pPhysics.PlayWorldSound(SingleFireSound, 0.5f, 0.0f, true, (Cell)null);
@@ -399,10 +404,10 @@ namespace XRL.World.Parts
             }
             if (E.ID == "BeginTakeAction")
             {
-                //MagazineAmmoLoader mal = this.ParentObject.GetPart<MagazineAmmoLoader>();
                 if (!FireMode && DefaultFireRate == 1)
                 {
-                    MissileWeapon mw = this.ParentObject.GetPart<MissileWeapon>() as MissileWeapon;//If in semi-automode fire rate was increased the increase will go to fire rate instead
+                    //If in semi-automode fire rate was increased the increase will go to fire rate instead
+                    MissileWeapon mw = this.ParentObject.GetPart<MissileWeapon>() as MissileWeapon;
                     if (mw.ShotsPerAction > 1)
                         FireRate = mw.ShotsPerAction - 1;
                 }
@@ -428,13 +433,12 @@ namespace XRL.World.Parts
                         string slotDisplayName = slot;
                         bool occupied = false;
                         slotDisplayName = SlotNames[slot];
-                        slotsAndAttachmentsMenu.Add(slotDisplayName + ": &knone");
+                        slotsAndAttachmentsMenu.Add($"{slotDisplayName}: &knone");
                         foreach (IPart part in weaponParts)
                         {
                             if (PartIsAttachment(part))
                             {
                                 WWA_Attachment possibleInstalledAttachment = part as WWA_Attachment;
-                                //MessageQueue.AddPlayerMessage(possibleInstalledAttachment.displayName);
                                 if (AttachmentFitsInSlot(possibleInstalledAttachment.displayName, slot))
                                 {
                                     string color = "";
@@ -492,7 +496,7 @@ namespace XRL.World.Parts
                                             }
                                         }
                                         else
-                                            MessageQueue.AddPlayerMessage("You don't have any attachments to install on " + weapon.ShortDisplayName + " " + fullSlotName + ".");
+                                            Log($"You don't have any attachments to install on {weapon.ShortDisplayName} {fullSlotName}.");
                                     }
                                 }
                                 break;
@@ -559,12 +563,14 @@ namespace XRL.World.Parts
             {
                 DefaultFireRate = mw2.ShotsPerAction;
                 DefaultAmmoPerShot = mw2.AmmoPerAction;
-                if (DefaultFireRate == 1)
-                    FireMode = false;
-                else
-                    FireMode = true;
+                FireMode = DefaultFireRate != 1;
             }
             return true;
+        }
+
+        private void Log(string message)
+        {
+            MessageQueue.AddPlayerMessage(message);
         }
     }
 }

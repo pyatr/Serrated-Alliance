@@ -65,12 +65,12 @@
       <object Blueprint="Leather Boots" Number="1"></object>
       <object Blueprint="Steel Dagger" Number="1"></object>
 
-      <table Name="#Injectors" Number="1d3+1"></table>
+      <!--<table Name="#Injectors" Number="1d3+1"></table>
       <table Name="#Cells" Number="1d2"></table>
       <table Name="#Trinkets 1" Number="1d3"></table>
       <table Name="#Artifact 1" Number="1d2"></table>
       <table Name="#Artifact 2" Number="1d2"></table>
-      <table Name="#Artifact 3" Number="1d1"></table>
+      <table Name="#Artifact 3" Number="1d1"></table>-->
     </group>
   </population>
 

@@ -269,7 +269,7 @@
   </object>
 
   <object Name="Combat Shotgun" Load="Merge">
-    <part Name="Render" DisplayName="combat shotgun" RenderString=")" Tile="items/WWA_CombatShotgun.png" ColorString="&amp;K" DetailColor="y"/>
+    <part Name="Render" DisplayName="combat shotgun" RenderString=")" Tile="items/WWA_CombatShotgun.png" ColorString="&amp;K" TileColor="&amp;y" DetailColor="K"></part>
     <tag Name="MissileFireSound" Value="combat_shotgun_single"></tag>
     <tag Name="ReloadSound" Value="reload_generic"></tag>
 
@@ -313,7 +313,7 @@
   </object>
 
   <object Name="WWA_AssaultRevolver" Inherits="BaseMagazinePistol">
-    <part Name="Render" DisplayName="assault revolver" RenderString=")" Tile="items/WWA_AssaultRevolver.png"  ColorString="&amp;K"></part>
+    <part Name="Render" DisplayName="assault revolver" RenderString=")" Tile="items/WWA_AssaultRevolver.png" ColorString="&amp;K"></part>
     <part Name="Physics" Weight="8"></part>
     <part Name="Commerce" Value="260"></part>
     <part Name="MissileWeapon" AnimationDelay="1" Skill="Pistol" ShotsPerAction="1" AmmoPerAction="1" ShotsPerAnimation="1" WeaponAccuracy="12" RangeIncrement="6"></part>
@@ -403,7 +403,7 @@
     <part Name="Render" DisplayName="double barreled machinegun" Tile="items/WWA_DBMG.png" RenderString=")" ColorString="&amp;K" DetailColor="y"></part>
     <part Name="Physics" Weight="19" UsesTwoSlots="true"></part>
     <part Name="Commerce" Value="470"></part>
-    <part Name="MissileWeapon" Skill="Rifle" ShotsPerAction="8" AmmoPerAction="2" ShotsPerAnimation="2" WeaponAccuracy="12"></part>
+    <part Name="MissileWeapon" Skill="Rifle" ShotsPerAction="8" AmmoPerAction="8" ShotsPerAnimation="2" WeaponAccuracy="12"></part>
     <part Name="MagazineAmmoLoader" ProjectileObject="WWA_DBMGShell" AmmoPart="AmmoSlug" MaxAmmo="90"></part>
     <part Name="Description" Short="Double barreled machinegun."></part>
     <part Name="Metal"></part>
@@ -421,6 +421,7 @@
     <tag Name="ReloadSound" Value="reload_generic"></tag>
 
     <tag Name="AttachmentSlot:scope:Scope mount" Value="scope,reflex sight"></tag>
+    <tag Name="AttachmentSlot:underbarrel:Under barrel" Value="foregrip"></tag>
     <tag Name="AttachmentSlot:bipod:Bipod" Value="bipod"></tag>
     <tag Name="AttachmentSlot:barrelside:Barrel side" Value="laser aiming module,magnetic accelerator"></tag>
   </object>
@@ -433,7 +434,7 @@
     <part Name="Physics" UsesTwoSlots="true" Weight="18" />
     <part Name="Commerce" Value="210" />
     <part Name="MissileWeapon" Skill="Rifle" NoWildfire="true" ShotsPerAction="8" AmmoPerAction="3" ShotsPerAnimation="8" WeaponAccuracy="39" RangeIncrement="6" />
-    <part Name="MagazineAmmoLoader" ProjectileObject="WWA_ProjectileAutoShotgunPellet" AmmoPart="AmmoShotgunShell" MaxAmmo="6" />
+    <part Name="MagazineAmmoLoader" ProjectileObject="WWA_ProjectileAutoShotgunPellet" AmmoPart="AmmoShotgunShell" MaxAmmo="20" />
     <part Name="Description" Short="A hefty automatic shotgun with a large drum magazine." />
     <part Name="Metal" />
     <part Name="TinkerItem" Bits="00224" CanDisassemble="true" CanBuild="true" />
@@ -613,7 +614,7 @@
     <part Name="Physics" IsReal="false"></part>
   </object>
 
-  <object Name="WWA_AntiMaterielRifle" Inherits="BaseHeavyWeapon">
+  <object Name="WWA_AntiMaterielRifle" Inherits="BaseRifle">
     <part Name="Render" Tile="items/WWA_AntiMaterielRifle.png" DisplayName="anti-materiel rifle" RenderString=")" ColorString="&amp;K"></part>
     <part Name="Physics" bUsesTwoSlots="true" Weight="20"></part>
     <part Name="Commerce" Value="720"></part>
