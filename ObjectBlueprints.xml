@@ -36,7 +36,7 @@
     <part Name="Commerce" Value="70"></part>
   </object>
   <object Name="WWA_ReflexSightAttachment" Inherits="Item">
-    <part Name="Render" Tile="items/WWA_ReflexSight.png"  DisplayName="reflex sight" ColorString="&amp;K" DetailColor="y"></part>
+    <part Name="Render" Tile="items/WWA_ReflexSight.png" DisplayName="reflex sight" ColorString="&amp;K" DetailColor="y"></part>
     <part Name="Description" Short="Sight used for faster target acquisition."></part>
     <part Name="Physics" Weight="0" Category="Weapon Attachments"></part>
     <part Name="WWA_ReflexSight" AttachmentBlueprintName="WWA_ReflexSightAttachment"></part>
@@ -44,14 +44,14 @@
   </object>
 
   <object Name="WWA_ForegripAttachment" Inherits="Item">
-    <part Name="Render" Tile="items/WWA_Foregrip.png"  DisplayName="foregrip" ColorString="&amp;K" DetailColor="y"></part>
+    <part Name="Render" Tile="items/WWA_Foregrip.png" DisplayName="foregrip" ColorString="&amp;K" DetailColor="y"></part>
     <part Name="Description" Short="Pistol grip, designed for grasping by off hand."></part>
     <part Name="Physics" Weight="0" Category="Weapon Attachments"></part>
     <part Name="WWA_Foregrip" AttachmentBlueprintName="WWA_ForegripAttachment"></part>
     <part Name="Commerce" Value="35"></part>
   </object>
   <object Name="WWA_BipodAttachment" Inherits="Item">
-    <part Name="Render" Tile="items/WWA_Bipod.png"  DisplayName="bipod" ColorString="&amp;K" DetailColor="y"></part>
+    <part Name="Render" Tile="items/WWA_Bipod.png" DisplayName="bipod" ColorString="&amp;K" DetailColor="y"></part>
     <part Name="Description" Short="Two metal legs help provide stability to a weapon."></part>
     <part Name="Physics" Weight="1" Category="Weapon Attachments"></part>
     <part Name="WWA_Bipod" AttachmentBlueprintName="WWA_BipodAttachment"></part>
@@ -116,7 +116,7 @@
     <part Name="Commerce" Value="23"></part>
   </object>
   <object Name="WWA_ExtendedHeavyBarrelAttachment" Inherits="Item">
-    <part Name="Render" Tile="items/WWA_ExtendedHeavyBarrel.png"  DisplayName="extended heavy barrel" ColorString="&amp;K" DetailColor="y"></part>
+    <part Name="Render" Tile="items/WWA_ExtendedHeavyBarrel.png" DisplayName="extended heavy barrel" ColorString="&amp;K" DetailColor="y"></part>
     <part Name="Description" Short=" "></part>
     <part Name="Physics" Weight="1" Category="Weapon Attachments"></part>
     <part Name="WWA_ExtendedHeavyBarrel" AttachmentBlueprintName="WWA_ExtendedHeavyBarrelAttachment"></part>
@@ -181,7 +181,7 @@
     <tag Name="AttachmentSlot:barrelside:Barrel side" Value="laser aiming module,magnetic accelerator"></tag>
   </object>
   <object Name="Musket" Load="Merge">
-    <part Name="TinkerItem" Bits="001" CanDisassemble="true" CanBuild="true" CanRepair="true"></part>
+    <part Name="TinkerItem" Bits="001" CanDisassemble="true" CanBuild="true"></part>
 
     <tag Name="MissileFireSound" Value="rifles_regularSingleShot"></tag>
 
@@ -294,8 +294,8 @@
     <part Name="MagazineAmmoLoader" ProjectileObject="WWA_AutoPistolShell" AmmoPart="AmmoSlug" MaxAmmo="20"></part>
     <part Name="Description" Short="Pistol with decent accuracy and both semi-automatic and automatic fire modes."></part>
     <part Name="Metal"></part>
-    <part Name="TinkerItem" Bits="0023" CanDisassemble="true" CanBuild="true" CanRepair="true"></part>
-    <part Name="Examiner" AlternateDisplayName="pistol" Complexity="4"></part>
+    <part Name="TinkerItem" Bits="0023" CanDisassemble="true" CanBuild="true"></part>
+    <part Name="Examiner" Alternate="pistol" Complexity="4"></part>
     <tag Name="DynamicObjectsTable:Guns"></tag>
     <tag Name="Tier" Value="4"></tag>
 
@@ -320,8 +320,8 @@
     <part Name="MagazineAmmoLoader" ProjectileObject="WWA_AssaultRevolverShell" AmmoPart="WWA_MediumAmmoSlug" MaxAmmo="6"></part>
     <part Name="Description" Short="A hefty revolver."></part>
     <part Name="Metal"></part>
-    <part Name="TinkerItem" Bits="0024" CanDisassemble="true" CanBuild="true" CanRepair="true"></part>
-    <part Name="Examiner" AlternateDisplayName="pistol" Complexity="5" Difficulty="3"></part>
+    <part Name="TinkerItem" Bits="0024" CanDisassemble="true" CanBuild="true"></part>
+    <part Name="Examiner" Alternate="pistol" Complexity="5" Difficulty="3"></part>
     <tag Name="DynamicObjectsTable:Guns"></tag>
     <tag Name="Tier" Value="4"></tag>
 
@@ -342,8 +342,8 @@
     <part Name="MagazineAmmoLoader" ProjectileObject="WWA_SMG_slug" AmmoPart="AmmoSlug" MaxAmmo="30" />
     <part Name="Description" Short="Simple rugged automatic carbine." />
     <part Name="Metal" />
-    <part Name="TinkerItem" Bits="0013" CanDisassemble="true" CanBuild="true" CanRepair="true" />
-    <part Name="Examiner" AlternateDisplayName="rifle" Complexity="4" />
+    <part Name="TinkerItem" Bits="0013" CanDisassemble="true" CanBuild="true"/>
+    <part Name="Examiner" Alternate="rifle" Complexity="4" />
     <tag Name="Tier" Value="4" />
     <tag Name="DynamicObjectsTable:Guns"></tag>
     <tag Name="AutomaticOnly" Value="true"></tag>
@@ -372,8 +372,8 @@
     <part Name="MagazineAmmoLoader" ProjectileObject="WWA_LSWShell" AmmoPart="AmmoSlug" MaxAmmo="30"></part>
     <part Name="Description" Short="Common carbine in bull-pup configuration fitted with longer heavier barrel, bipod and scope."></part>
     <part Name="Metal"></part>
-    <part Name="TinkerItem" Bits="0024" CanDisassemble="true" CanBuild="true" CanRepair="true"></part>
-    <part Name="Examiner" AlternateDisplayName="rifle" Complexity="5" Difficulty="4"></part>
+    <part Name="TinkerItem" Bits="0024" CanDisassemble="true" CanBuild="true"></part>
+    <part Name="Examiner" Alternate="rifle" Complexity="5" Difficulty="4"></part>
     <part Name="WWA_Scope" integral="true"></part>
     <part Name="WWA_Bipod" integral="true"></part>
     <part Name="WWA_ExtendedHeavyBarrel" integral="true"></part>
@@ -407,8 +407,8 @@
     <part Name="MagazineAmmoLoader" ProjectileObject="WWA_DBMGShell" AmmoPart="AmmoSlug" MaxAmmo="90"></part>
     <part Name="Description" Short="Double barreled machinegun."></part>
     <part Name="Metal"></part>
-    <part Name="TinkerItem" Bits="00334" CanDisassemble="true" CanBuild="true" CanRepair="true"></part>
-    <part Name="Examiner" AlternateDisplayName="rifle" Complexity="4" Difficulty="3"></part>
+    <part Name="TinkerItem" Bits="00334" CanDisassemble="true" CanBuild="true"></part>
+    <part Name="Examiner" Alternate="rifle" Complexity="4" Difficulty="3"></part>
     <part Name="WWA_Bipod" integral="true"></part>
     <tag Name="DynamicObjectsTable:Guns"></tag>
     <tag Name="Tier" Value="5"></tag>
@@ -433,13 +433,13 @@
     <part Name="Render" DisplayName="automatic shotgun" RenderString=")" Tile="items/WWA_AutoShotgun.png" ColorString="&amp;K" DetailColor="y"/>
     <part Name="Physics" UsesTwoSlots="true" Weight="18" />
     <part Name="Commerce" Value="210" />
-    <part Name="MissileWeapon" Skill="Rifle" NoWildfire="true" ShotsPerAction="8" AmmoPerAction="3" ShotsPerAnimation="8" WeaponAccuracy="39" RangeIncrement="6" />
+    <part Name="MissileWeapon" Skill="Rifle" NoWildfire="true" ShotsPerAction="24" AmmoPerAction="3" ShotsPerAnimation="8" WeaponAccuracy="32" RangeIncrement="6" />
     <part Name="MagazineAmmoLoader" ProjectileObject="WWA_ProjectileAutoShotgunPellet" AmmoPart="AmmoShotgunShell" MaxAmmo="20" />
     <part Name="Description" Short="A hefty automatic shotgun with a large drum magazine." />
     <part Name="Metal" />
     <part Name="TinkerItem" Bits="00224" CanDisassemble="true" CanBuild="true" />
     <tag Name="Tier" Value="3" />
-    <part Name="Examiner" AlternateDisplayName="rifle" Complexity="4" Difficulty="2" />
+    <part Name="Examiner" Alternate="rifle" Complexity="4" Difficulty="2" />
     <tag Name="DynamicObjectsTable:Guns" />
 
     <tag Name="MissileFireSound" Value="none"></tag>
@@ -465,8 +465,8 @@
     <part Name="MagazineAmmoLoader" ProjectileObject="WWA_BattleRifleSlug" AmmoPart="WWA_MediumAmmoSlug" MaxAmmo="15"></part>
     <part Name="Description" Short="Accurate automatic rifle loaded with full-powered cartriges."></part>
     <part Name="Metal"></part>
-    <part Name="TinkerItem" Bits="00134" CanDisassemble="true" CanBuild="true" CanRepair="true"></part>
-    <part Name="Examiner" AlternateDisplayName="rifle" Complexity="6" Difficulty="4"></part>
+    <part Name="TinkerItem" Bits="00134" CanDisassemble="true" CanBuild="true"></part>
+    <part Name="Examiner" Alternate="rifle" Complexity="6" Difficulty="4"></part>
     <tag Name="Tier" Value="5"></tag>
     <tag Name="DynamicObjectsTable:Guns"></tag>
 
@@ -499,8 +499,8 @@
     <part Name="MagazineAmmoLoader" ProjectileObject="WWA_HeavyAssaultRifleSlug" AmmoPart="WWA_MediumAmmoSlug" MaxAmmo="20"></part>
     <part Name="Description" Short="Heavy assault rifle dedicated for close quarter combat."></part>
     <part Name="Metal"></part>
-    <part Name="TinkerItem" Bits="00224" CanDisassemble="true" CanBuild="true" CanRepair="true"></part>
-    <part Name="Examiner" AlternateDisplayName="rifle" Complexity="7" Difficulty="4"></part>
+    <part Name="TinkerItem" Bits="00224" CanDisassemble="true" CanBuild="true"></part>
+    <part Name="Examiner" Alternate="rifle" Complexity="7" Difficulty="4"></part>
     <part Name="WWA_Foregrip" integral="true"></part>
     <tag Name="Tier" Value="5"></tag>
     <tag Name="DynamicObjectsTable:Guns"></tag>
@@ -528,12 +528,12 @@
     <part Name="Render" DisplayName="light machinegun" RenderString=")" Tile="items/WWA_LMG.png"></part>
     <part Name="Physics" Weight="22" UsesTwoSlots="true"></part>
     <part Name="Commerce" Value="200"></part>
-    <part Name="Examiner" AlternateDisplayName="strange tubes" UnknownTile="Items/sw_folding_chair.bmp" AlternateGender="plural" Complexity="2" Difficulty="2"></part>
+    <part Name="Examiner" Alternate="strange tubes" Unknown="UnknownStrangeTubes" Complexity="2" Difficulty="2"></part>
     <part Name="MissileWeapon" AnimationDelay="0" Skill="HeavyWeapons" ShotsPerAction="3" AmmoPerAction="3" ShotsPerAnimation="1" WeaponAccuracy="19" RangeIncrement="6"></part>
     <part Name="MagazineAmmoLoader" ProjectileObject="WWA_LMGSlug" AmmoPart="WWA_MediumAmmoSlug" MaxAmmo="47"></part>
     <part Name="Description" Short="Basic machinegun of old times with large air cooling shroud and pan style magazine."></part>
     <part Name="Metal"></part>
-    <part Name="TinkerItem" Bits="0024" CanDisassemble="true" CanBuild="true" CanRepair="true"></part>
+    <part Name="TinkerItem" Bits="0024" CanDisassemble="true" CanBuild="true"></part>
     <part Name="WWA_Bipod" integral="true"></part>
     <tag Name="Tier" Value="3"></tag>
     <tag Name="DynamicObjectsTable:Guns"></tag>
@@ -559,13 +559,13 @@
     <part Name="Render" DisplayName="general purpose machinegun" RenderString=")" Tile="items/WWA_GPMG.png" ColorString="&amp;K"></part>
     <part Name="Physics" Weight="35" UsesTwoSlots="true"></part>
     <part Name="Commerce" Value="390"></part>
-    <part Name="Examiner" AlternateDisplayName="strange tubes" UnknownTile="Items/sw_folding_chair.bmp" AlternateGender="plural" Complexity="8" Difficulty="5"></part>
+    <part Name="Examiner" Alternate="strange tubes" Unknown="UnknownStrangeTubes" Complexity="8" Difficulty="5"></part>
     <part Name="MissileWeapon" AnimationDelay="2" Skill="HeavyWeapons" ShotsPerAction="6" AmmoPerAction="6" ShotsPerAnimation="1" WeaponAccuracy="13" RangeIncrement="4"></part>
     <!--not sure if RangeIncrement does anything-->
     <part Name="MagazineAmmoLoader" ProjectileObject="WWA_GPMGSlug" AmmoPart="WWA_MediumAmmoSlug" MaxAmmo="100"></part>
     <part Name="Description" Short="A universal machinegun, suitable both as light machinegun and as a mounted weapon."></part>
     <part Name="Metal"></part>
-    <part Name="TinkerItem" Bits="003344" CanDisassemble="true" CanBuild="true" CanRepair="true"></part>
+    <part Name="TinkerItem" Bits="003344" CanDisassemble="true" CanBuild="true"></part>
     <part Name="WWA_Bipod" integral="true"></part>
     <tag Name="Tier" Value="5"></tag>
     <tag Name="DynamicObjectsTable:Guns"></tag>
@@ -590,14 +590,14 @@
 
   <object Name="WWA_AntitankRifle" Inherits="BaseHeavyWeapon">
     <part Name="Render" DisplayName="anti-tank rifle" RenderString=")" Tile="items/WWA_AntiTankRifle.png" ColorString="&amp;K"></part>
-    <part Name="Physics" bUsesTwoSlots="true" Weight="38"></part>
+    <part Name="Physics" UsesTwoSlots="true" Weight="38"></part>
     <part Name="Commerce" Value="600"></part>
     <part Name="MissileWeapon" Skill="HeavyWeapons" AnimationDelay="4" ShotsPerAction="1" AmmoPerAction="1" ShotsPerAnimation="1" WeaponAccuracy="10"></part>
     <part Name="MagazineAmmoLoader" ProjectileObject="WWA_ProjectileAntiTankShell" AmmoPart="WWA_HighCalibreAmmoSlug" MaxAmmo="10"></part>
     <part Name="Description" Short="A heavy rifle designed to pierce through armor."></part>
-    <part Name="Examiner" UnknownDisplayName="strange tubes" AlternateDisplayName="strange tubes" UnknownTile="Items/sw_folding_chair.bmp" Complexity="7" Difficulty ="5"></part>
+    <part Name="Examiner" Alternate="strange tubes" Unknown="UnknownStrangeTubes" Complexity="7" Difficulty ="5"></part>
     <part Name="Metal"></part>
-    <part Name="TinkerItem" Bits="0005" CanDisassemble="true" CanBuild="true" CanRepair="true"></part>
+    <part Name="TinkerItem" Bits="0005" CanDisassemble="true" CanBuild="true"></part>
     <tag Name="Tier" Value="5"></tag>
     <tag Name="DynamicObjectsTable:Guns"></tag>
 
@@ -616,17 +616,17 @@
 
   <object Name="WWA_AntiMaterielRifle" Inherits="BaseRifle">
     <part Name="Render" Tile="items/WWA_AntiMaterielRifle.png" DisplayName="anti-materiel rifle" RenderString=")" ColorString="&amp;K"></part>
-    <part Name="Physics" bUsesTwoSlots="true" Weight="20"></part>
+    <part Name="Physics" UsesTwoSlots="true" Weight="20"></part>
     <part Name="Commerce" Value="720"></part>
     <part Name="MissileWeapon" Skill="Rifle" ShotsPerAction="1" AmmoPerAction="1" ShotsPerAnimation="1" WeaponAccuracy="1"></part>
     <part Name="MagazineAmmoLoader" ProjectileObject="WWA_ProjectileAMRifleShell" AmmoPart="WWA_HighCalibreAmmoSlug" MaxAmmo="1"></part>
     <part Name="Description" Short="Have you seen what one of those anti-materiel rifles can do to a rhinox?"></part>
     <part Name="Metal"></part>
-    <part Name="TinkerItem" Bits="0026" CanDisassemble="true" CanBuild="true" CanRepair="true"></part>
+    <part Name="TinkerItem" Bits="0026" CanDisassemble="true" CanBuild="true"></part>
     <part Name="WWA_Scope" integral="true"></part>
     <part Name="WWA_Bipod" integral="true"></part>
     <tag Name="Tier" Value="6"></tag>
-    <part Name="Examiner" AlternateDisplayName="rifle" Complexity="9" UnknownTile="Items/sw_folding_chair.bmp" Difficulty="6"></part>
+    <part Name="Examiner" Alternate="rifle" Complexity="9" Unknown="UnknownStrangeTubes" Difficulty="6"></part>
     <tag Name="DynamicObjectsTable:Guns"></tag>
 
     <tag Name="MissileFireSound" Value="AMR_fire"></tag>
@@ -647,12 +647,12 @@
     <part Name="Render" DisplayName="heavy machinegun" RenderString=")" Tile="items/WWA_HMG.png" ColorString="&amp;K"></part>
     <part Name="Physics" Weight="45" UsesTwoSlots="true"></part>
     <part Name="Commerce" Value="690"></part>
-    <part Name="Examiner" AlternateDisplayName="strange tubes" UnknownTile="Items/sw_folding_chair.bmp" AlternateGender="plural" Complexity="8" Difficulty="5"></part>
+    <part Name="Examiner" Alternate="strange tubes" Unknown="UnknownStrangeTubes" Complexity="8" Difficulty="5"></part>
     <part Name="MissileWeapon" AnimationDelay="2" Skill="HeavyWeapons" ShotsPerAction="3" AmmoPerAction="3" ShotsPerAnimation="1" WeaponAccuracy="11" RangeIncrement="3"></part>
     <part Name="MagazineAmmoLoader" ProjectileObject="WWA_HVMGSlug" AmmoPart="WWA_HighCalibreAmmoSlug" MaxAmmo="15"></part>
     <part Name="Description" Short="Heavy machinegun with a magazine mounted on top."></part>
     <part Name="Metal"></part>
-    <part Name="TinkerItem" Bits="00345" CanDisassemble="true" CanBuild="true" CanRepair="true"></part>
+    <part Name="TinkerItem" Bits="00345" CanDisassemble="true" CanBuild="true"></part>
     <part Name="WWA_Bipod" integral="true"></part>
     <tag Name="Tier" Value="6"></tag>
     <tag Name="DynamicObjectsTable:Guns"></tag>
@@ -736,7 +736,7 @@
     <part Name="WWA_MediumAmmoSlug" ProjectileObject="WWA_MediumAmmoSlugProjectile" />
     <part Name="Physics" Category="Ammo"></part>
     <part Name="Description" Short="A lump of lead."></part>
-    <part Name="TinkerItem" Bits="000" CanBuild="true" CanRepair="false" CanDisassemble="false" NumberMade="40"></part>
+    <part Name="TinkerItem" Bits="000" CanBuild="true" CanDisassemble="false" NumberMade="40"></part>
     <part Name="Commerce" Value="0.06"></part>
     <tag Name="DynamicObjectsTable:Ammo"></tag>
     <tag Name="AlwaysStack" Value="Yes"></tag>
@@ -750,7 +750,7 @@
     <part Name="WWA_HighCalibreAmmoSlug" ProjectileObject="WWA_HighCalibreLeadSlugProjectile" />
     <part Name="Physics" Category="Ammo" />
     <part Name="Description" Short="A sizable lump of lead." />
-    <part Name="TinkerItem" Bits="0000" CanBuild="true" CanRepair="false" CanDisassemble="false" NumberMade="20" />
+    <part Name="TinkerItem" Bits="0000" CanBuild="true" CanDisassemble="false" NumberMade="20" />
     <part Name="Commerce" Value="0.14"></part>
     <tag Name="DynamicObjectsTable:Ammo" />
     <tag Name="AlwaysStack" Value="Yes" />
@@ -776,30 +776,30 @@
   <object Name="WWA_SmokeGrenade1" Inherits="Grenade">
     <part Name="Render" DisplayName="{{c|{{K|smoke}} grenade mk I}}" />
     <part Name="GasGrenade" Density="35" GasObject="WWA_Smoke" />
-    <part Name="Commerce" Value="16" />
+    <part Name="Commerce" Value="12" />
     <part Name="Description" Short="A dark grey cylinder with a pull ring." />
     <tag Name="Mark" Value="1" />
   </object>
   <object Name="WWA_SmokeGrenade2" Inherits="Grenade">
     <part Name="Render" DisplayName="{{c|{{K|smoke}} grenade mk II}}" />
     <part Name="GasGrenade" Density="56" GasObject="WWA_Smoke" />
-    <part Name="Commerce" Value="41" />
+    <part Name="Commerce" Value="32" />
     <part Name="Description" Short="A dark grey cylinder with a pull ring." />
-    <tag Name="Mark" Value="1" />
+    <tag Name="Mark" Value="2" />
   </object>
   <object Name="WWA_WPGrenade1" Inherits="Grenade">
     <part Name="Render" DisplayName="&amp;Ywhite phosphorus &amp;Cgrenade mk I" />
     <part Name="GasGrenade" Density="30" GasObject="WWA_PhosphorusObject" />
     <part Name="Commerce" Value="16" />
-    <part Name="Description" Short="A dark grey cylinder with a pull ring." />
+    <part Name="Description" Short="Slate colored cylinder with a conical base." />
     <tag Name="Mark" Value="1" />
   </object>
   <object Name="WWA_WPGrenade2" Inherits="Grenade">
     <part Name="Render" DisplayName="&amp;Ywhite phosphorus &amp;Cgrenade mk II" />
     <part Name="GasGrenade" Density="50" GasObject="WWA_PhosphorusObject" />
     <part Name="Commerce" Value="41" />
-    <part Name="Description" Short="A dark grey cylinder with a pull ring." />
-    <tag Name="Mark" Value="1" />
+    <part Name="Description" Short="Slate colored cylinder with a conical base." />
+    <tag Name="Mark" Value="2" />
   </object>
   <!--
   <object Name="WWA_FragGrenade1" Inherits="Grenade">

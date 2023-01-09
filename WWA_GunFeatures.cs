@@ -172,7 +172,7 @@ namespace XRL.World.Parts
                             mw.ShotsPerAction = 1;
                             mw.AmmoPerAction = 1;
                             this.ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", SemiAutoAccuracyBonus, true);
-                            Log($"Switched {this.ParentObject.ShortDisplayName} to semi-automatic mode.");
+                            MessageQueue.AddPlayerMessage($"Switched {this.ParentObject.ShortDisplayName} to semi-automatic mode.");
                         }
                         else
                         {
@@ -182,7 +182,7 @@ namespace XRL.World.Parts
                             mw.ShotsPerAction = DefaultFireRate + FireRate;
                             mw.AmmoPerAction = DefaultAmmoPerShot + FireRate;
                             this.ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", -SemiAutoAccuracyBonus, true);
-                            Log($"Switched {this.ParentObject.ShortDisplayName} to automatic mode.");
+                            MessageQueue.AddPlayerMessage($"Switched {this.ParentObject.ShortDisplayName} to automatic mode.");
                         }
                     }
                 }
@@ -216,7 +216,7 @@ namespace XRL.World.Parts
                         inventoryViewer.UseEnergy(1000, "Physical");
                     selectedAttachment.Destroy();
                     if (inventoryViewer.IsPlayer() && !Silent)
-                        Log($"{part.displayName} installed on {this.ParentObject.ShortDisplayName}.");
+                        MessageQueue.AddPlayerMessage($"{part.displayName} installed on {this.ParentObject.ShortDisplayName}.");
                     if (this.GetCharacterAbilities().chosenWeapon == null || this.ParentObject == null)
                         return;
                     if (this.GetCharacterAbilities().chosenWeapon == this.ParentObject)
@@ -241,7 +241,7 @@ namespace XRL.World.Parts
                 this.ParentObject.RemovePart(name);
                 GameObject uninstalled = GameObject.create(blueprintName);
                 if (inventoryViewer.IsPlayer())
-                    Log($"Removed {uninstalled.ShortDisplayName} from {this.ParentObject.ShortDisplayName}.");
+                    MessageQueue.AddPlayerMessage($"Removed {uninstalled.ShortDisplayName} from {this.ParentObject.ShortDisplayName}.");
                 if (uninstalled != null)
                     inventoryViewer.Inventory.AddObject(uninstalled, false, false, false);
                 inventoryViewer.UseEnergy(1000, "Physical");
@@ -249,7 +249,7 @@ namespace XRL.World.Parts
             else
             {
                 if (inventoryViewer.IsPlayer())
-                    Log("You can't remove integral attachments.");
+                    MessageQueue.AddPlayerMessage("You can't remove integral attachments.");
             }
 
         }
@@ -299,7 +299,7 @@ namespace XRL.World.Parts
                 if (s != "none")
                     UninstallAttachmentFromSlot(s);
             }
-            Log($"Uninstalled all attachments from {this.ParentObject.ShortDisplayName}.");
+            MessageQueue.AddPlayerMessage($"Uninstalled all attachments from {this.ParentObject.ShortDisplayName}.");
         }
 
         /// <summary>
@@ -496,7 +496,7 @@ namespace XRL.World.Parts
                                             }
                                         }
                                         else
-                                            Log($"You don't have any attachments to install on {weapon.ShortDisplayName} {fullSlotName}.");
+                                            MessageQueue.AddPlayerMessage($"You don't have any attachments to install on {weapon.ShortDisplayName} {fullSlotName}.");
                                     }
                                 }
                                 break;
@@ -566,11 +566,6 @@ namespace XRL.World.Parts
                 FireMode = DefaultFireRate != 1;
             }
             return true;
-        }
-
-        private void Log(string message)
-        {
-            MessageQueue.AddPlayerMessage(message);
         }
     }
 }

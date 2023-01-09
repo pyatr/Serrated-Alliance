@@ -90,9 +90,8 @@ namespace XRL.World.Parts
                     if (body != null)
                     {
                         bayonetObject = bayonet;
-                        BodyPart UBslot = null;
-                        //UBslot = body.AddPart("Bayonet", 0, (string)null, (string)null, (string)null, (string)null, this.ManagerID, new int?(), new int?(), new int?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), true);
-                        UBslot = body.AddPartAt("Bayonet", 0, (string)null, (string)null, (string)null, (string)null, this.ManagerID, new int?(), new int?(), new int?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), "Missile Weapon", new string[3]
+                        BodyPart UBslot = null;                        
+                        UBslot = body.AddPartAt("Bayonet", 0, (string)null, (string)null, (string)null, (string)null, this.ManagerID, new int?(), new int?(), new int?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), "Missile Weapon", new string[3]
                         {
                         "Hands",
                         "Feet",

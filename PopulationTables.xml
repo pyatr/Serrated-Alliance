@@ -1,4 +1,4 @@
-<populations Load="Merge">
+<populations>
   <population Name="StartingGear_Testman_Guns">
     <group Name="Items" Style="pickeach">
       <object Blueprint="WWA_ScopeAttachment" Number="2"></object>

@@ -71,12 +71,11 @@ namespace XRL.World.Parts
                         UBWmw.FiresManually = true;
                         BodyPart UBslot = null;
                         string type = "Underbarrel Weapon";
-                        UBslot = body.AddPartAt(type, 0, (string)null, (string)null, (string)null, (string)null, this.ManagerID, new int?(), new int?(), new int?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), "Missile Weapon", new string[3]
-                        {
-                        "Hands",
-                        "Feet",
-                        "Thrown Weapon"
-                        }, true);
+						//This is atrocious
+                        UBslot = body.AddPartAt	(type, 0, (string)null, (string)null, (string)null, (string)null, this.ManagerID, new int?(), new int?(), new int?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), "Missile Weapon", 
+						new string[3] {"Hands", "Feet", "Thrown Weapon"}, 
+						true);
+						
                         equipper.ForceEquipObject(weaponObject, UBslot, true);
                         WWA_TacticalAbilities ta = equipper.GetPart<WWA_TacticalAbilities>();
                         ta.activeWeapons.Add(weaponObject);
@@ -119,7 +118,7 @@ namespace XRL.World.Parts
                         weaponObject.AddPart(new Cursed());
                         BodyPart UBslot = null;
                         string type = "Underbarrel Weapon";
-                        UBslot = body.AddPartAt(type, 0, (string)null, (string)null, (string)null, (string)null, this.ManagerID, new int?(), new int?(), new int?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), "Missile Weapon", new string[3]
+                        UBslot = body.AddPartAt(type, 0, (string)null, (string)null, (string)null, (string)null, this.ManagerID, new int?(), new int?(), new int?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), "Missile Weapon", new string[3]
                         {
                         "Hands",
                         "Feet",

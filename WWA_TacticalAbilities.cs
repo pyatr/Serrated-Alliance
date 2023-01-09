@@ -117,7 +117,8 @@ namespace XRL.World.Parts
                         attachment.OnSelect(this.ParentObject);
                     }
                 }
-                this.DeselectPrimaryWeapon.Enabled = true;
+				if (this.activeWeapons.Count > 1)
+					this.DeselectPrimaryWeapon.Enabled = true;
             }
         }
 
@@ -205,6 +206,8 @@ namespace XRL.World.Parts
                             SetFiresManually(false, equipped);
                     }
                 }
+				if (this.activeWeapons.Count > 1)
+					this.DeselectPrimaryWeapon.Enabled = true;
                 return true;
             }
             if (E.ID == "BeginUnequip")
