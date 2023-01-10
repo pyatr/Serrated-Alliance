@@ -779,6 +779,7 @@
     <part Name="Commerce" Value="12" />
     <part Name="Description" Short="A dark grey cylinder with a pull ring." />
     <tag Name="Mark" Value="1" />
+    <tag Name="Tier" Value="1" />
   </object>
   <object Name="WWA_SmokeGrenade2" Inherits="Grenade">
     <part Name="Render" DisplayName="{{c|{{K|smoke}} grenade mk II}}" />
@@ -786,6 +787,15 @@
     <part Name="Commerce" Value="32" />
     <part Name="Description" Short="A dark grey cylinder with a pull ring." />
     <tag Name="Mark" Value="2" />
+    <tag Name="Tier" Value="3" />
+  </object>
+  <object Name="WWA_SmokeGrenade3" Inherits="Grenade">
+    <part Name="Render" DisplayName="{{c|{{K|smoke}} grenade mk III}}" />
+    <part Name="GasGrenade" Density="90" GasObject="WWA_Smoke" />
+    <part Name="Commerce" Value="50" />
+    <part Name="Description" Short="A dark grey cylinder with a pull ring." />
+    <tag Name="Mark" Value="3" />
+    <tag Name="Tier" Value="5" />
   </object>
   <object Name="WWA_WPGrenade1" Inherits="Grenade">
     <part Name="Render" DisplayName="&amp;Ywhite phosphorus &amp;Cgrenade mk I" />
@@ -793,6 +803,7 @@
     <part Name="Commerce" Value="16" />
     <part Name="Description" Short="Slate colored cylinder with a conical base." />
     <tag Name="Mark" Value="1" />
+    <tag Name="Tier" Value="1" />
   </object>
   <object Name="WWA_WPGrenade2" Inherits="Grenade">
     <part Name="Render" DisplayName="&amp;Ywhite phosphorus &amp;Cgrenade mk II" />
@@ -800,6 +811,16 @@
     <part Name="Commerce" Value="41" />
     <part Name="Description" Short="Slate colored cylinder with a conical base." />
     <tag Name="Mark" Value="2" />
+    <tag Name="Tier" Value="3" />
+  </object>
+  <object Name="WWA_WPGrenade3" Inherits="Grenade">
+    <part Name="Render" DisplayName="&amp;Ywhite phosphorus &amp;Cgrenade mk III" />
+    <part Name="GasGrenade" Density="120" GasObject="WWA_PhosphorusObject" />
+    <part Name="Commerce" Value="70" />
+    <part Name="Description" Short="Slate colored cylinder with a conical base." />
+    <tag Name="Mark" Value="3" />
+    <tag Name="Tier" Value="5" />
+    <tag Name="ExcludeFromTurretStock" />
   </object>
   <!--
   <object Name="WWA_FragGrenade1" Inherits="Grenade">
@@ -827,20 +848,4 @@
     <tag Name="ExcludeFromTurretStock" />
   </object>
   -->
-  <!--Gases-->
-  <object Name="WWA_Smoke" Inherits="Gas">
-    <part Name="Render" DisplayName="&amp;Ksmoke" Occluding="true" Visible="true"/>
-    <part Name="Gas" GasType="SightObstructionGas" ColorString="&amp;y"/>
-    <part Name="Description" Short="Cloud of smoke." />
-    <tag Name="LevelEffectDescription" Value="density"/>
-    <tag Name="ActivationColorString" Value="&amp;y"/>
-  </object>
-  <object Name="WWA_PhosphorusObject" Inherits="Gas">
-    <part Name="Render" DisplayName="white phosphorus"></part>
-    <part Name="Gas" GasType="White Phosphorus" ColorString="&amp;Y^y" Density="30"/>
-    <!--<part Name="GasDamaging" GasType="Phosphorus" Noun="white phosphorus" MessageColor="&amp;Y" DamageAttributes="Acid Heat" TargetPart="Physics" ExcludeTag="Item"/>-->
-    <part Name="WWA_Phosphorus" />
-    <part Name="Description" Short="Ignitious white phosphorus." />
-    <tag Name="ActivationColorString" Value="&amp;Y" />
-  </object>
 </objects>

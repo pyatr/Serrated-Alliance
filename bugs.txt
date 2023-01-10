@@ -1,2 +1,2 @@
-Semi-automatic only guns are said to be automatic in description
-Guns that shoot more than one bullet per shot in automatic mode shoot one bullet per shot in semi-automatic mode
+Guns that shoot more than one bullet per shot in automatic mode shoot one bullet per shot in semi-automatic mode (delayed by making such guns autofire only - autoshotgun, DBMG)
+Weapon stacking allows to dupe attachments

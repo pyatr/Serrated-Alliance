@@ -21,8 +21,9 @@ namespace XRL
             string[] data = { "ModDrumLoaded", "ModScoped", "ModLiquidCooled" };
             if (n > 0)            
 			{
+				//These mods are removed but still appear in game. How!?
+				UnityEngine.Debug.Log($"{TinkerData.TinkerRecipes[n].PartName} will be removed at {n}");
                 TinkerData.TinkerRecipes.RemoveAt(n);
-				UnityEngine.Debug.Log($"Removed at {n}");
 			}
             int wrongNamePos = -1;
             for (int i = 0; i < TinkerData.TinkerRecipes.Count; i++)
@@ -40,6 +41,13 @@ namespace XRL
             }
             if (wrongNamePos != -1)
                 Remove(wrongNamePos);
+			/*else
+			{
+				for (int i = 0; i < TinkerData.TinkerRecipes.Count; i++)
+				{
+					UnityEngine.Debug.Log($"HAS RECIPE: {TinkerData.TinkerRecipes[i].PartName}");
+				}
+			}*/
         }
     }
 }

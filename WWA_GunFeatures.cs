@@ -89,9 +89,55 @@ namespace XRL.World.Parts
             Object.RegisterPartEvent((IPart)this, "WeaponMissleWeaponFiring");
             base.Register(Object);
         }
+		
+		private List<WWA_Attachment> GetAttachments(GameObject forWeapon)
+		{
+            List<IPart> weaponParts = forWeapon.PartsList;
+			List<WWA_Attachment> attachments = new List<WWA_Attachment>();
+            foreach (IPart part in weaponParts)
+            {
+                if (PartIsAttachment(part))
+                {
+                    attachments.Add((WWA_Attachment)part);
+                }
+            }
+            return attachments;
+		}
+		
+		private List<string> AttachmentListToString(List<WWA_Attachment> alist)
+		{
+			List<string> atStrList = new List<string>();
+			foreach(WWA_Attachment satt in alist)			
+				atStrList.Add(satt.Name);
+			return atStrList;
+		}
 
         public override bool SameAs(IPart p)
         {
+			List<WWA_Attachment> currentWeaponAttachments = GetAttachments(this.ParentObject);
+			List<WWA_Attachment> comparedWeaponAttachments = GetAttachments(p.ParentObject);
+			//If different attachment count it's not the same and we do not stack those weapons
+			if (currentWeaponAttachments.Count != comparedWeaponAttachments.Count)
+				return false;
+			else
+			{
+				List<string> cwasl = AttachmentListToString(currentWeaponAttachments);
+				List<string> comwasl = AttachmentListToString(comparedWeaponAttachments);
+				foreach (string s in cwasl)
+				{
+					if(!comwasl.Contains(s))
+					{
+						return false;
+					}
+				}
+				foreach (string s in comwasl)
+				{
+					if(!cwasl.Contains(s))
+					{
+						return false;
+					}
+				}
+			}
             return base.SameAs(p);
         }
 
@@ -169,6 +215,7 @@ namespace XRL.World.Parts
                         this.FireMode = !this.FireMode;
                         if (!this.FireMode)
                         {
+							//TODO: Fix for autoshotgun and DBMG
                             mw.ShotsPerAction = 1;
                             mw.AmmoPerAction = 1;
                             this.ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", SemiAutoAccuracyBonus, true);
@@ -418,12 +465,12 @@ namespace XRL.World.Parts
                 if (AttachmentSlots.Count == SlotNames.Count && AttachmentSlots.Count > 0)
                 {
                     GameObject weapon = this.ParentObject;
-                    //if (weapon.HasPart("Stacker"))
-                    //{
-                    //    Stacker stackerino = weapon.GetPart("Stacker") as Stacker;
-                    //    //MessageQueue.AddPlayerMessage(stackerino.StackCount.ToString());
-                    //    weapon = stackerino.RemoveOne();
-                    //}
+					//FIXME: Attachment duping if weapon is in stack. Pls do not abuse.
+                    /*if (weapon.HasPart("Stacker"))
+                    {
+                        Stacker stackerino = weapon.GetPart("Stacker") as Stacker;
+                        weapon = stackerino.RemoveOne();
+                    }*/
                     inventoryViewer = E.GetParameter("Viewer") as GameObject;
                     List<string> slotsAndAttachmentsMenu = new List<string>();
                     Dictionary<string, bool> isSlotOccupied = new Dictionary<string, bool>();
@@ -491,6 +538,18 @@ namespace XRL.World.Parts
                                                         UninstallAttachmentFromSlot(selectedSlot);
                                                         selectedAttachment = attachments.Values.ElementAt(n);
                                                         InstallAttachment(selectedAttachment);
+														//Will not go further because
+														/*if (this.ParentObject.InInventory != null)
+														{
+															this.ParentObject.InInventory.Inventory.AddObjectNoStack(weapon);
+															MessageQueue.AddPlayerMessage("Added to inventory");
+														}
+														else
+														{
+															this.ParentObject.CurrentCell.AddObject(weapon);
+															MessageQueue.AddPlayerMessage("Added to cell");
+														}
+														MessageQueue.AddPlayerMessage("Finished fiddling with inventory");*/
                                                     }
                                                     break;
                                             }
@@ -503,10 +562,6 @@ namespace XRL.World.Parts
                         }
                     }
                     while (n == -1);
-                    //if (this.ParentObject.InInventory != null)
-                    //    this.ParentObject.InInventory.Inventory.AddObjectNoStack(weapon);
-                    //else
-                    //    this.ParentObject.CurrentCell.AddObject(weapon);
                 }
                 return true;
             }
@@ -535,10 +590,10 @@ namespace XRL.World.Parts
                 AutomaticOnly = true;
             if (this.ParentObject.GetTag("MissileFireSound") == "none")
             {
+				//TODO: Use single fire sound group for sounds
                 SingleFireSound = this.ParentObject.GetTag("FireSoundSingle");
                 FireBurstSound = this.ParentObject.GetTag("FireBurstSound");
                 FireBurstHighRateSound = this.ParentObject.GetTag("FireBurstHighRateSound");
-                //MessageQueue.AddPlayerMessage(SingleFireSound + "|" + FireBurstSound + "|" + FireBurstHighRateSound);
             }
             MagazineAmmoLoader mal = this.ParentObject.GetPart("MagazineAmmoLoader") as MagazineAmmoLoader;
             if (mal != null)

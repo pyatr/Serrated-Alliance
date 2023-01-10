@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<objects>
+  <object Name="WWA_Smoke" Inherits="Gas">
+    <part Name="Render" DisplayName="&amp;Ksmoke" Occluding="true" Visible="true"/>
+    <part Name="Gas" GasType="SightObstructionGas" ColorString="&amp;y"/>
+    <part Name="Description" Short="Cloud of smoke." />
+    <tag Name="LevelEffectDescription" Value="density"/>
+    <tag Name="ActivationColorString" Value="&amp;y"/>
+  </object>
+  <object Name="WWA_PhosphorusObject" Inherits="Gas">
+    <part Name="Render" DisplayName="white phosphorus"></part>
+    <part Name="Gas" GasType="White Phosphorus" ColorString="&amp;Y^y" Density="30"/>
+    <part Name="WWA_Phosphorus" />
+    <part Name="Description" Short="Ignitious white phosphorus." />
+    <tag Name="ActivationColorString" Value="&amp;Y" />
+  </object>
+</objects>

@@ -57,6 +57,7 @@
       <object Blueprint="WWA_SmokeGrenade2" Number="6"></object>
       <object Blueprint="WWA_WPGrenade1" Number="6"></object>
       <object Blueprint="WWA_WPGrenade2" Number="6"></object>
+      <object Blueprint="EMPGrenade2" Number="6"></object>
       <object Blueprint="SalveTonic" Number="2d2+1"></object>
       <object Blueprint="HalfFullWaterskin" Number="3"></object>
       <object Blueprint="Nanoweave Vest" Number="1"></object>
