@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<!--
+
 <subtypes>
   <class ID="Castes" ChargenTitle="Choose Arcology &amp;&amp; Caste" SingularTitle="caste" StatBoxDisplay="true">
     <category Name="Testers" DisplayName="&amp;KThe People of Test">
@@ -19,4 +19,3 @@
     </category>
   </class>
 </subtypes>
--->
