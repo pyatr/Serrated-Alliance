@@ -6,7 +6,7 @@ namespace XRL.World.Parts
     [Serializable]
     public class WWA_Choke : WWA_Attachment
     {
-        public int accuracyBonus = 28;
+        public int accuracyBonus = 20;
 
         public WWA_Choke()
         {
@@ -22,7 +22,7 @@ namespace XRL.World.Parts
         {
             MissileWeapon mw = this.ParentObject.GetPart("MissileWeapon") as MissileWeapon;
             if (mw != null)
-                mw.WeaponAccuracy += accuracyBonus;
+                mw.WeaponAccuracy -= accuracyBonus;
             return base.OnInstall();
         }
 
@@ -30,7 +30,7 @@ namespace XRL.World.Parts
         {
             MissileWeapon mw = this.ParentObject.GetPart("MissileWeapon") as MissileWeapon;
             if (mw != null)
-                mw.WeaponAccuracy -= accuracyBonus;
+                mw.WeaponAccuracy += accuracyBonus;
             return base.OnUninstall();
         }
 

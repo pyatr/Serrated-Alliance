@@ -107,6 +107,7 @@
 
   <population Name="WWA_GunsmithAdditionalAmmo">
     <group Name="Items" Style="pickeach">
+      <object Blueprint="Lead Slug" Number="60-85"></object>
       <object Blueprint="WWA_MediumLeadSlug" Number="30-45"></object>
       <object Blueprint="WWA_HighCalibreLeadSlug" Number="20-25"></object>
     </group>

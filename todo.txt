@@ -1,4 +1,12 @@
-- Add new pseudo-attachment which would act as a power source, allowing more than one powered attachment without issues
 - Add frag grenades (3 tiers)
 - Add new ammo types
-- Do stealth and silencers
+- Improve gun features code
+- Figure out how often new weapons appear underground, possibly improve
+- Add random attachments to weapons. Attach them automatically if they're in a same weapon in cell
+- Make AI use prone or fire mode selection as well as underbarrel weapons
+- Rework stun grenades to work more like stun grenades in Underrail
+- Possibly improve new icons or redraw them in even higher resolution
+
+- Fix removed mods still appearing in game
+- Fix weapon stacking allowing to dupe attachments
+- Fix fire mode selection for weapons with more than one bullet per shot (set to auto-only right now)
