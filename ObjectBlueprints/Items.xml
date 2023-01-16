@@ -611,7 +611,6 @@
 
   <object Name="WWA_ProjectileAntiTankShell" Inherits="TemporaryProjectile">
     <part Name="Projectile" BasePenetration="10" BaseDamage="2d6" ColorString="&amp;y"></part>
-    <part Name="Physics" IsReal="false"></part>
   </object>
 
   <object Name="WWA_AntiMaterielRifle" Inherits="BaseRifle">
@@ -640,7 +639,6 @@
 
   <object Name="WWA_ProjectileAMRifleShell" Inherits="TemporaryProjectile">
     <part Name="Projectile" BasePenetration="11" BaseDamage="2d8" ColorString="&amp;y"></part>
-    <part Name="Physics" IsReal="false"></part>
   </object>
 
   <object Name="WWA_HVMG" Inherits="BaseHeavyWeapon">
