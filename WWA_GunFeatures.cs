@@ -150,20 +150,24 @@ namespace XRL.World.Parts
 
         public override bool HandleEvent(GetShortDescriptionEvent E)
         {
-            if (!FireMode)
-            {
-                if (DefaultFireRate > 1)
-                    E.Postfix.AppendRules($"Fire mode: semi-automatic, +{SemiAutoAccuracyBonus} to player accuracy\n");
-                else
-                    E.Postfix.AppendRules("Fire mode: semi-automatic\n");
-            }
-            else
-            {
-                if (this.ParentObject.GetTag("AutomaticOnly") == "false")
-                    E.Postfix.AppendRules("Fire mode: automatic\n");
-                else
-                    E.Postfix.AppendRules("Fire mode: automatic only\n");
-            }
+			if (DefaultAmmoPerShot == 1)
+			{
+                E.Postfix.AppendRules("Fire mode: semi-automatic\n");
+			}
+			else
+			{
+				if (!FireMode)
+				{
+					E.Postfix.AppendRules($"Fire mode: semi-automatic, +{SemiAutoAccuracyBonus} to player accuracy\n");
+				}
+				else
+				{
+					if (this.ParentObject.GetTag("AutomaticOnly") == "false")
+						E.Postfix.AppendRules("Fire mode: automatic\n");
+					else
+						E.Postfix.AppendRules("Fire mode: automatic only\n");
+				}
+			}
             if (AttachmentSlots.Count == SlotNames.Count && AttachmentSlots.Count > 0)
             {
                 string description = "Possible attachments: \n";
@@ -590,7 +594,7 @@ namespace XRL.World.Parts
                 AutomaticOnly = true;
             if (this.ParentObject.GetTag("MissileFireSound") == "none")
             {
-				//TODO: Use single fire sound group for sounds
+				//TODO: Use groups of various fire sounds for all shots
                 SingleFireSound = this.ParentObject.GetTag("FireSoundSingle");
                 FireBurstSound = this.ParentObject.GetTag("FireBurstSound");
                 FireBurstHighRateSound = this.ParentObject.GetTag("FireBurstHighRateSound");
