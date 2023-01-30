@@ -5,6 +5,7 @@ using System.IO;
 using XRL.Messages;
 using XRL.UI;
 using XRL.World.Effects;
+using XRL.World.Anatomy;
 using ConsoleLib.Console;
 
 namespace XRL.World.Parts

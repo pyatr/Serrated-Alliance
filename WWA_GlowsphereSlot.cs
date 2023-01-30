@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using XRL.Messages;
 using XRL.UI;
 using XRL.World;
+using XRL.World.Anatomy;
 using ConsoleLib.Console;
 
 namespace XRL.World.Parts

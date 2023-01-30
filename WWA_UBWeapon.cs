@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using XRL.Messages;
+using XRL.World.Anatomy;
 
 namespace XRL.World.Parts
 {
