@@ -41,9 +41,9 @@ namespace XRL.World.Parts
             worksOnSelect = true;
         }
 
-        public override void Register(GameObject Object)
+        public override void Register(GameObject Object, IEventRegistrar Registrar)
         {
-            base.Register(Object);
+            base.Register(Object, Registrar);
         }
 
         public override string GetDescription()
@@ -220,7 +220,6 @@ namespace XRL.World.Parts
                 }
                 weaponObject.Destroy(null, true);
                 this.ParentObject.Equipped.RemoveBodyPartsByManager(this.ManagerID);
-                this.ParentObject.Equipped.UnregisterPartEvent((IPart)this, "CommandFireUBWeapon");
                 if (this.FireUBWeaponAbilityID != Guid.Empty)
                 {
                     ActivatedAbilities pAA =

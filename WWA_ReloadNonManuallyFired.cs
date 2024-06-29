@@ -22,11 +22,11 @@ namespace XRL.World.Parts
 
         public WWA_ReloadNonManuallyFired() { }
 
-        public override void Register(GameObject Object)
+        public override void Register(GameObject Object, IEventRegistrar Registrar)
         {
             //Doesn't matter what event this is, it's required for FireEvent to be called at all
             Object.RegisterPartEvent((IPart)this, "EndTurn");
-            base.Register(Object);
+            base.Register(Object, Registrar);
         }
 
         //Very important to for HandleEvent to be called

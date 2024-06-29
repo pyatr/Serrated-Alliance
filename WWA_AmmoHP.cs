@@ -6,9 +6,9 @@ namespace XRL.World.Parts
     [Serializable]
     public class WWA_AmmoHP : WWA_AmmoPartOnLoad
     {
-        public override void Register(GameObject Object)
+        public override void Register(GameObject Object, IEventRegistrar Registrar)
         {
-            base.Register(Object);
+            base.Register(Object, Registrar);
         }
         
         public override bool HandleEvent(GetDisplayNameEvent E)

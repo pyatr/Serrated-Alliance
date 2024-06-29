@@ -63,11 +63,11 @@ namespace XRL.World.Parts
             return true;
         }
 
-        public override void Register(GameObject Object)
+        public override void Register(GameObject Object, IEventRegistrar Registrar)
         {
             Object.RegisterPartEvent((IPart)this, "DensityChange");
             Object.RegisterPartEvent((IPart)this, "EndTurn");
-            base.Register(Object);
+            base.Register(Object, Registrar);
         }
 
         public void ApplyWP(GameObject GO)

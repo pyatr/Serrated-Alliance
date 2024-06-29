@@ -15,9 +15,9 @@ namespace XRL.World.Parts
             displayName = "pistol stock";
         }
 
-        public override void Register(GameObject Object)
+        public override void Register(GameObject Object, IEventRegistrar Registrar)
         {
-            base.Register(Object);
+            base.Register(Object, Registrar);
         }
 
         public override bool OnInstall()

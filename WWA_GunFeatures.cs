@@ -82,12 +82,12 @@ namespace XRL.World.Parts
             }
         }
 
-        public override void Register(GameObject Object)
+        public override void Register(GameObject Object, IEventRegistrar Registrar)
         {
             Object.RegisterPartEvent((IPart)this, "BeginTakeAction");
             Object.RegisterPartEvent((IPart)this, "ObjectCreated");
             Object.RegisterPartEvent((IPart)this, "WeaponMissleWeaponFiring");
-            base.Register(Object);
+            base.Register(Object, Registrar);
         }
 		
 		private List<WWA_Attachment> GetAttachments(GameObject forWeapon)

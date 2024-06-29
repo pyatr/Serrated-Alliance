@@ -13,10 +13,10 @@ namespace XRL.World.Parts
             displayName = "laser aiming module";
         }
 
-        public override void Register(GameObject Object)
+        public override void Register(GameObject Object, IEventRegistrar Registrar)
         {
             Object.RegisterPartEvent((IPart)this, "ModifyAimVariance");
-            base.Register(Object);
+            base.Register(Object, Registrar);
         }
 
         public override string GetDescription()

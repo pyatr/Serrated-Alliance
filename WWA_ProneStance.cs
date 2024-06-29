@@ -47,16 +47,10 @@ namespace XRL.World.Effects
                 + "-50 to movement speed.";
         }
 
-        public override void Register(GameObject Object)
+        public override void Register(GameObject Object, IEventRegistrar Registrar)
         {
             Object.RegisterEffectEvent(this, "BeginMove");
-            base.Register(Object);
-        }
-
-        public override void Unregister(GameObject Object)
-        {
-            Object.UnregisterEffectEvent(this, "BeginMove");
-            base.Unregister(Object);
+            base.Register(Object, Registrar);
         }
 
         public override bool Render(RenderEvent E)

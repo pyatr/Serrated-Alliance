@@ -10,10 +10,10 @@ namespace XRL.World.Parts
         public int diceSideModifier = 0;
         public int flatModifier = 0;
 
-        public override void Register(GameObject Object)
+        public override void Register(GameObject Object, IEventRegistrar Registrar)
         {
             Object.RegisterPartEvent((IPart)this, "ObjectCreated");
-            base.Register(Object);
+            base.Register(Object, Registrar);
         }
         
         public override bool HandleEvent(GetDisplayNameEvent E)

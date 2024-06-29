@@ -11,11 +11,11 @@ namespace XRL.World.Parts
             displayName = "extended barrel";
         }
 
-        public override void Register(GameObject Object)
+        public override void Register(GameObject Object, IEventRegistrar Registrar)
         {
             Object.RegisterPartEvent((IPart)this, "WeaponMissleWeaponFiring");
             Object.RegisterPartEvent((IPart)this, "ShotComplete");
-            base.Register(Object);
+            base.Register(Object, Registrar);
         }
 
         public override string GetDescription()

@@ -32,9 +32,9 @@ namespace XRL.World.Parts
             displayName = "bayonet lug";
         }
 
-        public override void Register(GameObject Object)
+        public override void Register(GameObject Object, IEventRegistrar Registrar)
         {
-            base.Register(Object);
+            base.Register(Object, Registrar);
         }
 
         public override void SaveData(SerializationWriter Writer)
@@ -120,7 +120,6 @@ namespace XRL.World.Parts
                 bayonetObject.RemovePart("Cursed");
                 bayonetObject.ForceUnequip(true);
                 attachmentInstalled = false;
-                this.ParentObject.Equipped.UnregisterPartEvent((IPart)this, "CommandSwitchToBayonet");
                 this.ParentObject.Equipped.RemoveBodyPartsByManager(this.ManagerID);
                 if (this.SwitchToBayonetAbilityID != Guid.Empty)
                 {

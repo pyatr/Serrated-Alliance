@@ -12,12 +12,12 @@ namespace XRL.World.Parts
         public bool installed = false;
         public bool worksOnSelect = false;
 
-        public override void Register(GameObject Object)
+        public override void Register(GameObject Object, IEventRegistrar Registrar)
         {
             Object.RegisterPartEvent((IPart)this, "Equipped");
             Object.RegisterPartEvent((IPart)this, "Unequipped");
             Object.RegisterPartEvent((IPart)this, "ObjectCreated");
-            base.Register(Object);
+            base.Register(Object, Registrar);
         }
 
         public WWA_GunFeatures GetGunFeatures()
