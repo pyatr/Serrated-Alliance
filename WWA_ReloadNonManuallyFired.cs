@@ -25,7 +25,7 @@ namespace XRL.World.Parts
         public override void Register(GameObject Object, IEventRegistrar Registrar)
         {
             //Doesn't matter what event this is, it's required for FireEvent to be called at all
-            Object.RegisterPartEvent((IPart)this, "EndTurn");
+            Object.RegisterPartEvent(this, "EndTurn");
             base.Register(Object, Registrar);
         }
 

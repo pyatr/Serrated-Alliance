@@ -3,9 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using XRL.Messages;
 using XRL.UI;
-using XRL.World;
 using XRL.World.Anatomy;
-using ConsoleLib.Console;
 
 namespace XRL.World.Parts
 {
@@ -34,16 +32,16 @@ namespace XRL.World.Parts
             base.Register(Object, Registrar);
         }
 
-        public override void SaveData(SerializationWriter Writer)
+        public override void Write(GameObject basis,SerializationWriter Writer)
         {
             Writer.WriteGameObject(this.glowsphereObject);
-            base.SaveData(Writer);
+            base.Write(basis, Writer);
         }
 
-        public override void LoadData(SerializationReader Reader)
+        public override void Read(GameObject basis,SerializationReader Reader)
         {
-            this.glowsphereObject = Reader.ReadGameObject((string)null);
-            base.LoadData(Reader);
+            this.glowsphereObject = Reader.ReadGameObject(null);
+            base.Read(basis, Reader);
         }
 
         public override bool WantEvent(int ID, int cascade)
@@ -88,8 +86,7 @@ namespace XRL.World.Parts
                     if (body != null)
                     {
                         glowsphereObject = glowsphere;
-                        BodyPart UBslot = null;
-                        UBslot = body.AddPartAt("Glowsphere", 0, (string)null, (string)null, (string)null, (string)null, this.ManagerID, new int?(), new int?(), new int?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), "Missile Weapon", new string[3]
+                        BodyPart UBslot = body.AddPartAt("Glowsphere", 0, null, null, null, null, this.ManagerID, new int?(), new int?(), new int?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), "Missile Weapon", new string[3]
                         {
                         "Hands",
                         "Feet",
@@ -149,7 +146,7 @@ namespace XRL.World.Parts
                 if (glowSpheres.Count > 0)
                 {
                     string[] options = glowSpheres.Keys.ToArray();
-                    GameObject sphere = glowSpheres.Values.ElementAt(Popup.ShowOptionList("Choose glowsphere"/* + ". Come on, they're all the same." */, options));
+                    GameObject sphere = glowSpheres.Values.ElementAt(Popup.PickOption("Choose glowsphere", null, "", null/* + ". Come on, they're all the same." */, options));
                     InstallGlowsphere(sphere);
                 }
                 else

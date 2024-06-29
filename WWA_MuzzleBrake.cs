@@ -13,8 +13,8 @@ namespace XRL.World.Parts
 
         public override void Register(GameObject Object, IEventRegistrar Registrar)
         {
-            Object.RegisterPartEvent((IPart)this, "WeaponMissleWeaponFiring");
-            Object.RegisterPartEvent((IPart)this, "ShotComplete");
+            Object.RegisterPartEvent(this, "WeaponMissleWeaponFiring");
+            Object.RegisterPartEvent(this, "ShotComplete");
             base.Register(Object, Registrar);
         }
         

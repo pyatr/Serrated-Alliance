@@ -19,16 +19,16 @@ namespace XRL.World.Parts
         //OnEquip does not work properly here, do not change
         public bool AddOnEquip = false;
 
-        public override void SaveData(SerializationWriter Writer)
+        public override void Write(GameObject basis,SerializationWriter Writer)
         {
             Writer.WriteGameObject(this.weaponObject);
-            base.SaveData(Writer);
+            base.Write(basis, Writer);
         }
 
-        public override void LoadData(SerializationReader Reader)
+        public override void Read(GameObject basis,SerializationReader Reader)
         {
-            this.weaponObject = Reader.ReadGameObject((string)null);
-            base.LoadData(Reader);
+            this.weaponObject = Reader.ReadGameObject(null);
+            base.Read(basis, Reader);
         }
 
         public string ManagerID
@@ -75,10 +75,10 @@ namespace XRL.World.Parts
                         UBslot = body.AddPartAt(
                             type,
                             0,
-                            (string)null,
-                            (string)null,
-                            (string)null,
-                            (string)null,
+                            null,
+                            null,
+                            null,
+                            null,
                             this.ManagerID,
                             new int?(),
                             new int?(),
@@ -122,7 +122,7 @@ namespace XRL.World.Parts
                             false,
                             true,
                             new int?(0),
-                            (string)null,
+                            null,
                             (List<GameObject>)null
                         );
                         mal.SetAmmo((GameObject)null);
@@ -151,10 +151,10 @@ namespace XRL.World.Parts
                         UBslot = body.AddPartAt(
                             type,
                             0,
-                            (string)null,
-                            (string)null,
-                            (string)null,
-                            (string)null,
+                            null,
+                            null,
+                            null,
+                            null,
                             this.ManagerID,
                             new int?(),
                             new int?(),
@@ -174,7 +174,7 @@ namespace XRL.World.Parts
                             true
                         );
                         selector.ForceEquipObject(weaponObject, UBslot, true);
-                        selector.RegisterPartEvent((IPart)this, "CommandFireUBWeapon");
+                        selector.RegisterPartEvent(this, "CommandFireUBWeapon");
                         this.FireUBWeaponAbilityID = pAA.AddAbility(
                             "Fire " + weaponObject.ShortDisplayName,
                             "CommandFireUBWeapon",
@@ -213,13 +213,14 @@ namespace XRL.World.Parts
                         false,
                         true,
                         new int?(0),
-                        (string)null,
+                        null,
                         (List<GameObject>)null
                     );
                     mal.SetAmmo((GameObject)null);
                 }
                 weaponObject.Destroy(null, true);
                 this.ParentObject.Equipped.RemoveBodyPartsByManager(this.ManagerID);
+                this.ParentObject.Equipped.UnregisterPartEvent(this, "CommandFireUBWeapon");
                 if (this.FireUBWeaponAbilityID != Guid.Empty)
                 {
                     ActivatedAbilities pAA =

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace XRL.World.Parts
 {
     [Serializable]
-    public class WWA_Phosphorus : IPart
+    public class WWA_Phosphorus : IGasBehavior
     {
         public string GasType = "Phosphorus";
 
@@ -35,7 +35,7 @@ namespace XRL.World.Parts
 
         public override bool HandleEvent(GetNavigationWeightEvent E)
         {
-            if (CheckGasCanAffectEvent.Check(E.Actor, this.ParentObject, (Gas)null))
+            if (CheckGasCanAffectEvent.Check(E.Actor, this.ParentObject, null))
             {
                 if (E.Smart)
                 {
@@ -65,8 +65,8 @@ namespace XRL.World.Parts
 
         public override void Register(GameObject Object, IEventRegistrar Registrar)
         {
-            Object.RegisterPartEvent((IPart)this, "DensityChange");
-            Object.RegisterPartEvent((IPart)this, "EndTurn");
+            Object.RegisterPartEvent(this, "DensityChange");
+            Object.RegisterPartEvent(this, "EndTurn");
             base.Register(Object, Registrar);
         }
 

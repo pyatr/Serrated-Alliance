@@ -23,7 +23,7 @@ namespace XRL.World.Parts
         public override bool OnInstall()
         {
             this.ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", aimingBonus, true);
-            this.ParentObject.pPhysics.UsesTwoSlots = true;
+            this.ParentObject.Physics.UsesTwoSlots = true;
             MissileWeapon mw = this.ParentObject.GetPart<MissileWeapon>() as MissileWeapon;
             if (mw != null)
             {
@@ -37,7 +37,7 @@ namespace XRL.World.Parts
         public override bool OnUninstall()
         {
             this.ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", -aimingBonus, true);
-            this.ParentObject.pPhysics.UsesTwoSlots = false;
+            this.ParentObject.Physics.UsesTwoSlots = false;
             MissileWeapon mw = this.ParentObject.GetPart<MissileWeapon>() as MissileWeapon;
             if (mw != null)
             {

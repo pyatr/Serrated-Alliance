@@ -84,16 +84,16 @@ namespace XRL.World.Parts
 
         public override void Register(GameObject Object, IEventRegistrar Registrar)
         {
-            Object.RegisterPartEvent((IPart)this, "BeginTakeAction");
-            Object.RegisterPartEvent((IPart)this, "ObjectCreated");
-            Object.RegisterPartEvent((IPart)this, "WeaponMissleWeaponFiring");
+            Object.RegisterPartEvent(this, "BeginTakeAction");
+            Object.RegisterPartEvent(this, "ObjectCreated");
+            Object.RegisterPartEvent(this, "WeaponMissleWeaponFiring");
             base.Register(Object, Registrar);
         }
-		
-		private List<WWA_Attachment> GetAttachments(GameObject forWeapon)
-		{
-            List<IPart> weaponParts = forWeapon.PartsList;
-			List<WWA_Attachment> attachments = new List<WWA_Attachment>();
+
+        private List<WWA_Attachment> GetAttachments(GameObject forWeapon)
+        {
+            PartRack weaponParts = forWeapon.PartsList;
+            List<WWA_Attachment> attachments = new List<WWA_Attachment>();
             foreach (IPart part in weaponParts)
             {
                 if (PartIsAttachment(part))
@@ -102,42 +102,42 @@ namespace XRL.World.Parts
                 }
             }
             return attachments;
-		}
-		
-		private List<string> AttachmentListToString(List<WWA_Attachment> alist)
-		{
-			List<string> atStrList = new List<string>();
-			foreach(WWA_Attachment satt in alist)			
-				atStrList.Add(satt.Name);
-			return atStrList;
-		}
+        }
+
+        private List<string> AttachmentListToString(List<WWA_Attachment> alist)
+        {
+            List<string> atStrList = new List<string>();
+            foreach (WWA_Attachment satt in alist)
+                atStrList.Add(satt.Name);
+            return atStrList;
+        }
 
         public override bool SameAs(IPart p)
         {
-			List<WWA_Attachment> currentWeaponAttachments = GetAttachments(this.ParentObject);
-			List<WWA_Attachment> comparedWeaponAttachments = GetAttachments(p.ParentObject);
-			//If different attachment count it's not the same and we do not stack those weapons
-			if (currentWeaponAttachments.Count != comparedWeaponAttachments.Count)
-				return false;
-			else
-			{
-				List<string> cwasl = AttachmentListToString(currentWeaponAttachments);
-				List<string> comwasl = AttachmentListToString(comparedWeaponAttachments);
-				foreach (string s in cwasl)
-				{
-					if(!comwasl.Contains(s))
-					{
-						return false;
-					}
-				}
-				foreach (string s in comwasl)
-				{
-					if(!cwasl.Contains(s))
-					{
-						return false;
-					}
-				}
-			}
+            List<WWA_Attachment> currentWeaponAttachments = GetAttachments(this.ParentObject);
+            List<WWA_Attachment> comparedWeaponAttachments = GetAttachments(p.ParentObject);
+            //If different attachment count it's not the same and we do not stack those weapons
+            if (currentWeaponAttachments.Count != comparedWeaponAttachments.Count)
+                return false;
+            else
+            {
+                List<string> cwasl = AttachmentListToString(currentWeaponAttachments);
+                List<string> comwasl = AttachmentListToString(comparedWeaponAttachments);
+                foreach (string s in cwasl)
+                {
+                    if (!comwasl.Contains(s))
+                    {
+                        return false;
+                    }
+                }
+                foreach (string s in comwasl)
+                {
+                    if (!cwasl.Contains(s))
+                    {
+                        return false;
+                    }
+                }
+            }
             return base.SameAs(p);
         }
 
@@ -150,24 +150,24 @@ namespace XRL.World.Parts
 
         public override bool HandleEvent(GetShortDescriptionEvent E)
         {
-			if (DefaultAmmoPerShot == 1)
-			{
+            if (DefaultAmmoPerShot == 1)
+            {
                 E.Postfix.AppendRules("Fire mode: semi-automatic\n");
-			}
-			else
-			{
-				if (!FireMode)
-				{
-					E.Postfix.AppendRules($"Fire mode: semi-automatic, +{SemiAutoAccuracyBonus} to player accuracy\n");
-				}
-				else
-				{
-					if (this.ParentObject.GetTag("AutomaticOnly") == "false")
-						E.Postfix.AppendRules("Fire mode: automatic\n");
-					else
-						E.Postfix.AppendRules("Fire mode: automatic only\n");
-				}
-			}
+            }
+            else
+            {
+                if (!FireMode)
+                {
+                    E.Postfix.AppendRules($"Fire mode: semi-automatic, +{SemiAutoAccuracyBonus} to player accuracy\n");
+                }
+                else
+                {
+                    if (this.ParentObject.GetTag("AutomaticOnly") == "false")
+                        E.Postfix.AppendRules("Fire mode: automatic\n");
+                    else
+                        E.Postfix.AppendRules("Fire mode: automatic only\n");
+                }
+            }
             if (AttachmentSlots.Count == SlotNames.Count && AttachmentSlots.Count > 0)
             {
                 string description = "Possible attachments: \n";
@@ -219,7 +219,7 @@ namespace XRL.World.Parts
                         this.FireMode = !this.FireMode;
                         if (!this.FireMode)
                         {
-							//TODO: Fix for autoshotgun and DBMG
+                            //TODO: Fix for autoshotgun and DBMG
                             mw.ShotsPerAction = 1;
                             mw.AmmoPerAction = 1;
                             this.ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", SemiAutoAccuracyBonus, true);
@@ -248,7 +248,7 @@ namespace XRL.World.Parts
         {
             if (selectedAttachment != null)
             {
-                List<IPart> parts = selectedAttachment.PartsList;
+                PartRack parts = selectedAttachment.PartsList;
                 IPart partToCopy = null;
                 foreach (IPart part in parts)
                 {
@@ -308,7 +308,7 @@ namespace XRL.World.Parts
 
         public void UninstallAttachmentFromSlot(string slot)
         {
-            List<IPart> parts = this.ParentObject.PartsList;
+            PartRack parts = this.ParentObject.PartsList;
             foreach (IPart part in parts)
             {
                 if (PartIsAttachment(part))
@@ -325,7 +325,7 @@ namespace XRL.World.Parts
 
         public void UninstallAttachmentByName(string attachmentName)
         {
-            List<IPart> parts = this.ParentObject.PartsList;
+            PartRack parts = this.ParentObject.PartsList;
             foreach (IPart part in parts)
             {
                 if (PartIsAttachment(part))
@@ -341,7 +341,7 @@ namespace XRL.World.Parts
         }
 
         /// <summary>
-        /// Uninstal all non-integral attachments from weapon
+        /// Uninstall all non-integral attachments from weapon
         /// </summary>
         public void UninstallAllAttachments()
         {
@@ -363,7 +363,7 @@ namespace XRL.World.Parts
         public bool WeaponHasAttachment(out string s, bool removeableOnly = false)
         {
             s = "none";
-            List<IPart> parts = this.ParentObject.PartsList;
+            PartRack parts = this.ParentObject.PartsList;
             foreach (IPart part in parts)
             {
                 if (PartIsAttachment(part))
@@ -386,7 +386,7 @@ namespace XRL.World.Parts
             return false;
         }
 
-        public bool PartIsAttachment(IPart part) => part.GetType().BaseType.Name == "WWA_Attachment";        
+        public bool PartIsAttachment(IPart part) => part.GetType().BaseType.Name == "WWA_Attachment";
 
         public Dictionary<string, GameObject> FindAttachmentsForSlot(string slot, List<string> possibleAttachments)
         {
@@ -394,9 +394,9 @@ namespace XRL.World.Parts
             List<GameObject> inventory = inventoryViewer.GetInventory();
             foreach (GameObject GO in inventory)
             {
-                if (GO.pPhysics.Category == "Weapon Attachments")
+                if (GO.Physics.Category == "Weapon Attachments")
                 {
-                    List<IPart> parts = GO.PartsList;
+                    PartRack parts = GO.PartsList;
                     foreach (IPart part in parts)
                     {
                         if (PartIsAttachment(part))
@@ -438,11 +438,11 @@ namespace XRL.World.Parts
             if (DefaultFireRate > 1)
             {
                 if (!FireMode)
-                    this.ParentObject.Equipped.pPhysics.PlayWorldSound(SingleFireSound, 0.5f, 0.0f, true, (Cell)null);
+                    this.ParentObject.Equipped.Physics.PlayWorldSound(SingleFireSound, 0.5f, 0.0f, true, (Cell)null);
                 else if (FireRate < 1)
-                    this.ParentObject.Equipped.pPhysics.PlayWorldSound(FireBurstSound, 0.5f, 0.0f, true, (Cell)null);
+                    this.ParentObject.Equipped.Physics.PlayWorldSound(FireBurstSound, 0.5f, 0.0f, true, (Cell)null);
                 else
-                    this.ParentObject.Equipped.pPhysics.PlayWorldSound(FireBurstHighRateSound, 0.5f, 0.0f, true, (Cell)null);
+                    this.ParentObject.Equipped.Physics.PlayWorldSound(FireBurstHighRateSound, 0.5f, 0.0f, true, (Cell)null);
 
             }
         }
@@ -470,7 +470,7 @@ namespace XRL.World.Parts
                 if (AttachmentSlots.Count == SlotNames.Count && AttachmentSlots.Count > 0)
                 {
                     GameObject weapon = this.ParentObject;
-					//FIXME: Attachment duping if weapon is in stack. Pls do not abuse.
+                    //FIXME: Attachment duping if weapon is in stack. Pls do not abuse.
                     /*if (weapon.HasPart("Stacker"))
                     {
                         Stacker stackerino = weapon.GetPart("Stacker") as Stacker;
@@ -481,7 +481,7 @@ namespace XRL.World.Parts
                     Dictionary<string, bool> isSlotOccupied = new Dictionary<string, bool>();
                     foreach (string slot in AttachmentSlots.Keys)
                     {
-                        List<IPart> weaponParts = weapon.PartsList;
+                        PartRack weaponParts = weapon.PartsList;
                         string slotDisplayName = slot;
                         bool occupied = false;
                         slotDisplayName = SlotNames[slot];
@@ -510,7 +510,7 @@ namespace XRL.World.Parts
                     int n = -1;
                     do
                     {
-                        n = Popup.ShowOptionList("Attachments", slotsAndAttachmentsMenu.ToArray());
+                        n = Popup.PickOption("Attachments", null, "", null, slotsAndAttachmentsMenu.ToArray());
                         switch (slotsAndAttachmentsMenu[n])
                         {
                             case "Remove all attachments": UninstallAllAttachments(); break;
@@ -532,7 +532,7 @@ namespace XRL.World.Parts
                                         string[] names = options.ToArray();
                                         if (attachments.Count > 0 || isSlotOccupied[selectedSlot])
                                         {
-                                            n = Popup.ShowOptionList("Choose attachment", names);
+                                            n = Popup.PickOption("Choose attachment", null, "", null, names);
                                             //MessageQueue.AddPlayerMessage("You can't remove integral attachments.");
                                             switch (names[n])
                                             {
@@ -543,8 +543,8 @@ namespace XRL.World.Parts
                                                         UninstallAttachmentFromSlot(selectedSlot);
                                                         selectedAttachment = attachments.Values.ElementAt(n);
                                                         InstallAttachment(selectedAttachment);
-														//Will not go further because
-														/*if (this.ParentObject.InInventory != null)
+                                                        //Will not go further because
+                                                        /*if (this.ParentObject.InInventory != null)
 														{
 															this.ParentObject.InInventory.Inventory.AddObjectNoStack(weapon);
 															MessageQueue.AddPlayerMessage("Added to inventory");
@@ -595,7 +595,7 @@ namespace XRL.World.Parts
                 AutomaticOnly = true;
             if (this.ParentObject.GetTag("MissileFireSound") == "none")
             {
-				//TODO: Use groups of various fire sounds for all shots
+                //TODO: Use groups of various fire sounds for all shots
                 SingleFireSound = this.ParentObject.GetTag("FireSoundSingle");
                 FireBurstSound = this.ParentObject.GetTag("FireBurstSound");
                 FireBurstHighRateSound = this.ParentObject.GetTag("FireBurstHighRateSound");

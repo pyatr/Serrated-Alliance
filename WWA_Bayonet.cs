@@ -37,16 +37,16 @@ namespace XRL.World.Parts
             base.Register(Object, Registrar);
         }
 
-        public override void SaveData(SerializationWriter Writer)
+        public override void Write(GameObject basis,SerializationWriter Writer)
         {
             Writer.WriteGameObject(this.bayonetObject);
-            base.SaveData(Writer);
+            base.Write(basis, Writer);
         }
 
-        public override void LoadData(SerializationReader Reader)
+        public override void Read(GameObject basis,SerializationReader Reader)
         {
-            this.bayonetObject = Reader.ReadGameObject((string)null);
-            base.LoadData(Reader);
+            this.bayonetObject = Reader.ReadGameObject(null);
+            base.Read(basis, Reader);
         }
 
         public override bool WantEvent(int ID, int cascade)
@@ -91,8 +91,8 @@ namespace XRL.World.Parts
                     if (body != null)
                     {
                         bayonetObject = bayonet;
-                        BodyPart UBslot = null;                        
-                        UBslot = body.AddPartAt("Bayonet", 0, (string)null, (string)null, (string)null, (string)null, this.ManagerID, new int?(), new int?(), new int?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), "Missile Weapon", new string[3]
+                        BodyPart UBslot = null;
+                        UBslot = body.AddPartAt("Bayonet", 0, null, null, null, null, this.ManagerID, new int?(), new int?(), new int?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), "Missile Weapon", new string[3]
                         {
                         "Hands",
                         "Feet",
@@ -100,7 +100,7 @@ namespace XRL.World.Parts
                         }, true);
                         bayonetObject.AddPart(new Cursed());
                         equipped.ForceEquipObject(bayonetObject, UBslot, true);
-                        equipped.RegisterPartEvent((IPart)this, "CommandSwitchToBayonet");
+                        equipped.RegisterPartEvent(this, "CommandSwitchToBayonet");
                         attachmentInstalled = true;
                         ActivatedAbilities pAA = equipped.GetPart<ActivatedAbilities>();
                         if (pAA != null)
@@ -121,6 +121,7 @@ namespace XRL.World.Parts
                 bayonetObject.ForceUnequip(true);
                 attachmentInstalled = false;
                 this.ParentObject.Equipped.RemoveBodyPartsByManager(this.ManagerID);
+                this.ParentObject.Equipped.UnregisterPartEvent(this, "CommandSwitchToBayonet");
                 if (this.SwitchToBayonetAbilityID != Guid.Empty)
                 {
                     ActivatedAbilities pAA = this.ParentObject.Equipped.GetPart<ActivatedAbilities>();
@@ -171,7 +172,7 @@ namespace XRL.World.Parts
                             shortBlades.Add(GO.DisplayName, GO);
                 }
                 if (shortBlades.Count > 0)
-                    InstallBayonet(shortBlades.Values.ElementAt(Popup.ShowOptionList("Choose short blade", shortBlades.Keys.ToArray())));
+                    InstallBayonet(shortBlades.Values.ElementAt(Popup.PickOption("Choose short blade", null, "", null, shortBlades.Keys.ToArray())));
                 else if (owner.IsPlayer())
                     MessageQueue.AddPlayerMessage("You don't have any short blades to attach on " + this.ParentObject.ShortDisplayName + " bayonet lug.");
                 return true;
