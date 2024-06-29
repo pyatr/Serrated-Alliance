@@ -79,14 +79,14 @@ namespace XRL.World.Parts
             Gas part = this.ParentObject.GetPart("Gas") as Gas;
             if (!CheckGasCanAffectEvent.Check(GO, this.ParentObject, part) || !GO.PhaseAndFlightMatches(this.ParentObject)/* || GO.GetIntProperty("Inorganic", 0) != 0 || !GO.HasTag("Creature") && !GO.HasPart("Food")*/)
                 return;
-            Damage damage = new Damage((int)Math.Max(Math.Ceiling(0.220000007152557 * (double)part.Density), 1.0));
+            Damage damage = new Damage((int)Math.Max(Math.Ceiling(0.220000007152557 * part.Density), 1.0));
             damage.AddAttribute("Heat");
             damage.AddAttribute("Acid");
             damage.AddAttribute("NoBurn");
             Event E = Event.New("TakeDamage", 0, 0, 0);
-            E.SetParameter("Damage", (object)damage);
-            E.SetParameter("Owner", (object)part.Creator);
-            E.SetParameter("Attacker", (object)part.Creator);
+            E.SetParameter("Damage", damage);
+            E.SetParameter("Owner", part.Creator);
+            E.SetParameter("Attacker", part.Creator);
             E.SetParameter("Message", "from %o white phosphorus!");
             GO.FireEvent(E);
         }

@@ -1,21 +1,22 @@
 ﻿using System;
 using System.Xml;
 using System.Collections.Generic;
-using XRL;
-using XRL.Core;
-using XRL.Messages;
-using XRL.World;
 using UnityEngine;
+using XRL.Messages;
 
 namespace XRL
 {
     [HasGameBasedStaticCache]
     public class WWA_AddPopulationsFromXML
     {
+        [GameBasedCacheInit]
         public static void Reset()
         {
+            Debug.Log("I want to merge populations");
+
             string modName = "Serrated Alliance (Weapons && Attachments)";
             string path = "";
+
             foreach (ModInfo modInfo in ModManager.Mods)
             {
                 if (modInfo.Manifest.Title == modName)
@@ -24,6 +25,7 @@ namespace XRL
                     break;
                 }
             }
+
             if (path != "")
             {
                 XmlDocument xDoc = new XmlDocument();

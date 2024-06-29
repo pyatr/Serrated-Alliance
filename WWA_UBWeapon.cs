@@ -204,8 +204,7 @@ namespace XRL.World.Parts
         {
             if (!AddOnEquip)
             {
-                MagazineAmmoLoader mal =
-                    weaponObject.GetPart("MagazineAmmoLoader") as MagazineAmmoLoader;
+                MagazineAmmoLoader mal = weaponObject.GetPart("MagazineAmmoLoader") as MagazineAmmoLoader;
                 if (mal != null)
                 {
                     this.ParentObject.Equipped.TakeObject(

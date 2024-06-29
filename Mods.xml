@@ -4,10 +4,6 @@
 
   <mod Part="WWA_ModDrumLoaded" Tables="MagazineMods" Rarity="U" TinkerTier="3" TinkerDisplayName="drum-loaded" Value="1.4" Description="Drum-loaded: This weapon may hold about 3x more additional ammo." />
   <mod Part="WWA_ModHiCapMag" Tables="MagazineMods" Rarity="U" TinkerTier="2" TinkerDisplayName="hi-cap magazine" Value="1.2" Description="High capacity magazine: This weapon may hold about 1.5x more additional ammo." />
-  <!--Removing at load doesn't work for whatever reason so let's at least forbid tinkering for now-->
-  <mod Part="ModDrumLoaded" Tables="MagazineMods" Rarity="R3" MinTier="3" TinkerTier="2" TinkerDisplayName="drum-loaded" Value="1.2" TinkerAllowed="false" Description="Drum-loaded: This weapon may hold 20% additional ammo." />
-  <mod Part="ModScoped" Tables="FirearmMods" Rarity="R3" MinTier="2" TinkerDisplayName="scoped" Value="1.1" TinkerAllowed="false" Description="Scoped: This weapon has increased accuracy." />
-  <mod Part="ModLiquidCooled" Tables="FirearmMods" Rarity="R3" NativeTier="3" TinkerTier="3" CanAutoTinker="false" TinkerAllowed="false" TinkerDisplayName="liquid-cooled" Value="1.2" />
   
   <!--<mod Part="WWA_ModSemiauto" Tables="SemiautoMod" Rarity="R" TinkerTier="2" TinkerDisplayName="semi-auto" Value="1.2" Description="Semi-automatic mode: This weapon has a semi-automatic fire mode resulting in higher fire rate but lower accuracy." />-->
   <!--<mod Part="WWA_ModSemiautoAutomatic" Tables="SemiautoModA" Rarity="U" TinkerTier="2" TinkerDisplayName="semi-auto (A)" Value="1.1" Description="Semi-automatic mode: This weapon has a semi-automatic fire." />-->

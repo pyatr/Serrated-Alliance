@@ -107,14 +107,14 @@
   </population>
 
   <population Name="TombSupply">
-    <group Name="Items" Style="pickone">
+    <group Name="Rifle" Style="pickone">
       <object Blueprint="WWA_HVMG" Weight="2"></object>
       <object Blueprint="WWA_BattleRifle" Weight="2"></object>
       <object Blueprint="WWA_HeavyAssaultRifle" Weight="1"></object>
       <object Blueprint="WWA_AntiMaterielRifle" Weight="1"></object>
       <object Blueprint="WWA_AntitankRifle" Weight="1"></object>
     </group>
-    <group Name="Items" Style="each">
+    <group Name="Ammo" Style="each">
       <object Blueprint="WWA_MediumLeadSlug" Number="80-100"></object>
       <object Blueprint="WWA_HighCalibreLeadSlug" Number="30-50"></object>
     </group>

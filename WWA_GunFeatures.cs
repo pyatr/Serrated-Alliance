@@ -7,6 +7,7 @@ using XRL.Messages;
 using XRL.World;
 using XRL.World.Effects;
 using ConsoleLib.Console;
+using UnityEngine;
 
 namespace XRL.World.Parts
 {
@@ -88,6 +89,15 @@ namespace XRL.World.Parts
             Object.RegisterPartEvent(this, "ObjectCreated");
             Object.RegisterPartEvent(this, "WeaponMissleWeaponFiring");
             base.Register(Object, Registrar);
+        }
+
+        //Not sure if that's necessary, there's always GamePoolError still has 3 part registrations after unregistering
+        public override void ApplyUnregistrar(GameObject Object, bool Active = false)
+        {
+            Object.UnregisterPartEvent(this, "BeginTakeAction");
+            Object.UnregisterPartEvent(this, "ObjectCreated");
+            Object.UnregisterPartEvent(this, "WeaponMissleWeaponFiring");
+            base.ApplyUnregistrar(Object, Active);
         }
 
         private List<WWA_Attachment> GetAttachments(GameObject forWeapon)
@@ -267,10 +277,17 @@ namespace XRL.World.Parts
                         inventoryViewer.UseEnergy(1000, "Physical");
                     selectedAttachment.Destroy();
                     if (inventoryViewer.IsPlayer() && !Silent)
+                    {
                         MessageQueue.AddPlayerMessage($"{part.displayName} attached to {this.ParentObject.ShortDisplayName}.");
-                    if (this.GetCharacterAbilities().chosenWeapon == null || this.ParentObject == null)
+                    }
+
+                    WWA_TacticalAbilities abilities = GetCharacterAbilities();
+
+                    if (abilities == null || abilities.chosenWeapon == null || this.ParentObject == null)
+                    {
                         return;
-                    if (this.GetCharacterAbilities().chosenWeapon == this.ParentObject)
+                    }
+                    else if (abilities.chosenWeapon == this.ParentObject)
                     {
                         part.OnSelect(inventoryViewer);
                         part.OnEquip(inventoryViewer);
@@ -415,10 +432,10 @@ namespace XRL.World.Parts
         {
             if (this.ParentObject.Equipped != null)
                 if (this.ParentObject.Equipped.HasPart("WWA_TacticalAbilities"))
-                    return this.ParentObject.Equipped.GetPart("WWA_TacticalAbilities") as WWA_TacticalAbilities;
+                    return this.ParentObject.Equipped.GetPart<WWA_TacticalAbilities>();
                 else if (this.inventoryViewer != null)
                     if (this.inventoryViewer.HasPart("WWA_TacticalAbilities"))
-                        return this.inventoryViewer.GetPart("WWA_TacticalAbilities") as WWA_TacticalAbilities;
+                        return this.inventoryViewer.GetPart<WWA_TacticalAbilities>();
 
             return null;
         }
@@ -600,7 +617,7 @@ namespace XRL.World.Parts
                 FireBurstSound = this.ParentObject.GetTag("FireBurstSound");
                 FireBurstHighRateSound = this.ParentObject.GetTag("FireBurstHighRateSound");
             }
-            MagazineAmmoLoader mal = this.ParentObject.GetPart("MagazineAmmoLoader") as MagazineAmmoLoader;
+            MagazineAmmoLoader mal = this.ParentObject.GetPart<MagazineAmmoLoader>();
             if (mal != null)
             {
                 if (this.ParentObject.HasIntProperty("ExtendedMagCapacity"))
