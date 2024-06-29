@@ -23,7 +23,7 @@ namespace XRL.World.Parts
         {
             get
             {
-                return this.ParentObject.id + "::" + this.ParentObject.ShortDisplayName + ":bayonet";
+                return this.ParentObject.ID + "::" + this.ParentObject.ShortDisplayName + ":bayonet";
             }
         }
 

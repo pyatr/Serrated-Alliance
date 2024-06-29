@@ -10,6 +10,7 @@ namespace XRL.World.Parts
     {
         public Guid FireUBWeaponAbilityID = Guid.Empty;
         public ActivatedAbilityEntry FireUBWeaponAbility;
+
         [NonSerialized]
         public GameObject weaponObject = null;
         public string WeaponBlueprintName;
@@ -32,10 +33,7 @@ namespace XRL.World.Parts
 
         public string ManagerID
         {
-            get
-            {
-                return this.ParentObject.id + "::" + this.ParentObject.ShortDisplayName;
-            }
+            get { return this.ParentObject.ID + "::" + this.ParentObject.ShortDisplayName; }
         }
 
         public WWA_UBWeapon()
@@ -66,17 +64,40 @@ namespace XRL.World.Parts
                     ActivatedAbilities pAA = equipper.GetPart<ActivatedAbilities>();
                     if (body != null && pAA != null)
                     {
-                        weaponObject = GameObject.create(WeaponBlueprintName);
+                        weaponObject = GameObject.Create(WeaponBlueprintName);
                         weaponObject.AddPart(new Cursed());
-                        MissileWeapon UBWmw = weaponObject.GetPart("MissileWeapon") as MissileWeapon;
+                        MissileWeapon UBWmw =
+                            weaponObject.GetPart("MissileWeapon") as MissileWeapon;
                         UBWmw.FiresManually = true;
                         BodyPart UBslot = null;
                         string type = "Underbarrel Weapon";
-						//This is atrocious
-                        UBslot = body.AddPartAt	(type, 0, (string)null, (string)null, (string)null, (string)null, this.ManagerID, new int?(), new int?(), new int?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), "Missile Weapon", 
-						new string[3] {"Hands", "Feet", "Thrown Weapon"}, 
-						true);
-						
+                        //This is atrocious
+                        UBslot = body.AddPartAt(
+                            type,
+                            0,
+                            (string)null,
+                            (string)null,
+                            (string)null,
+                            (string)null,
+                            this.ManagerID,
+                            new int?(),
+                            new int?(),
+                            new int?(),
+                            new bool?(),
+                            new bool?(),
+                            new bool?(),
+                            new bool?(),
+                            new bool?(),
+                            new bool?(),
+                            new bool?(),
+                            new bool?(),
+                            new bool?(),
+                            new bool?(),
+                            "Missile Weapon",
+                            new string[3] { "Hands", "Feet", "Thrown Weapon" },
+                            true
+                        );
+
                         equipper.ForceEquipObject(weaponObject, UBslot, true);
                         WWA_TacticalAbilities ta = equipper.GetPart<WWA_TacticalAbilities>();
                         ta.activeWeapons.Add(weaponObject);
@@ -92,10 +113,18 @@ namespace XRL.World.Parts
             {
                 if (unequipper != null)
                 {
-                    MagazineAmmoLoader mal = weaponObject.GetPart("MagazineAmmoLoader") as MagazineAmmoLoader;
+                    MagazineAmmoLoader mal =
+                        weaponObject.GetPart("MagazineAmmoLoader") as MagazineAmmoLoader;
                     if (mal != null)
                     {
-                        unequipper.TakeObject(mal.Ammo, true, new int?(0), (string)null, (List<GameObject>)null);
+                        unequipper.TakeObject(
+                            mal.Ammo,
+                            false,
+                            true,
+                            new int?(0),
+                            (string)null,
+                            (List<GameObject>)null
+                        );
                         mal.SetAmmo((GameObject)null);
                     }
                     weaponObject.Destroy(null, true);
@@ -115,19 +144,55 @@ namespace XRL.World.Parts
                     ActivatedAbilities pAA = selector.GetPart<ActivatedAbilities>();
                     if (body != null && pAA != null)
                     {
-                        weaponObject = GameObject.create(WeaponBlueprintName);
+                        weaponObject = GameObject.Create(WeaponBlueprintName);
                         weaponObject.AddPart(new Cursed());
                         BodyPart UBslot = null;
                         string type = "Underbarrel Weapon";
-                        UBslot = body.AddPartAt(type, 0, (string)null, (string)null, (string)null, (string)null, this.ManagerID, new int?(), new int?(), new int?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), "Missile Weapon", new string[3]
-                        {
-                        "Hands",
-                        "Feet",
-                        "Thrown Weapon"
-                        }, true);
+                        UBslot = body.AddPartAt(
+                            type,
+                            0,
+                            (string)null,
+                            (string)null,
+                            (string)null,
+                            (string)null,
+                            this.ManagerID,
+                            new int?(),
+                            new int?(),
+                            new int?(),
+                            new bool?(),
+                            new bool?(),
+                            new bool?(),
+                            new bool?(),
+                            new bool?(),
+                            new bool?(),
+                            new bool?(),
+                            new bool?(),
+                            new bool?(),
+                            new bool?(),
+                            "Missile Weapon",
+                            new string[3] { "Hands", "Feet", "Thrown Weapon" },
+                            true
+                        );
                         selector.ForceEquipObject(weaponObject, UBslot, true);
                         selector.RegisterPartEvent((IPart)this, "CommandFireUBWeapon");
-                        this.FireUBWeaponAbilityID = pAA.AddAbility("Fire " + weaponObject.ShortDisplayName, "CommandFireUBWeapon", "Tactics", "Fire " + weaponObject.ShortDisplayName + " of " + this.ParentObject.ShortDisplayName + ".", "\a", null, false, true, false, false, false, true);
+                        this.FireUBWeaponAbilityID = pAA.AddAbility(
+                            "Fire " + weaponObject.ShortDisplayName,
+                            "CommandFireUBWeapon",
+                            "Tactics",
+                            "Fire "
+                                + weaponObject.ShortDisplayName
+                                + " of "
+                                + this.ParentObject.ShortDisplayName
+                                + ".",
+                            "\a",
+                            null,
+                            false,
+                            true,
+                            false,
+                            false,
+                            false,
+                            true
+                        );
                         this.FireUBWeaponAbility = pAA.AbilityByGuid[this.FireUBWeaponAbilityID];
                     }
                 }
@@ -139,10 +204,18 @@ namespace XRL.World.Parts
         {
             if (!AddOnEquip)
             {
-                MagazineAmmoLoader mal = weaponObject.GetPart("MagazineAmmoLoader") as MagazineAmmoLoader;
+                MagazineAmmoLoader mal =
+                    weaponObject.GetPart("MagazineAmmoLoader") as MagazineAmmoLoader;
                 if (mal != null)
                 {
-                    this.ParentObject.Equipped.TakeObject(mal.Ammo, true, new int?(0), (string)null, (List<GameObject>)null);
+                    this.ParentObject.Equipped.TakeObject(
+                        mal.Ammo,
+                        false,
+                        true,
+                        new int?(0),
+                        (string)null,
+                        (List<GameObject>)null
+                    );
                     mal.SetAmmo((GameObject)null);
                 }
                 weaponObject.Destroy(null, true);
@@ -150,7 +223,8 @@ namespace XRL.World.Parts
                 this.ParentObject.Equipped.UnregisterPartEvent((IPart)this, "CommandFireUBWeapon");
                 if (this.FireUBWeaponAbilityID != Guid.Empty)
                 {
-                    ActivatedAbilities pAA = this.ParentObject.Equipped.GetPart<ActivatedAbilities>();
+                    ActivatedAbilities pAA =
+                        this.ParentObject.Equipped.GetPart<ActivatedAbilities>();
                     pAA.RemoveAbility(this.FireUBWeaponAbilityID);
                     this.FireUBWeaponAbilityID = Guid.Empty;
                 }
@@ -162,7 +236,8 @@ namespace XRL.World.Parts
         {
             if (E.ID == "CommandFireUBWeapon")
             {
-                MagazineAmmoLoader mal = weaponObject.GetPart("MagazineAmmoLoader") as MagazineAmmoLoader;
+                MagazineAmmoLoader mal =
+                    weaponObject.GetPart("MagazineAmmoLoader") as MagazineAmmoLoader;
                 if (mal.Ammo != null)
                 {
                     Combat combat = this.ParentObject.Equipped.GetPart("Combat") as Combat;

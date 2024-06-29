@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
-<!--
-<subtypes>
+<!--<subtypes>
   <class ID="Castes" ChargenTitle="Choose Arcology &amp;&amp; Caste" SingularTitle="caste" StatBoxDisplay="true">
     <category Name="Testers" DisplayName="&amp;KThe People of Test">
       <subtype Name="Testman" Code="a" Gear="StartingGear_Testman_Guns" Tile="creatures/caste_10.bmp" DetailColor="g">
@@ -19,5 +18,4 @@
       </subtype>
     </category>
   </class> 
-</subtypes>
--->
+</subtypes>-->

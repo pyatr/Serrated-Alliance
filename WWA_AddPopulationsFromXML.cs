@@ -14,7 +14,7 @@ namespace XRL
     {
         public static void Reset()
         {
-            string modName = "Serrated Alliance";
+            string modName = "Serrated Alliance (Weapons && Attachments)";
             string path = "";
             foreach (ModInfo modInfo in ModManager.Mods)
             {

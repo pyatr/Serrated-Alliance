@@ -25,7 +25,7 @@ namespace XRL.World.Parts
         {
             get
             {
-                return this.ParentObject.id + "::" + this.ParentObject.ShortDisplayName + ":glowsphere";
+                return this.ParentObject.ID + "::" + this.ParentObject.ShortDisplayName + ":glowsphere";
             }
         }
 

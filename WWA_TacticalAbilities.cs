@@ -19,13 +19,13 @@ namespace XRL.World.Parts
         public List<GameObject> activeWeapons = new List<GameObject>();
 
         public Guid SelectPrimaryWeaponID = Guid.Empty;
-        public ActivatedAbilityEntry SelectPrimaryWeapon;
+        public ActivatedAbilityEntry SelectPrimaryWeapon = null;
         public Guid DeselectPrimaryWeaponID = Guid.Empty;
-        public ActivatedAbilityEntry DeselectPrimaryWeapon;
+        public ActivatedAbilityEntry DeselectPrimaryWeapon = null;
         public Guid SwitchFireModeID = Guid.Empty;
-        public ActivatedAbilityEntry SwitchFireMode;
+        public ActivatedAbilityEntry SwitchFireMode = null;
         public Guid GoProneID = Guid.Empty;
-        public ActivatedAbilityEntry GoProne;
+        public ActivatedAbilityEntry GoProne = null;
 
         public int ProneAimBonus = 1;
         public int ProneDVPenalty = 15;
@@ -153,7 +153,7 @@ namespace XRL.World.Parts
         {
             if (GO != null)
             {
-                GameObject item = GameObject.create(GO.Blueprint);
+                GameObject item = GameObject.Create(GO.Blueprint);
                 MissileWeapon mw = GetMissileWeaponPart(item);
                 if (mw != null)
                     if (mw.FiresManually == false)
@@ -207,8 +207,14 @@ namespace XRL.World.Parts
                             SetFiresManually(false, equipped);
                     }
                 }
-				if (this.activeWeapons.Count > 1)
-					this.DeselectPrimaryWeapon.Enabled = true;
+				//In case BeginEquip happens before object is fully generated				
+				ActivatedAbilities pAA = this.ParentObject.GetPart<ActivatedAbilities>();
+				if (this.DeselectPrimaryWeapon == null && pAA != null)
+				{
+					this.DeselectPrimaryWeaponID = pAA.AddAbility("Deselect missile weapon", "CommandDeselectWeapon", "Tactics");
+					this.DeselectPrimaryWeapon = pAA.AbilityByGuid[this.DeselectPrimaryWeaponID];
+				}
+				this.DeselectPrimaryWeapon.Enabled = this.activeWeapons.Count > 1;				
                 return true;
             }
             if (E.ID == "BeginUnequip")

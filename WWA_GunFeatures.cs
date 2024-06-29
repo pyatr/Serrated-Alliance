@@ -267,7 +267,7 @@ namespace XRL.World.Parts
                         inventoryViewer.UseEnergy(1000, "Physical");
                     selectedAttachment.Destroy();
                     if (inventoryViewer.IsPlayer() && !Silent)
-                        MessageQueue.AddPlayerMessage($"{part.displayName} installed on {this.ParentObject.ShortDisplayName}.");
+                        MessageQueue.AddPlayerMessage($"{part.displayName} attached to {this.ParentObject.ShortDisplayName}.");
                     if (this.GetCharacterAbilities().chosenWeapon == null || this.ParentObject == null)
                         return;
                     if (this.GetCharacterAbilities().chosenWeapon == this.ParentObject)
@@ -290,11 +290,12 @@ namespace XRL.World.Parts
                 attachment.OnDeselect();
                 attachment.OnUninstall();
                 this.ParentObject.RemovePart(name);
-                GameObject uninstalled = GameObject.create(blueprintName);
+                GameObject uninstalled = GameObject.Create(blueprintName);
                 if (inventoryViewer.IsPlayer())
-                    MessageQueue.AddPlayerMessage($"Removed {uninstalled.ShortDisplayName} from {this.ParentObject.ShortDisplayName}.");
+                    MessageQueue.AddPlayerMessage($"Detached {uninstalled.ShortDisplayName} from {this.ParentObject.ShortDisplayName}.");
+                //Can't remember why FlushTransient is null
                 if (uninstalled != null)
-                    inventoryViewer.Inventory.AddObject(uninstalled, false, false, false);
+                    inventoryViewer.Inventory.AddObject(uninstalled, null, false, false, false);
                 inventoryViewer.UseEnergy(1000, "Physical");
             }
             else

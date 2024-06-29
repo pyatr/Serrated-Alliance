@@ -32,7 +32,7 @@ namespace XRL.World.Parts
         {
             if (string.IsNullOrEmpty(this.ProjectileObject))
                 return true;
-            E.Projectile = GameObject.create(this.ProjectileObject);
+            E.Projectile = GameObject.Create(this.ProjectileObject);
             return false;
         }
 
