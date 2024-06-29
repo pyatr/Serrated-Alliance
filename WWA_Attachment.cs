@@ -22,7 +22,7 @@ namespace XRL.World.Parts
 
         public WWA_GunFeatures GetGunFeatures()
         {
-            WWA_GunFeatures gf = this.ParentObject.GetPart<WWA_GunFeatures>() as WWA_GunFeatures;
+            WWA_GunFeatures gf = this.ParentObject.GetPart<WWA_GunFeatures>();
             return gf;
         }
 

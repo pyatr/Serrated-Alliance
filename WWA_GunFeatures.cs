@@ -73,7 +73,7 @@ namespace XRL.World.Parts
             FireRate += mod;
             if (FireMode)
             {
-                MissileWeapon mw = this.ParentObject.GetPart<MissileWeapon>() as MissileWeapon;
+                MissileWeapon mw = this.ParentObject.GetPart<MissileWeapon>();
                 if (mw != null)
                 {
                     mw.ShotsPerAction = DefaultFireRate + FireRate;
@@ -201,7 +201,7 @@ namespace XRL.World.Parts
         public override bool HandleEvent(InventoryActionEvent E)
         {
             if (E.Command == "ViewAttachments")
-                this.FireEvent(Event.New("ViewAttachments", "Viewer", (object)E.Actor));
+                this.FireEvent(Event.New("ViewAttachments", "Viewer", E.Actor));
             return true;
         }
 
@@ -213,7 +213,7 @@ namespace XRL.World.Parts
             {
                 if (!AutomaticOnly)
                 {
-                    MissileWeapon mw = this.ParentObject.GetPart<MissileWeapon>() as MissileWeapon;
+                    MissileWeapon mw = this.ParentObject.GetPart<MissileWeapon>();
                     if (mw != null)
                     {
                         this.FireMode = !this.FireMode;
@@ -438,11 +438,11 @@ namespace XRL.World.Parts
             if (DefaultFireRate > 1)
             {
                 if (!FireMode)
-                    this.ParentObject.Equipped.Physics.PlayWorldSound(SingleFireSound, 0.5f, 0.0f, true, (Cell)null);
+                    this.ParentObject.Equipped.Physics.PlayWorldSound(SingleFireSound, 0.5f, 0.0f, true, null);
                 else if (FireRate < 1)
-                    this.ParentObject.Equipped.Physics.PlayWorldSound(FireBurstSound, 0.5f, 0.0f, true, (Cell)null);
+                    this.ParentObject.Equipped.Physics.PlayWorldSound(FireBurstSound, 0.5f, 0.0f, true, null);
                 else
-                    this.ParentObject.Equipped.Physics.PlayWorldSound(FireBurstHighRateSound, 0.5f, 0.0f, true, (Cell)null);
+                    this.ParentObject.Equipped.Physics.PlayWorldSound(FireBurstHighRateSound, 0.5f, 0.0f, true, null);
 
             }
         }
@@ -459,7 +459,7 @@ namespace XRL.World.Parts
                 if (!FireMode && DefaultFireRate == 1)
                 {
                     //If in semi-automode fire rate was increased the increase will go to fire rate instead
-                    MissileWeapon mw = this.ParentObject.GetPart<MissileWeapon>() as MissileWeapon;
+                    MissileWeapon mw = this.ParentObject.GetPart<MissileWeapon>();
                     if (mw.ShotsPerAction > 1)
                         FireRate = mw.ShotsPerAction - 1;
                 }
@@ -618,7 +618,7 @@ namespace XRL.World.Parts
                     //MessageQueue.AddPlayerMessage(ParentObject.ShortDisplayName + ": " + DrumMagCapacity.ToString());
                 }
             }
-            MissileWeapon mw2 = this.ParentObject.GetPart<MissileWeapon>() as MissileWeapon;
+            MissileWeapon mw2 = this.ParentObject.GetPart<MissileWeapon>();
             if (mw2 != null)
             {
                 DefaultFireRate = mw2.ShotsPerAction;

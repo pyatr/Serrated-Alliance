@@ -33,7 +33,7 @@ namespace XRL.World.Parts
             WWA_GunFeatures gf = Object.GetPart<WWA_GunFeatures>();
             if (part != null)
                 part.MaxAmmo = gf.DrumMagCapacity;
-            this.IncreaseDifficultyAndComplexity(1, 1, (GameObject)null);
+            this.IncreaseDifficultyAndComplexity(1, 1, null);
         }
 
         public override bool WantEvent(int ID, int cascade)

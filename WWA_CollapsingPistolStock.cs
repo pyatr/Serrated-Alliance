@@ -47,9 +47,9 @@ namespace XRL.World.Parts
         public override bool HandleEvent(InventoryActionEvent E)
         {
             if (E.Command == "CollapseStock")
-                this.FireEvent(Event.New("CollapseStock", "Actor", (object)E.Actor));
+                this.FireEvent(Event.New("CollapseStock", "Actor", E.Actor));
             if (E.Command == "RetractStock")
-                this.FireEvent(Event.New("RetractStock", "Actor", (object)E.Actor));
+                this.FireEvent(Event.New("RetractStock", "Actor", E.Actor));
             return true;
         }
 
@@ -60,7 +60,7 @@ namespace XRL.World.Parts
                 retracted = true;
                 this.ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", aimingBonus, true);
                 this.ParentObject.Physics.UsesTwoSlots = true;
-                MissileWeapon mw = this.ParentObject.GetPart<MissileWeapon>() as MissileWeapon;
+                MissileWeapon mw = this.ParentObject.GetPart<MissileWeapon>();
                 if (mw != null)
                 {
                     mw.Skill = "Rifle";
@@ -81,7 +81,7 @@ namespace XRL.World.Parts
                 retracted = false;
                 this.ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", -aimingBonus, true);
                 this.ParentObject.Physics.UsesTwoSlots = false;
-                MissileWeapon mw = this.ParentObject.GetPart<MissileWeapon>() as MissileWeapon;
+                MissileWeapon mw = this.ParentObject.GetPart<MissileWeapon>();
                 if (mw != null)
                 {
                     mw.Skill = "Pistol";

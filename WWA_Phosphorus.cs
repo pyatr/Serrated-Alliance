@@ -52,7 +52,9 @@ namespace XRL.World.Parts
                     }
                 }
                 else
+                {
                     E.MinWeight(5);
+                }
             }
             return true;
         }

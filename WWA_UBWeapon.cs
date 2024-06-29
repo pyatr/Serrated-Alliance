@@ -19,13 +19,13 @@ namespace XRL.World.Parts
         //OnEquip does not work properly here, do not change
         public bool AddOnEquip = false;
 
-        public override void Write(GameObject basis,SerializationWriter Writer)
+        public override void Write(GameObject basis, SerializationWriter Writer)
         {
             Writer.WriteGameObject(this.weaponObject);
             base.Write(basis, Writer);
         }
 
-        public override void Read(GameObject basis,SerializationReader Reader)
+        public override void Read(GameObject basis, SerializationReader Reader)
         {
             this.weaponObject = Reader.ReadGameObject(null);
             base.Read(basis, Reader);
@@ -125,7 +125,7 @@ namespace XRL.World.Parts
                             null,
                             (List<GameObject>)null
                         );
-                        mal.SetAmmo((GameObject)null);
+                        mal.SetAmmo(null);
                     }
                     weaponObject.Destroy(null, true);
                     unequipper.RemoveBodyPartsByManager(this.ManagerID);
@@ -216,7 +216,7 @@ namespace XRL.World.Parts
                         null,
                         (List<GameObject>)null
                     );
-                    mal.SetAmmo((GameObject)null);
+                    mal.SetAmmo(null);
                 }
                 weaponObject.Destroy(null, true);
                 this.ParentObject.Equipped.RemoveBodyPartsByManager(this.ManagerID);
@@ -236,17 +236,19 @@ namespace XRL.World.Parts
         {
             if (E.ID == "CommandFireUBWeapon")
             {
-                MagazineAmmoLoader mal =
-                    weaponObject.GetPart("MagazineAmmoLoader") as MagazineAmmoLoader;
+                MagazineAmmoLoader mal = weaponObject.GetPart("MagazineAmmoLoader") as MagazineAmmoLoader;
                 if (mal.Ammo != null)
                 {
                     Combat combat = this.ParentObject.Equipped.GetPart("Combat") as Combat;
                     MissileWeapon mw = this.ParentObject.GetPart("MissileWeapon") as MissileWeapon;
                     MissileWeapon UBWmw = weaponObject.GetPart("MissileWeapon") as MissileWeapon;
                     combat.LastFired = mw;
+                    string cachedSkill = UBWmw.Skill;
                     UBWmw.FiresManually = true;
-                    this.ParentObject.Equipped.FireEvent("CommandFireMissileWeapon");
+                    UBWmw.Skill = "Underbarrel";
+                    Combat.FireMissileWeapon(The.Player, null, null, FireType.Normal, "Underbarrel");
                     UBWmw.FiresManually = false;
+                    UBWmw.Skill = cachedSkill;
                 }
                 else
                 {

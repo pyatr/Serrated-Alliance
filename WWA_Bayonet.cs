@@ -73,9 +73,9 @@ namespace XRL.World.Parts
             if (this.ParentObject.Equipped != null)
             {
                 if (E.Command == "AddBayonet")
-                    this.FireEvent(Event.New("AddBayonet", "Actor", (object)E.Actor));
+                    this.FireEvent(Event.New("AddBayonet", "Actor", E.Actor));
                 if (E.Command == "RemoveBayonet")
-                    this.FireEvent(Event.New("RemoveBayonet", "Actor", (object)E.Actor));
+                    this.FireEvent(Event.New("RemoveBayonet", "Actor", E.Actor));
             }
             return true;
         }

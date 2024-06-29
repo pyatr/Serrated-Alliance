@@ -20,7 +20,7 @@ namespace XRL.World.Parts
 
         public override bool OnInstall()
         {
-            WWA_GunFeatures gf = this.ParentObject.GetPart<WWA_GunFeatures>() as WWA_GunFeatures;
+            WWA_GunFeatures gf = this.ParentObject.GetPart<WWA_GunFeatures>();
             if (gf != null)
             {
                 gf.ModFireRate(1);
@@ -30,7 +30,7 @@ namespace XRL.World.Parts
 
         public override bool OnUninstall()
         {
-            WWA_GunFeatures gf = this.ParentObject.GetPart<WWA_GunFeatures>() as WWA_GunFeatures;
+            WWA_GunFeatures gf = this.ParentObject.GetPart<WWA_GunFeatures>();
             if (gf != null)
             {
                 gf.ModFireRate(-1);
@@ -48,7 +48,7 @@ namespace XRL.World.Parts
         {
             if (E.ID == "WeaponMissleWeaponFiring")
             {
-                WWA_GunFeatures gf = this.ParentObject.GetPart<WWA_GunFeatures>() as WWA_GunFeatures;
+                WWA_GunFeatures gf = this.ParentObject.GetPart<WWA_GunFeatures>();
                 if (gf != null)
                 {
                     if (gf.FireMode)
@@ -61,7 +61,7 @@ namespace XRL.World.Parts
             }
             if (E.ID == "ShotComplete")
             {
-                WWA_GunFeatures gf = this.ParentObject.GetPart<WWA_GunFeatures>() as WWA_GunFeatures;
+                WWA_GunFeatures gf = this.ParentObject.GetPart<WWA_GunFeatures>();
                 if (gf != null)
                 {
                     if (gf.FireMode)

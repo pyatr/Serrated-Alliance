@@ -114,7 +114,7 @@ namespace XRL.World.Parts
             if (this.chosenWeapon != null)
             {
                 WWA_GunFeatures gf =
-                    this.chosenWeapon.GetPart<WWA_GunFeatures>() as WWA_GunFeatures;
+                    this.chosenWeapon.GetPart<WWA_GunFeatures>();
                 gf.SwitchAutomatic();
             }
         }
@@ -170,7 +170,7 @@ namespace XRL.World.Parts
 
         public MissileWeapon GetMissileWeaponPart(GameObject GO)
         {
-            return GO.GetPart<MissileWeapon>() as MissileWeapon;
+            return GO.GetPart<MissileWeapon>();
         }
 
         public bool WeaponFiresManually(GameObject GO)

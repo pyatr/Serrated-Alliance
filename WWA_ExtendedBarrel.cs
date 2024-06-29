@@ -28,7 +28,7 @@ namespace XRL.World.Parts
         {
             if (E.ID == "WeaponMissleWeaponFiring")
             {
-                WWA_GunFeatures gf = this.ParentObject.GetPart<WWA_GunFeatures>() as WWA_GunFeatures;
+                WWA_GunFeatures gf = this.ParentObject.GetPart<WWA_GunFeatures>();
                 MissileWeapon mw = this.ParentObject.GetPart("MissileWeapon") as MissileWeapon;
                 if (gf != null && mw != null)
                 {
@@ -40,7 +40,7 @@ namespace XRL.World.Parts
             }
             if (E.ID == "ShotComplete")
             {
-                WWA_GunFeatures gf = this.ParentObject.GetPart<WWA_GunFeatures>() as WWA_GunFeatures;
+                WWA_GunFeatures gf = this.ParentObject.GetPart<WWA_GunFeatures>();
                 MissileWeapon mw = this.ParentObject.GetPart("MissileWeapon") as MissileWeapon;
                 if (gf != null && mw != null)
                 {

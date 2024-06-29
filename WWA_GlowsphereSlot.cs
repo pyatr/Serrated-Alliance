@@ -68,9 +68,9 @@ namespace XRL.World.Parts
             if (this.ParentObject.Equipped != null)
             {
                 if (E.Command == "AttachGlowsphere")
-                    this.FireEvent(Event.New("AttachGlowsphere", "Actor", (object)E.Actor));
+                    this.FireEvent(Event.New("AttachGlowsphere", "Actor", E.Actor));
                 if (E.Command == "RemoveGlowsphere")
-                    this.FireEvent(Event.New("RemoveGlowsphere", "Actor", (object)E.Actor));
+                    this.FireEvent(Event.New("RemoveGlowsphere", "Actor", E.Actor));
             }
             return true;
         }

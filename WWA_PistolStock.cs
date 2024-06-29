@@ -24,7 +24,7 @@ namespace XRL.World.Parts
         {
             this.ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", aimingBonus, true);
             this.ParentObject.Physics.UsesTwoSlots = true;
-            MissileWeapon mw = this.ParentObject.GetPart<MissileWeapon>() as MissileWeapon;
+            MissileWeapon mw = this.ParentObject.GetPart<MissileWeapon>();
             if (mw != null)
             {
                 mw.Skill = "Rifle";
@@ -38,7 +38,7 @@ namespace XRL.World.Parts
         {
             this.ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", -aimingBonus, true);
             this.ParentObject.Physics.UsesTwoSlots = false;
-            MissileWeapon mw = this.ParentObject.GetPart<MissileWeapon>() as MissileWeapon;
+            MissileWeapon mw = this.ParentObject.GetPart<MissileWeapon>();
             if (mw != null)
             {
                 mw.Skill = "Pistol";

@@ -30,7 +30,7 @@ namespace XRL.World.Parts
             {
                 if (this.ParentObject.Equipped.HasEffect("WWA_ProneStance"))
                 {
-                    WWA_GunFeatures gf = this.ParentObject.GetPart<WWA_GunFeatures>() as WWA_GunFeatures;
+                    WWA_GunFeatures gf = this.ParentObject.GetPart<WWA_GunFeatures>();
                     if (gf != null)
                     {
                         if (gf.FireMode)
@@ -51,7 +51,7 @@ namespace XRL.World.Parts
             {
                 if (this.ParentObject.Equipped.HasEffect("WWA_ProneStance"))
                 {
-                    WWA_GunFeatures gf = this.ParentObject.GetPart<WWA_GunFeatures>() as WWA_GunFeatures;
+                    WWA_GunFeatures gf = this.ParentObject.GetPart<WWA_GunFeatures>();
                     if (gf != null)
                     {
                         if (gf.FireMode)
