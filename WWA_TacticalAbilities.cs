@@ -113,8 +113,7 @@ namespace XRL.World.Parts
         {
             if (this.chosenWeapon != null)
             {
-                WWA_GunFeatures gf =
-                    this.chosenWeapon.GetPart<WWA_GunFeatures>();
+                WWA_GunFeatures gf = this.chosenWeapon.GetPart<WWA_GunFeatures>();
                 gf.SwitchAutomatic();
             }
         }

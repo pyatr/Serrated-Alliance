@@ -70,6 +70,22 @@ namespace XRL.World.Parts
         [NonSerialized]
         private GameObject inventoryViewer;
 
+        public GameObject WeaponFromStack
+        {
+            get
+            {
+                GameObject weapon = ParentObject;
+
+                if (weapon.HasPart("Stacker"))
+                {
+                    weapon = weapon.Stacker.SplitStack(1);
+                    weapon ??= ParentObject;
+                }
+
+                return weapon;
+            }
+        }
+
         public void ModFireRate(int mod)
         {
             FireRate += mod;
@@ -250,8 +266,10 @@ namespace XRL.World.Parts
             }
         }
 
-        public void InstallAttachment(GameObject selectedAttachment, bool noEnergyUse = false, bool Silent = false)
+        public void InstallAttachment(GameObject weapon, GameObject selectedAttachment, bool noEnergyUse = false, bool Silent = false)
         {
+            //Weapon should be retrieved from SplitStack so that part is not added to entire stack
+
             if (selectedAttachment != null)
             {
                 PartRack parts = selectedAttachment.PartsList;
@@ -268,8 +286,8 @@ namespace XRL.World.Parts
 
                 if (partToCopy != null)
                 {
-                    this.ParentObject.AddPart(partToCopy);
-                    WWA_Attachment part = this.ParentObject.GetPart(partToCopy.Name) as WWA_Attachment;
+                    weapon.AddPart(partToCopy);
+                    WWA_Attachment part = weapon.GetPart(partToCopy.Name) as WWA_Attachment;
                     part.OnInstall();
 
                     if (!noEnergyUse)
@@ -281,16 +299,16 @@ namespace XRL.World.Parts
 
                     if (inventoryViewer.IsPlayer() && !Silent)
                     {
-                        MessageQueue.AddPlayerMessage($"{part.displayName} attached to {this.ParentObject.ShortDisplayName}.");
+                        MessageQueue.AddPlayerMessage($"{part.displayName} attached to {weapon.ShortDisplayName}.");
                     }
 
                     WWA_TacticalAbilities abilities = GetCharacterAbilities();
 
-                    if (abilities == null || abilities.chosenWeapon == null || this.ParentObject == null)
+                    if (abilities == null || abilities.chosenWeapon == null || weapon == null)
                     {
                         return;
                     }
-                    else if (abilities.chosenWeapon == this.ParentObject)
+                    else if (abilities.chosenWeapon == weapon)
                     {
                         part.OnSelect(inventoryViewer);
                         part.OnEquip(inventoryViewer);
@@ -299,56 +317,68 @@ namespace XRL.World.Parts
             }
         }
 
-        public void UninstallAttachment(WWA_Attachment attachment, bool noEnergyUse = false, bool Silent = false)
+        public void UninstallAttachment(GameObject weapon, WWA_Attachment attachment, bool useEnergy = true, bool Silent = false)
         {
             if (!attachment.integral)
             {
                 string name = attachment.Name;
                 string blueprintName = attachment.AttachmentBlueprintName;
 
-                if (this.ParentObject.Equipped != null)
+                if (weapon.Equipped != null)
                 {
                     attachment.OnUnequip(inventoryViewer);
                 }
 
                 attachment.OnDeselect();
                 attachment.OnUninstall();
-                this.ParentObject.RemovePart(name);
+                weapon.RemovePart(attachment);
+
                 GameObject uninstalled = GameObject.Create(blueprintName);
-                if (inventoryViewer.IsPlayer())
-                    MessageQueue.AddPlayerMessage($"Detached {uninstalled.ShortDisplayName} from {this.ParentObject.ShortDisplayName}.");
+
+                if (inventoryViewer.IsPlayer() && !Silent)
+                {
+                    MessageQueue.AddPlayerMessage($"Detached {uninstalled.ShortDisplayName} from {weapon.ShortDisplayName}.");
+                }
+
                 //Can't remember why FlushTransient is null
                 if (uninstalled != null)
+                {
                     inventoryViewer.Inventory.AddObject(uninstalled, null, false, false, false);
-                inventoryViewer.UseEnergy(1000, "Physical");
+                }
+
+                if (useEnergy)
+                {
+                    inventoryViewer.UseEnergy(1000, "Physical");
+                }
             }
-            else if (inventoryViewer.IsPlayer())
+            else if (inventoryViewer.IsPlayer() && !Silent)
             {
                 MessageQueue.AddPlayerMessage("You can't remove integral attachments.");
             }
 
         }
 
-        public void UninstallAttachmentFromSlot(string slot)
+        public void UninstallAttachmentFromSlot(GameObject weapon, string slot)
         {
-            PartRack parts = this.ParentObject.PartsList;
+            PartRack parts = weapon.PartsList;
             foreach (IPart part in parts)
             {
                 if (PartIsAttachment(part))
                 {
                     WWA_Attachment attachment = part as WWA_Attachment;
+
                     if (AttachmentFitsInSlot(attachment.displayName, slot))
                     {
-                        UninstallAttachment(attachment);
+                        UninstallAttachment(weapon, attachment);
                         break;
                     }
                 }
             }
         }
 
-        public void UninstallAttachmentByName(string attachmentName)
+        public void UninstallAttachmentByName(GameObject weapon, string attachmentName)
         {
-            PartRack parts = this.ParentObject.PartsList;
+            PartRack parts = weapon.PartsList;
             foreach (IPart part in parts)
             {
                 if (PartIsAttachment(part))
@@ -356,7 +386,7 @@ namespace XRL.World.Parts
                     WWA_Attachment attachment = part as WWA_Attachment;
                     if (attachment.displayName == attachmentName)
                     {
-                        UninstallAttachment(attachment);
+                        UninstallAttachment(weapon, attachment);
                         break;
                     }
                 }
@@ -366,15 +396,15 @@ namespace XRL.World.Parts
         /// <summary>
         /// Uninstall all non-integral attachments from weapon
         /// </summary>
-        public void UninstallAllAttachments()
+        public void UninstallAllAttachments(GameObject weapon)
         {
             string s;
-            while (WeaponHasAttachment(out s, true))
+            while (WeaponHasAttachment(out s, weapon, true))
             {
                 if (s != "none")
-                    UninstallAttachmentFromSlot(s);
+                    UninstallAttachmentFromSlot(weapon, s);
             }
-            MessageQueue.AddPlayerMessage($"Uninstalled all attachments from {this.ParentObject.ShortDisplayName}.");
+            MessageQueue.AddPlayerMessage($"Uninstalled all attachments from {weapon.ShortDisplayName}.");
         }
 
         /// <summary>
@@ -383,10 +413,10 @@ namespace XRL.World.Parts
         /// <param name="s">Slot name</param>
         /// <param name="removeableOnly">Can attachment be removed from weapon or is it integral?</param>
         /// <returns></returns>
-        public bool WeaponHasAttachment(out string s, bool removeableOnly = false)
+        public bool WeaponHasAttachment(out string s, GameObject weapon, bool removeableOnly = false)
         {
             s = "none";
-            PartRack parts = this.ParentObject.PartsList;
+            PartRack parts = weapon.PartsList;
             foreach (IPart part in parts)
             {
                 if (PartIsAttachment(part))
@@ -495,17 +525,7 @@ namespace XRL.World.Parts
                     return true;
                 }
 
-                GameObject weapon = this.ParentObject;
-
-                if (weapon.HasPart("Stacker"))
-                {
-                    weapon = weapon.Stacker.SplitStack(1);
-
-                    if (weapon == null)
-                    {
-                        weapon = ParentObject;
-                    }
-                }
+                GameObject weapon = WeaponFromStack;
 
                 inventoryViewer = E.GetParameter("Viewer") as GameObject;
                 List<string> slotsAndAttachmentsMenu = new List<string>();
@@ -560,8 +580,11 @@ namespace XRL.World.Parts
 
                     switch (slotsAndAttachmentsMenu[selectedSlotNumber])
                     {
-                        case "Remove all attachments": UninstallAllAttachments(); break;
-                        case "Cancel": break;
+                        case "Remove all attachments":
+                            UninstallAllAttachments(weapon);
+                            break;
+                        case "Cancel":
+                            break;
                         default:
                             string selectedSlot = AttachmentSlots.Keys.ElementAt(selectedSlotNumber);
                             string fullSlotName = SlotNames[selectedSlot];
@@ -586,13 +609,13 @@ namespace XRL.World.Parts
 
                                 switch (names[selectedSlotNumber])
                                 {
-                                    case "Remove attachment": UninstallAttachmentFromSlot(selectedSlot); break;
+                                    case "Remove attachment": UninstallAttachmentFromSlot(weapon, selectedSlot); break;
                                     case "Cancel": selectedSlotNumber = -1; break;
                                     default:
                                         {
-                                            UninstallAttachmentFromSlot(selectedSlot);
+                                            UninstallAttachmentFromSlot(weapon, selectedSlot);
                                             selectedAttachment = attachments.Values.ElementAt(selectedSlotNumber);
-                                            InstallAttachment(selectedAttachment);
+                                            InstallAttachment(weapon, selectedAttachment);
                                         }
                                         break;
                                 }

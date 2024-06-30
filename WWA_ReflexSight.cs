@@ -17,20 +17,24 @@ namespace XRL.World.Parts
         public override bool OnSelect(GameObject selector)
         {
             MissileWeapon mw = this.ParentObject.GetPart<MissileWeapon>();
+
             if (mw != null)
             {
                 mw.EnergyCost += EnergyCostMod;
             }
+
             return base.OnSelect(selector);
         }
 
         public override bool OnDeselect()
         {
             MissileWeapon mw = this.ParentObject.GetPart<MissileWeapon>();
+
             if (mw != null)
             {
                 mw.EnergyCost -= EnergyCostMod;
             }
+
             return base.OnDeselect();
         }
 
