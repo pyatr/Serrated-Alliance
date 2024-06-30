@@ -14,14 +14,14 @@ namespace XRL.World.Effects
 
         public WWA_ProneStance()
         {
-            base.DisplayName = "&cPronce stance";
+            base.DisplayName = "&cProne stance";
             this.Duration = 1;
             this.AccuracyBonus = 1;
         }
 
         public WWA_ProneStance(int accuracyBonus)
         {
-            base.DisplayName = "&cPronce stance";
+            base.DisplayName = "&cProne stance";
             this.Duration = 1;
             this.AccuracyBonus = accuracyBonus;
         }
@@ -69,7 +69,13 @@ namespace XRL.World.Effects
         {
             if (E.ID == "BeginMove")
             {
-                //return false;
+                //Make AI get up after some time has passed
+                //Object can be null after effect is removed, lets hope it won't screw up the game
+                if (Duration > 0 && Object != null && !Object.IsPlayer())
+                {
+                    Duration--;
+                }
+
                 return true;
             }
             return base.FireEvent(E);

@@ -71,6 +71,26 @@ namespace XRL.World.Parts
             base.Register(Object, Registrar);
         }
 
+        public override bool HandleEvent(AIGetDefensiveAbilityListEvent E)
+        {
+            //If AI
+            // has weapon
+            // is a humanoid
+            // smart enough to go prone
+            // it's far enough
+            // and it has an accurate enough weapon to hit at current distance it can go prone
+            if (this.chosenWeapon != null &&
+                ParentObject.GetPart<Body>().Anatomy == "Humanoid" &&
+                ParentObject.GetStat("Intelligence").Value >= 16 &&
+                E.Distance > MinProneDVDistance &&
+                E.Distance > this.chosenWeapon.GetPart<MissileWeapon>().WeaponAccuracy)
+            {
+                E.Add("CommandGoProne");
+            }
+
+            return base.HandleEvent(E);
+        }
+
         public void AddAbilities()
         {
             ActivatedAbilities pAA = this.ParentObject.GetPart<ActivatedAbilities>();
@@ -124,8 +144,7 @@ namespace XRL.World.Parts
             if (GO != null && SelectPrimaryWeapon != null) //May be called before object creation event
             {
                 this.chosenWeapon = GO;
-                this.SelectPrimaryWeapon.DisplayName =
-                    "Selected - " + this.chosenWeapon.ShortDisplayName;
+                this.SelectPrimaryWeapon.DisplayName = "Selected - " + this.chosenWeapon.ShortDisplayName;
                 //MessageQueue.AddPlayerMessage(this.chosenWeapon.ShortDisplayName + " selected as primary missile weapon.");
                 foreach (GameObject GO2 in this.activeWeapons)
                 {
@@ -327,7 +346,14 @@ namespace XRL.World.Parts
                 {
                     if (!this.ParentObject.HasEffect("WWA_ProneStance"))
                     {
-                        this.ParentObject.ApplyEffect(new WWA_ProneStance(1));
+                        WWA_ProneStance prone = new WWA_ProneStance(1);
+
+                        if (!ParentObject.IsPlayer())
+                        {
+                            prone.Duration = 30;
+                        }
+
+                        this.ParentObject.ApplyEffect(prone);
                         this.ParentObject.UseEnergy(1000, "Physical");
                         if (this.ParentObject.IsPlayer())
                             MessageQueue.AddPlayerMessage("You lie down.");
