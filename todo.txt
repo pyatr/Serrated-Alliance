@@ -7,6 +7,5 @@
 - Rework stun grenades to work more like stun grenades in Underrail
 - Possibly improve new icons or redraw them in even higher resolution
 
-- Fix removed mods still appearing in game
 - Fix weapon stacking allowing to dupe attachments
 - Fix fire mode selection for weapons with more than one bullet per shot (set to auto-only right now)

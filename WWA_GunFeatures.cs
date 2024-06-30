@@ -8,6 +8,7 @@ using XRL.World;
 using XRL.World.Effects;
 using ConsoleLib.Console;
 using UnityEngine;
+using System.Reflection;
 
 namespace XRL.World.Parts
 {
@@ -126,28 +127,23 @@ namespace XRL.World.Parts
         {
             List<WWA_Attachment> currentWeaponAttachments = GetAttachments(this.ParentObject);
             List<WWA_Attachment> comparedWeaponAttachments = GetAttachments(p.ParentObject);
+
             //If different attachment count it's not the same and we do not stack those weapons
             if (currentWeaponAttachments.Count != comparedWeaponAttachments.Count)
+            {
                 return false;
+            }
             else
             {
                 List<string> cwasl = AttachmentListToString(currentWeaponAttachments);
                 List<string> comwasl = AttachmentListToString(comparedWeaponAttachments);
-                foreach (string s in cwasl)
+
+                if (cwasl.All(comwasl.Contains))
                 {
-                    if (!comwasl.Contains(s))
-                    {
-                        return false;
-                    }
-                }
-                foreach (string s in comwasl)
-                {
-                    if (!cwasl.Contains(s))
-                    {
-                        return false;
-                    }
+                    return true;
                 }
             }
+
             return base.SameAs(p);
         }
 
@@ -260,6 +256,7 @@ namespace XRL.World.Parts
             {
                 PartRack parts = selectedAttachment.PartsList;
                 IPart partToCopy = null;
+
                 foreach (IPart part in parts)
                 {
                     if (PartIsAttachment(part))
@@ -268,14 +265,20 @@ namespace XRL.World.Parts
                         break;
                     }
                 }
+
                 if (partToCopy != null)
                 {
                     this.ParentObject.AddPart(partToCopy);
                     WWA_Attachment part = this.ParentObject.GetPart(partToCopy.Name) as WWA_Attachment;
                     part.OnInstall();
+
                     if (!noEnergyUse)
+                    {
                         inventoryViewer.UseEnergy(1000, "Physical");
+                    }
+
                     selectedAttachment.Destroy();
+
                     if (inventoryViewer.IsPlayer() && !Silent)
                     {
                         MessageQueue.AddPlayerMessage($"{part.displayName} attached to {this.ParentObject.ShortDisplayName}.");
@@ -302,8 +305,12 @@ namespace XRL.World.Parts
             {
                 string name = attachment.Name;
                 string blueprintName = attachment.AttachmentBlueprintName;
+
                 if (this.ParentObject.Equipped != null)
+                {
                     attachment.OnUnequip(inventoryViewer);
+                }
+
                 attachment.OnDeselect();
                 attachment.OnUninstall();
                 this.ParentObject.RemovePart(name);
@@ -315,10 +322,9 @@ namespace XRL.World.Parts
                     inventoryViewer.Inventory.AddObject(uninstalled, null, false, false, false);
                 inventoryViewer.UseEnergy(1000, "Physical");
             }
-            else
+            else if (inventoryViewer.IsPlayer())
             {
-                if (inventoryViewer.IsPlayer())
-                    MessageQueue.AddPlayerMessage("You can't remove integral attachments.");
+                MessageQueue.AddPlayerMessage("You can't remove integral attachments.");
             }
 
         }
@@ -484,107 +490,123 @@ namespace XRL.World.Parts
             }
             if (E.ID == "ViewAttachments")
             {
-                if (AttachmentSlots.Count == SlotNames.Count && AttachmentSlots.Count > 0)
+                if (AttachmentSlots.Count != SlotNames.Count || AttachmentSlots.Count == 0)
                 {
-                    GameObject weapon = this.ParentObject;
-                    //FIXME: Attachment duping if weapon is in stack. Pls do not abuse.
-                    /*if (weapon.HasPart("Stacker"))
+                    return true;
+                }
+
+                GameObject weapon = this.ParentObject;
+
+                if (weapon.HasPart("Stacker"))
+                {
+                    weapon = weapon.Stacker.SplitStack(1);
+
+                    if (weapon == null)
                     {
-                        Stacker stackerino = weapon.GetPart("Stacker") as Stacker;
-                        weapon = stackerino.RemoveOne();
-                    }*/
-                    inventoryViewer = E.GetParameter("Viewer") as GameObject;
-                    List<string> slotsAndAttachmentsMenu = new List<string>();
-                    Dictionary<string, bool> isSlotOccupied = new Dictionary<string, bool>();
-                    foreach (string slot in AttachmentSlots.Keys)
+                        weapon = ParentObject;
+                    }
+                }
+
+                inventoryViewer = E.GetParameter("Viewer") as GameObject;
+                List<string> slotsAndAttachmentsMenu = new List<string>();
+                Dictionary<string, bool> isSlotOccupied = new Dictionary<string, bool>();
+
+                foreach (string slot in AttachmentSlots.Keys)
+                {
+                    PartRack weaponParts = weapon.PartsList;
+                    string slotDisplayName = SlotNames[slot];
+                    bool occupied = false;
+                    slotsAndAttachmentsMenu.Add($"{slotDisplayName}: &knone");
+
+                    foreach (IPart part in weaponParts)
                     {
-                        PartRack weaponParts = weapon.PartsList;
-                        string slotDisplayName = slot;
-                        bool occupied = false;
-                        slotDisplayName = SlotNames[slot];
-                        slotsAndAttachmentsMenu.Add($"{slotDisplayName}: &knone");
-                        foreach (IPart part in weaponParts)
+                        if (!PartIsAttachment(part))
                         {
-                            if (PartIsAttachment(part))
+                            continue;
+                        }
+
+                        WWA_Attachment possibleInstalledAttachment = part as WWA_Attachment;
+                        string color = "";
+
+                        if (!AttachmentFitsInSlot(possibleInstalledAttachment.displayName, slot))
+                        {
+                            continue;
+                        }
+
+                        if (possibleInstalledAttachment.integral)
+                        {
+                            color = "&Y";
+                        }
+
+                        slotsAndAttachmentsMenu[slotsAndAttachmentsMenu.Count - 1] = slotDisplayName + ": " + color + possibleInstalledAttachment.displayName;
+                        occupied = true;
+                        break;
+                    }
+
+                    isSlotOccupied.Add(slot, occupied);
+                }
+
+                if (isSlotOccupied.ContainsValue(true))
+                {
+                    slotsAndAttachmentsMenu.Add("Remove all attachments");
+                }
+
+                slotsAndAttachmentsMenu.Add("Cancel");
+                int selectedSlotNumber = -1;
+
+                do
+                {
+                    selectedSlotNumber = Popup.PickOption("Attachments", null, "", null, slotsAndAttachmentsMenu.ToArray());
+
+                    switch (slotsAndAttachmentsMenu[selectedSlotNumber])
+                    {
+                        case "Remove all attachments": UninstallAllAttachments(); break;
+                        case "Cancel": break;
+                        default:
+                            string selectedSlot = AttachmentSlots.Keys.ElementAt(selectedSlotNumber);
+                            string fullSlotName = SlotNames[selectedSlot];
+                            List<string> possibleAttachments = AttachmentSlots[selectedSlot].ToList();
+
+                            if (selectedSlot == "Cancel")
                             {
-                                WWA_Attachment possibleInstalledAttachment = part as WWA_Attachment;
-                                if (AttachmentFitsInSlot(possibleInstalledAttachment.displayName, slot))
+                                break;
+                            }
+
+                            Dictionary<string, GameObject> attachments = FindAttachmentsForSlot(selectedSlot, possibleAttachments);
+                            GameObject selectedAttachment = null;
+                            List<string> options = new List<string>();
+                            options.AddRange(attachments.Keys.ToList());
+                            if (isSlotOccupied[selectedSlot])
+                                options.Add("Remove attachment");
+                            options.Add("Cancel");
+                            string[] names = options.ToArray();
+                            if (attachments.Count > 0 || isSlotOccupied[selectedSlot])
+                            {
+                                selectedSlotNumber = Popup.PickOption("Choose attachment", null, "", null, names);
+
+                                switch (names[selectedSlotNumber])
                                 {
-                                    string color = "";
-                                    if (possibleInstalledAttachment.integral)
-                                        color = "&Y";
-                                    slotsAndAttachmentsMenu[slotsAndAttachmentsMenu.Count - 1] = slotDisplayName + ": " + color + possibleInstalledAttachment.displayName;
-                                    occupied = true;
-                                    break;
+                                    case "Remove attachment": UninstallAttachmentFromSlot(selectedSlot); break;
+                                    case "Cancel": selectedSlotNumber = -1; break;
+                                    default:
+                                        {
+                                            UninstallAttachmentFromSlot(selectedSlot);
+                                            selectedAttachment = attachments.Values.ElementAt(selectedSlotNumber);
+                                            InstallAttachment(selectedAttachment);
+                                        }
+                                        break;
                                 }
                             }
-                        }
-                        isSlotOccupied.Add(slot, occupied);
+                            else
+                            {
+                                MessageQueue.AddPlayerMessage($"You don't have any attachments to install on {weapon.ShortDisplayName} {fullSlotName}.");
+                            }
+
+                            break;
                     }
-                    if (isSlotOccupied.Values.Contains(true))
-                        slotsAndAttachmentsMenu.Add("Remove all attachments");
-                    slotsAndAttachmentsMenu.Add("Cancel");
-                    int n = -1;
-                    do
-                    {
-                        n = Popup.PickOption("Attachments", null, "", null, slotsAndAttachmentsMenu.ToArray());
-                        switch (slotsAndAttachmentsMenu[n])
-                        {
-                            case "Remove all attachments": UninstallAllAttachments(); break;
-                            case "Cancel": break;
-                            default:
-                                {
-                                    string selectedSlot = AttachmentSlots.Keys.ElementAt(n);
-                                    string fullSlotName = SlotNames[selectedSlot];
-                                    List<string> possibleAttachments = AttachmentSlots[selectedSlot].ToList();
-                                    if (selectedSlot != "Cancel")
-                                    {
-                                        Dictionary<string, GameObject> attachments = FindAttachmentsForSlot(selectedSlot, possibleAttachments);
-                                        GameObject selectedAttachment = null;
-                                        List<string> options = new List<string>();
-                                        options.AddRange(attachments.Keys.ToList());
-                                        if (isSlotOccupied[selectedSlot])
-                                            options.Add("Remove attachment");
-                                        options.Add("Cancel");
-                                        string[] names = options.ToArray();
-                                        if (attachments.Count > 0 || isSlotOccupied[selectedSlot])
-                                        {
-                                            n = Popup.PickOption("Choose attachment", null, "", null, names);
-                                            //MessageQueue.AddPlayerMessage("You can't remove integral attachments.");
-                                            switch (names[n])
-                                            {
-                                                case "Remove attachment": UninstallAttachmentFromSlot(selectedSlot); break;
-                                                case "Cancel": n = -1; break;
-                                                default:
-                                                    {
-                                                        UninstallAttachmentFromSlot(selectedSlot);
-                                                        selectedAttachment = attachments.Values.ElementAt(n);
-                                                        InstallAttachment(selectedAttachment);
-                                                        //Will not go further because
-                                                        /*if (this.ParentObject.InInventory != null)
-														{
-															this.ParentObject.InInventory.Inventory.AddObjectNoStack(weapon);
-															MessageQueue.AddPlayerMessage("Added to inventory");
-														}
-														else
-														{
-															this.ParentObject.CurrentCell.AddObject(weapon);
-															MessageQueue.AddPlayerMessage("Added to cell");
-														}
-														MessageQueue.AddPlayerMessage("Finished fiddling with inventory");*/
-                                                    }
-                                                    break;
-                                            }
-                                        }
-                                        else
-                                            MessageQueue.AddPlayerMessage($"You don't have any attachments to install on {weapon.ShortDisplayName} {fullSlotName}.");
-                                    }
-                                }
-                                break;
-                        }
-                    }
-                    while (n == -1);
                 }
+                while (selectedSlotNumber == -1);
+
                 return true;
             }
             if (!(E.ID == "ObjectCreated"))
