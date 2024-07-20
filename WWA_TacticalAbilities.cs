@@ -37,37 +37,37 @@ namespace XRL.World.Parts
 
         public WWA_TacticalAbilities()
         {
-            this.activeWeapons = new List<GameObject>();
+            activeWeapons = new List<GameObject>();
         }
 
         public override void Write(GameObject basis, SerializationWriter Writer)
         {
-            Writer.WriteGameObject(this.chosenWeapon);
-            Writer.WriteGameObjectList(this.activeWeapons);
+            Writer.WriteGameObject(chosenWeapon);
+            Writer.WriteGameObjectList(activeWeapons);
             base.Write(basis, Writer);
         }
 
         public override void Read(GameObject basis, SerializationReader Reader)
         {
-            this.chosenWeapon = Reader.ReadGameObject();
-            this.activeWeapons = new List<GameObject>();
-            Reader.ReadGameObjectList(this.activeWeapons);
+            chosenWeapon = Reader.ReadGameObject();
+            activeWeapons = new List<GameObject>();
+            Reader.ReadGameObjectList(activeWeapons);
             base.Read(basis, Reader);
         }
 
         public override void Register(GameObject Object, IEventRegistrar Registrar)
         {
-            Object.RegisterPartEvent(this, "CommandSelectWeapon");
-            Object.RegisterPartEvent(this, "CommandDeselectWeapon");
-            Object.RegisterPartEvent(this, "CommandSwitchFireMode");
-            Object.RegisterPartEvent(this, "CommandGoProne");
-            Object.RegisterPartEvent(this, "BeginTakeAction");
-            Object.RegisterPartEvent(this, "ObjectCreated");
-            Object.RegisterPartEvent(this, "BeginEquip");
-            Object.RegisterPartEvent(this, "BeginUnequip");
-            Object.RegisterPartEvent(this, "WeaponGetDefenderDV");
-            Object.RegisterPartEvent(this, "FiringMissile");
-            Object.RegisterPartEvent(this, "FiredMissileWeapon");
+            Registrar.Register("CommandSelectWeapon");
+            Registrar.Register("CommandDeselectWeapon");
+            Registrar.Register("CommandSwitchFireMode");
+            Registrar.Register("CommandGoProne");
+            Registrar.Register("BeginTakeAction");
+            Registrar.Register("ObjectCreated");
+            Registrar.Register("BeginEquip");
+            Registrar.Register("BeginUnequip");
+            Registrar.Register("WeaponGetDefenderDV");
+            Registrar.Register("FiringMissile");
+            Registrar.Register("FiredMissileWeapon");
             base.Register(Object, Registrar);
         }
 
@@ -79,11 +79,11 @@ namespace XRL.World.Parts
             // smart enough to go prone
             // it's far enough
             // and it has an accurate enough weapon to hit at current distance it can go prone
-            if (this.chosenWeapon != null &&
+            if (chosenWeapon != null &&
                 ParentObject.GetPart<Body>().Anatomy == "Humanoid" &&
                 ParentObject.GetStat("Intelligence").Value >= 16 &&
                 E.Distance > MinProneDVDistance &&
-                E.Distance > this.chosenWeapon.GetPart<MissileWeapon>().WeaponAccuracy)
+                E.Distance > chosenWeapon.GetPart<MissileWeapon>().WeaponAccuracy)
             {
                 E.Add("CommandGoProne");
             }
@@ -93,31 +93,31 @@ namespace XRL.World.Parts
 
         public void AddAbilities()
         {
-            ActivatedAbilities pAA = this.ParentObject.GetPart<ActivatedAbilities>();
+            ActivatedAbilities pAA = ParentObject.GetPart<ActivatedAbilities>();
             if (pAA != null)
             {
-                this.SelectPrimaryWeaponID = pAA.AddAbility(
+                SelectPrimaryWeaponID = pAA.AddAbility(
                     "Select primary missile weapon",
                     "CommandSelectWeapon",
                     "Tactics",
                     "Select a specific missile weapon."
                 );
-                this.SelectPrimaryWeapon = pAA.AbilityByGuid[this.SelectPrimaryWeaponID];
-                this.DeselectPrimaryWeaponID = pAA.AddAbility(
+                SelectPrimaryWeapon = pAA.AbilityByGuid[SelectPrimaryWeaponID];
+                DeselectPrimaryWeaponID = pAA.AddAbility(
                     "Deselect missile weapon",
                     "CommandDeselectWeapon",
                     "Tactics"
                 );
-                this.DeselectPrimaryWeapon = pAA.AbilityByGuid[this.DeselectPrimaryWeaponID];
-                this.DeselectPrimaryWeapon.Enabled = false;
-                this.SwitchFireModeID = pAA.AddAbility(
+                DeselectPrimaryWeapon = pAA.AbilityByGuid[DeselectPrimaryWeaponID];
+                DeselectPrimaryWeapon.Enabled = false;
+                SwitchFireModeID = pAA.AddAbility(
                     "Switch fire mode",
                     "CommandSwitchFireMode",
                     "Tactics",
                     "Choose between automatic and semi-automatic fire mode. Some weapons only have automatic fire mode."
                 );
-                this.SwitchFireMode = pAA.AbilityByGuid[this.SwitchFireModeID];
-                this.GoProneID = pAA.AddAbility(
+                SwitchFireMode = pAA.AbilityByGuid[SwitchFireModeID];
+                GoProneID = pAA.AddAbility(
                     "Go prone",
                     "CommandGoProne",
                     "Tactics",
@@ -125,15 +125,15 @@ namespace XRL.World.Parts
                         + (ProneAimBonus * 2).ToString()
                         + " points higher."
                 );
-                this.GoProne = pAA.AbilityByGuid[this.GoProneID];
+                GoProne = pAA.AbilityByGuid[GoProneID];
             }
         }
 
         public void SwitchAutomatic()
         {
-            if (this.chosenWeapon != null)
+            if (chosenWeapon != null)
             {
-                WWA_GunFeatures gf = this.chosenWeapon.GetPart<WWA_GunFeatures>();
+                WWA_GunFeatures gf = chosenWeapon.GetPart<WWA_GunFeatures>();
                 gf.SwitchAutomatic();
             }
         }
@@ -143,33 +143,33 @@ namespace XRL.World.Parts
             DeselectWeapon();
             if (GO != null && SelectPrimaryWeapon != null) //May be called before object creation event
             {
-                this.chosenWeapon = GO;
-                this.SelectPrimaryWeapon.DisplayName = "Selected - " + this.chosenWeapon.ShortDisplayName;
+                chosenWeapon = GO;
+                SelectPrimaryWeapon.DisplayName = "Selected - " + chosenWeapon.ShortDisplayName;
                 //MessageQueue.AddPlayerMessage(this.chosenWeapon.ShortDisplayName + " selected as primary missile weapon.");
-                foreach (GameObject GO2 in this.activeWeapons)
+                foreach (GameObject GO2 in activeWeapons)
                 {
-                    if (GO2 != this.chosenWeapon)
+                    if (GO2 != chosenWeapon)
                         SetFiresManually(false, GO2);
                 }
-                PartRack parts = this.chosenWeapon.PartsList;
+                PartRack parts = chosenWeapon.PartsList;
                 foreach (IPart part in parts)
                 {
                     if (part.GetType().BaseType.Name == "WWA_Attachment")
                     {
                         WWA_Attachment attachment = part as WWA_Attachment;
-                        attachment.OnSelect(this.ParentObject);
+                        attachment.OnSelect(ParentObject);
                     }
                 }
-                if (this.activeWeapons.Count > 1)
-                    this.DeselectPrimaryWeapon.Enabled = true;
+                if (activeWeapons.Count > 1)
+                    DeselectPrimaryWeapon.Enabled = true;
             }
         }
 
         void DeselectWeapon()
         {
-            if (this.chosenWeapon != null)
+            if (chosenWeapon != null)
             {
-                PartRack parts = this.chosenWeapon.PartsList;
+                PartRack parts = chosenWeapon.PartsList;
                 foreach (IPart part in parts)
                 {
                     if (part.GetType().BaseType.Name == "WWA_Attachment")
@@ -178,11 +178,11 @@ namespace XRL.World.Parts
                         attachment.OnDeselect();
                     }
                 }
-                this.chosenWeapon = null;
-                this.SelectPrimaryWeapon.DisplayName = "Select primary missile weapon";
-                foreach (GameObject GO2 in this.activeWeapons)
+                chosenWeapon = null;
+                SelectPrimaryWeapon.DisplayName = "Select primary missile weapon";
+                foreach (GameObject GO2 in activeWeapons)
                     SetFiresManually(true, GO2);
-                this.DeselectPrimaryWeapon.Enabled = false;
+                DeselectPrimaryWeapon.Enabled = false;
             }
         }
 
@@ -228,14 +228,14 @@ namespace XRL.World.Parts
             {
                 if (
                     (
-                        this.ParentObject.HasEffect("Flying")
-                        || this.ParentObject.HasEffect("Sprinting")
-                    ) && this.ParentObject.HasEffect("WWA_ProneStance")
+                        ParentObject.HasEffect("Flying")
+                        || ParentObject.HasEffect("Sprinting")
+                    ) && ParentObject.HasEffect("WWA_ProneStance")
                 )
                 {
-                    this.ParentObject.RemoveEffect(typeof(WWA_ProneStance));
-                    this.ParentObject.UseEnergy(1000, "Physical");
-                    if (this.ParentObject.IsPlayer())
+                    ParentObject.RemoveEffect(typeof(WWA_ProneStance));
+                    ParentObject.UseEnergy(1000, "Physical");
+                    if (ParentObject.IsPlayer())
                         MessageQueue.AddPlayerMessage("You get up.");
                 }
                 return true;
@@ -247,25 +247,25 @@ namespace XRL.World.Parts
                 {
                     if (equipped != null && IsFirearm(equipped))
                     {
-                        this.activeWeapons.Add(equipped);
-                        if (this.activeWeapons.Count == 1)
+                        activeWeapons.Add(equipped);
+                        if (activeWeapons.Count == 1)
                             SelectWeapon(equipped);
                         if (chosenWeapon != null && chosenWeapon != equipped)
                             SetFiresManually(false, equipped);
                     }
                 }
                 //In case BeginEquip happens before object is fully generated
-                ActivatedAbilities pAA = this.ParentObject.GetPart<ActivatedAbilities>();
-                if (this.DeselectPrimaryWeapon == null && pAA != null)
+                ActivatedAbilities pAA = ParentObject.GetPart<ActivatedAbilities>();
+                if (DeselectPrimaryWeapon == null && pAA != null)
                 {
-                    this.DeselectPrimaryWeaponID = pAA.AddAbility(
+                    DeselectPrimaryWeaponID = pAA.AddAbility(
                         "Deselect missile weapon",
                         "CommandDeselectWeapon",
                         "Tactics"
                     );
-                    this.DeselectPrimaryWeapon = pAA.AbilityByGuid[this.DeselectPrimaryWeaponID];
+                    DeselectPrimaryWeapon = pAA.AbilityByGuid[DeselectPrimaryWeaponID];
                 }
-                this.DeselectPrimaryWeapon.Enabled = this.activeWeapons.Count > 1;
+                DeselectPrimaryWeapon.Enabled = activeWeapons.Count > 1;
                 return true;
             }
             if (E.ID == "BeginUnequip")
@@ -277,27 +277,27 @@ namespace XRL.World.Parts
                     if (equipped != null && IsFirearm(equipped))
                     {
                         SetFiresManually(true, equipped);
-                        if (equipped == this.chosenWeapon)
+                        if (equipped == chosenWeapon)
                             DeselectWeapon();
-                        this.activeWeapons.Remove(equipped);
-                        this.activeWeapons.TrimExcess();
-                        if (this.activeWeapons.Count == 1) //Selecting the only remaining weapon
-                            SelectWeapon(this.activeWeapons[0]);
+                        activeWeapons.Remove(equipped);
+                        activeWeapons.TrimExcess();
+                        if (activeWeapons.Count == 1) //Selecting the only remaining weapon
+                            SelectWeapon(activeWeapons[0]);
                     }
                 }
                 return true;
             }
             if (E.ID == "CommandSelectWeapon")
             {
-                if (this.activeWeapons.Count == 0)
+                if (activeWeapons.Count == 0)
                 {
                     MessageQueue.AddPlayerMessage("You don't have any missile weapons equipped.");
                     return true;
                 }
-                else if (this.activeWeapons.Count == 1)
+                else if (activeWeapons.Count == 1)
                 {
-                    if (this.chosenWeapon == null)
-                        SelectWeapon(this.activeWeapons[0]);
+                    if (chosenWeapon == null)
+                        SelectWeapon(activeWeapons[0]);
                     else
                         MessageQueue.AddPlayerMessage("You only have one missile weapon equipped.");
                     return true;
@@ -306,7 +306,7 @@ namespace XRL.World.Parts
                 {
                     Dictionary<GameObject, string> names = new Dictionary<GameObject, string>();
 
-                    foreach (GameObject GO in this.activeWeapons)
+                    foreach (GameObject GO in activeWeapons)
                     {
                         if (
                             GetMissileWeaponPart(GO) != null /* && GO != this.chosenWeapon*/
@@ -318,7 +318,7 @@ namespace XRL.World.Parts
                     string[] _names = names.Values.ToArray();
                     if (_names.Length == 1)
                     {
-                        SelectWeapon(this.activeWeapons[0]);
+                        SelectWeapon(activeWeapons[0]);
                         return true;
                     }
                     else if (_names.Length > 1)
@@ -342,9 +342,9 @@ namespace XRL.World.Parts
             }
             if (E.ID == "CommandGoProne")
             {
-                if (!this.ParentObject.OnWorldMap())
+                if (!ParentObject.OnWorldMap())
                 {
-                    if (!this.ParentObject.HasEffect("WWA_ProneStance"))
+                    if (!ParentObject.HasEffect("WWA_ProneStance"))
                     {
                         WWA_ProneStance prone = new WWA_ProneStance(1);
 
@@ -353,16 +353,16 @@ namespace XRL.World.Parts
                             prone.Duration = 30;
                         }
 
-                        this.ParentObject.ApplyEffect(prone);
-                        this.ParentObject.UseEnergy(1000, "Physical");
-                        if (this.ParentObject.IsPlayer())
+                        ParentObject.ApplyEffect(prone);
+                        ParentObject.UseEnergy(1000, "Physical");
+                        if (ParentObject.IsPlayer())
                             MessageQueue.AddPlayerMessage("You lie down.");
                     }
                     else
                     {
-                        this.ParentObject.RemoveEffect(typeof(WWA_ProneStance));
-                        this.ParentObject.UseEnergy(1000, "Physical");
-                        if (this.ParentObject.IsPlayer())
+                        ParentObject.RemoveEffect(typeof(WWA_ProneStance));
+                        ParentObject.UseEnergy(1000, "Physical");
+                        if (ParentObject.IsPlayer())
                             MessageQueue.AddPlayerMessage("You get up.");
                     }
                 }
@@ -370,7 +370,7 @@ namespace XRL.World.Parts
             }
             if (E.ID == "FiringMissile")
             {
-                if (!ProneBonusApplied && this.chosenWeapon != null)
+                if (!ProneBonusApplied && chosenWeapon != null)
                 {
                     MissileWeapon mw = GetMissileWeaponPart(chosenWeapon);
                     bool weaponIsPistol = false;
@@ -378,13 +378,13 @@ namespace XRL.World.Parts
                         if (mw.Skill == "Pistol")
                             weaponIsPistol = true;
                     if (
-                        this.ParentObject.HasEffect("WWA_ProneStance")
-                        && this.chosenWeapon.HasPart("MagazineAmmoLoader")
+                        ParentObject.HasEffect("WWA_ProneStance")
+                        && chosenWeapon.HasPart("MagazineAmmoLoader")
                         && !weaponIsPistol
                     )
                     {
                         //MessageQueue.AddPlayerMessage("Prone accuracy bonus applied to " + this.chosenWeapon.ShortDisplayName + ".");
-                        this.ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", 2, true);
+                        ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", 2, true);
                         ProneBonusApplied = true;
                     }
                 }
@@ -395,18 +395,18 @@ namespace XRL.World.Parts
                 if (ProneBonusApplied)
                 {
                     //MessageQueue.AddPlayerMessage("Prone accuracy bonus unapplied to " + this.chosenWeapon.ShortDisplayName + ".");
-                    this.ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", -2, true);
+                    ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", -2, true);
                     ProneBonusApplied = false;
                 }
                 return true;
             }
             if (E.ID == "WeaponGetDefenderDV")
             {
-                if (this.ParentObject.HasEffect("WWA_ProneStance"))
+                if (ParentObject.HasEffect("WWA_ProneStance"))
                 {
                     GameObject attackerWeapon = E.GetParameter("Weapon") as GameObject;
                     GameObject attacker = attackerWeapon.Equipped;
-                    int dif = attacker.CurrentCell.DistanceTo(this.ParentObject);
+                    int dif = attacker.CurrentCell.DistanceTo(ParentObject);
                     if (dif > MinProneDVDistance)
                     {
                         //MessageQueue.AddPlayerMessage(this.ParentObject.ShortDisplayName + " is far enough from " + attacker.ShortDisplayName + " to gain DV bonus. " + dif.ToString() + "/" + minProneDVDistance.ToString());

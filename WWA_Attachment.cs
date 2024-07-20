@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using XRL.Messages;
 
 namespace XRL.World.Parts
@@ -14,15 +15,15 @@ namespace XRL.World.Parts
 
         public override void Register(GameObject Object, IEventRegistrar Registrar)
         {
-            Object.RegisterPartEvent(this, "Equipped");
-            Object.RegisterPartEvent(this, "Unequipped");
-            Object.RegisterPartEvent(this, "ObjectCreated");
+            Registrar.Register("Equipped");
+            Registrar.Register("Unequipped");
+            Registrar.Register("ObjectCreated");
             base.Register(Object, Registrar);
         }
 
         public WWA_GunFeatures GetGunFeatures()
         {
-            WWA_GunFeatures gf = this.ParentObject.GetPart<WWA_GunFeatures>();
+            WWA_GunFeatures gf = ParentObject.GetPart<WWA_GunFeatures>();
             return gf;
         }
 
@@ -54,7 +55,7 @@ namespace XRL.World.Parts
         }
 
         public virtual bool OnInstall()
-        {            
+        {
             //MessageQueue.AddPlayerMessage(this.Name + " installed.");
             installed = true;
             return true;
@@ -76,7 +77,7 @@ namespace XRL.World.Parts
 
         public override bool HandleEvent(GetShortDescriptionEvent E)
         {
-            E.Postfix.AppendRules(this.GetDescription());
+            E.Postfix.AppendRules(GetDescription());
             return true;
         }
 
@@ -92,22 +93,43 @@ namespace XRL.World.Parts
             return s;
         }
 
+        protected bool CheckParentObject()
+        {
+            if (ParentObject == null)
+            {
+                MessageQueue.AddPlayerMessage("No parent object");
+
+                return false;
+            }
+
+            if (ParentObject.Equipped == null)
+            {
+                MessageQueue.AddPlayerMessage("No equipped on parent object");
+
+                return false;
+            }
+
+            MessageQueue.AddPlayerMessage("Got both parent object and equipped");
+
+            return true;
+        }
+
         public override bool FireEvent(Event E)
         {
             if (E.ID == "Equipped")
             {
-                this.OnEquip(E.GetParameter<GameObject>("EquippingObject"));
+                OnEquip(E.GetParameter<GameObject>("EquippingObject"));
                 return true;
             }
             if (E.ID == "Unequipped")
             {
-                this.OnUnequip(E.GetParameter<GameObject>("UnequippingObject"));
+                OnUnequip(E.GetParameter<GameObject>("UnequippingObject"));
                 return true;
             }
             if (!(E.ID == "ObjectCreated"))
                 return true;
-            if (this.ParentObject.HasPart("MissileWeapon"))
-                this.OnInstall();
+            if (ParentObject.HasPart("MissileWeapon"))
+                OnInstall();
             return base.FireEvent(E);
         }
     }

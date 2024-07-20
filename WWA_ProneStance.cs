@@ -15,35 +15,35 @@ namespace XRL.World.Effects
         public WWA_ProneStance()
         {
             base.DisplayName = "&cProne stance";
-            this.Duration = 1;
-            this.AccuracyBonus = 1;
+            Duration = 1;
+            AccuracyBonus = 1;
         }
 
         public WWA_ProneStance(int accuracyBonus)
         {
             base.DisplayName = "&cProne stance";
-            this.Duration = 1;
-            this.AccuracyBonus = accuracyBonus;
+            Duration = 1;
+            AccuracyBonus = accuracyBonus;
         }
 
         public override bool Apply(GameObject Object)
         {
             Object.Statistics["DV"].Penalty += DVPenalty;
-            this.StatShifter.SetStatShift("MoveSpeed", 50);
+            StatShifter.SetStatShift("MoveSpeed", 50);
             return true;
         }
 
         public override void Remove(GameObject Object)
         {
             Object.Statistics["DV"].Penalty -= DVPenalty;
-            this.StatShifter.RemoveStatShifts();
+            StatShifter.RemoveStatShifts();
             base.Remove(Object);
         }
 
         public override string GetDetails()
         {
-            return "Rifles and lead-based heavy weapons fire as if your agility was " + (this.AccuracyBonus * 2).ToString() + " points higher.\n"
-                + this.DVPenalty.ToString() + " DV penalty in melee combat, " + this.IncomingProjectileToHitPenalty + " DV bonus in ranged combat if distance between you and attacker is larger than 5.\n"
+            return "Rifles and lead-based heavy weapons fire as if your agility was " + (AccuracyBonus * 2).ToString() + " points higher.\n"
+                + DVPenalty.ToString() + " DV penalty in melee combat, " + IncomingProjectileToHitPenalty + " DV bonus in ranged combat if distance between you and attacker is larger than 5.\n"
                 + "-50 to movement speed.";
         }
 

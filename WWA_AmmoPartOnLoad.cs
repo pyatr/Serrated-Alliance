@@ -12,7 +12,7 @@ namespace XRL.World.Parts
 
         public override void Register(GameObject Object, IEventRegistrar Registrar)
         {
-            Object.RegisterPartEvent(this, "ObjectCreated");
+            Registrar.Register("ObjectCreated");
             base.Register(Object, Registrar);
         }
         
@@ -40,7 +40,7 @@ namespace XRL.World.Parts
 
         public override bool HandleEvent(GetShortDescriptionEvent E)
         {
-            E.Postfix.AppendRules(this.GetDescription());
+            E.Postfix.AppendRules(GetDescription());
             return true;
         }
 

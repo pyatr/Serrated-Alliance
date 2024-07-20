@@ -17,8 +17,8 @@ namespace XRL.World.Parts
 
         public override bool OnSelect(GameObject selector)
         {
-            this.ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", aimingBonus, true);
-            MissileWeapon mw = this.ParentObject.GetPart<MissileWeapon>();
+            ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", aimingBonus, true);
+            MissileWeapon mw = ParentObject.GetPart<MissileWeapon>();
             if (mw != null)
             {
                 mw.EnergyCost += energyPenalty;
@@ -28,8 +28,8 @@ namespace XRL.World.Parts
 
         public override bool OnDeselect()
         {
-            this.ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", -aimingBonus, true);
-            MissileWeapon mw = this.ParentObject.GetPart<MissileWeapon>();
+            ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", -aimingBonus, true);
+            MissileWeapon mw = ParentObject.GetPart<MissileWeapon>();
             if (mw != null)
             {
                 mw.EnergyCost -= energyPenalty;
@@ -39,7 +39,7 @@ namespace XRL.World.Parts
 
         public override string GetDescription()
         {
-            string s = "Scope: Increases weapon accuracy by " + this.aimingBonus + ", +" + energyPenalty.ToString() + " energy cost.";
+            string s = "Scope: Increases weapon accuracy by " + aimingBonus + ", +" + energyPenalty.ToString() + " energy cost.";
             return s + base.GetDescription();
         }
 

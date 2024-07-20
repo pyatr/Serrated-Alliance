@@ -91,7 +91,7 @@ namespace XRL.World.Parts
             FireRate += mod;
             if (FireMode)
             {
-                MissileWeapon mw = this.ParentObject.GetPart<MissileWeapon>();
+                MissileWeapon mw = ParentObject.GetPart<MissileWeapon>();
                 if (mw != null)
                 {
                     mw.ShotsPerAction = DefaultFireRate + FireRate;
@@ -102,9 +102,9 @@ namespace XRL.World.Parts
 
         public override void Register(GameObject Object, IEventRegistrar Registrar)
         {
-            Object.RegisterPartEvent(this, "BeginTakeAction");
-            Object.RegisterPartEvent(this, "ObjectCreated");
-            Object.RegisterPartEvent(this, "WeaponMissleWeaponFiring");
+            Registrar.Register("BeginTakeAction");
+            Registrar.Register("ObjectCreated");
+            Registrar.Register("WeaponMissleWeaponFiring");
             base.Register(Object, Registrar);
         }
 
@@ -141,7 +141,7 @@ namespace XRL.World.Parts
 
         public override bool SameAs(IPart p)
         {
-            List<WWA_Attachment> currentWeaponAttachments = GetAttachments(this.ParentObject);
+            List<WWA_Attachment> currentWeaponAttachments = GetAttachments(ParentObject);
             List<WWA_Attachment> comparedWeaponAttachments = GetAttachments(p.ParentObject);
 
             //If different attachment count it's not the same and we do not stack those weapons
@@ -184,7 +184,7 @@ namespace XRL.World.Parts
                 }
                 else
                 {
-                    if (this.ParentObject.GetTag("AutomaticOnly") == "false")
+                    if (ParentObject.GetTag("AutomaticOnly") == "false")
                         E.Postfix.AppendRules("Fire mode: automatic\n");
                     else
                         E.Postfix.AppendRules("Fire mode: automatic only\n");
@@ -223,7 +223,7 @@ namespace XRL.World.Parts
         public override bool HandleEvent(InventoryActionEvent E)
         {
             if (E.Command == "ViewAttachments")
-                this.FireEvent(Event.New("ViewAttachments", "Viewer", E.Actor));
+                FireEvent(Event.New("ViewAttachments", "Viewer", E.Actor));
             return true;
         }
 
@@ -235,17 +235,17 @@ namespace XRL.World.Parts
             {
                 if (!AutomaticOnly)
                 {
-                    MissileWeapon mw = this.ParentObject.GetPart<MissileWeapon>();
+                    MissileWeapon mw = ParentObject.GetPart<MissileWeapon>();
                     if (mw != null)
                     {
-                        this.FireMode = !this.FireMode;
-                        if (!this.FireMode)
+                        FireMode = !FireMode;
+                        if (!FireMode)
                         {
                             //TODO: Fix for autoshotgun and DBMG
                             mw.ShotsPerAction = 1;
                             mw.AmmoPerAction = 1;
-                            this.ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", SemiAutoAccuracyBonus, true);
-                            MessageQueue.AddPlayerMessage($"Switched {this.ParentObject.ShortDisplayName} to semi-automatic mode.");
+                            ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", SemiAutoAccuracyBonus, true);
+                            MessageQueue.AddPlayerMessage($"Switched {ParentObject.ShortDisplayName} to semi-automatic mode.");
                         }
                         else
                         {
@@ -254,14 +254,14 @@ namespace XRL.World.Parts
                                 FireRate = mw.ShotsPerAction - DefaultFireRate;
                             mw.ShotsPerAction = DefaultFireRate + FireRate;
                             mw.AmmoPerAction = DefaultAmmoPerShot + FireRate;
-                            this.ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", -SemiAutoAccuracyBonus, true);
-                            MessageQueue.AddPlayerMessage($"Switched {this.ParentObject.ShortDisplayName} to automatic mode.");
+                            ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", -SemiAutoAccuracyBonus, true);
+                            MessageQueue.AddPlayerMessage($"Switched {ParentObject.ShortDisplayName} to automatic mode.");
                         }
                     }
                 }
                 else
                 {
-                    MessageQueue.AddPlayerMessage(this.ParentObject.ShortDisplayName + " only has automatic mode.");
+                    MessageQueue.AddPlayerMessage(ParentObject.ShortDisplayName + " only has automatic mode.");
                 }
             }
         }
@@ -466,12 +466,12 @@ namespace XRL.World.Parts
 
         public WWA_TacticalAbilities GetCharacterAbilities()
         {
-            if (this.ParentObject.Equipped != null)
-                if (this.ParentObject.Equipped.HasPart("WWA_TacticalAbilities"))
-                    return this.ParentObject.Equipped.GetPart<WWA_TacticalAbilities>();
-                else if (this.inventoryViewer != null)
-                    if (this.inventoryViewer.HasPart("WWA_TacticalAbilities"))
-                        return this.inventoryViewer.GetPart<WWA_TacticalAbilities>();
+            if (ParentObject.Equipped != null)
+                if (ParentObject.Equipped.HasPart("WWA_TacticalAbilities"))
+                    return ParentObject.Equipped.GetPart<WWA_TacticalAbilities>();
+                else if (inventoryViewer != null)
+                    if (inventoryViewer.HasPart("WWA_TacticalAbilities"))
+                        return inventoryViewer.GetPart<WWA_TacticalAbilities>();
 
             return null;
         }
@@ -491,11 +491,11 @@ namespace XRL.World.Parts
             if (DefaultFireRate > 1)
             {
                 if (!FireMode)
-                    this.ParentObject.Equipped.Physics.PlayWorldSound(SingleFireSound, 0.5f, 0.0f, true, null);
+                    ParentObject.Equipped.Physics.PlayWorldSound(SingleFireSound, 0.5f, 0.0f, true, null);
                 else if (FireRate < 1)
-                    this.ParentObject.Equipped.Physics.PlayWorldSound(FireBurstSound, 0.5f, 0.0f, true, null);
+                    ParentObject.Equipped.Physics.PlayWorldSound(FireBurstSound, 0.5f, 0.0f, true, null);
                 else
-                    this.ParentObject.Equipped.Physics.PlayWorldSound(FireBurstHighRateSound, 0.5f, 0.0f, true, null);
+                    ParentObject.Equipped.Physics.PlayWorldSound(FireBurstHighRateSound, 0.5f, 0.0f, true, null);
 
             }
         }
@@ -512,7 +512,7 @@ namespace XRL.World.Parts
                 if (!FireMode && DefaultFireRate == 1)
                 {
                     //If in semi-automode fire rate was increased the increase will go to fire rate instead
-                    MissileWeapon mw = this.ParentObject.GetPart<MissileWeapon>();
+                    MissileWeapon mw = ParentObject.GetPart<MissileWeapon>();
                     if (mw.ShotsPerAction > 1)
                         FireRate = mw.ShotsPerAction - 1;
                 }
@@ -636,7 +636,7 @@ namespace XRL.World.Parts
                 return base.FireEvent(E);
 
             FireRate = 0;
-            GameObjectBlueprint blueprint = this.ParentObject.GetBlueprint();
+            GameObjectBlueprint blueprint = ParentObject.GetBlueprint();
             Dictionary<string, string> blueprintTags = blueprint.Tags;
             AttachmentSlots = new Dictionary<string, string[]>();
             SlotNames = new Dictionary<string, string>();
@@ -653,34 +653,34 @@ namespace XRL.World.Parts
                 }
             }
             AutomaticOnly = false;
-            if (this.ParentObject.GetTag("AutomaticOnly") == "true")
+            if (ParentObject.GetTag("AutomaticOnly") == "true")
                 AutomaticOnly = true;
-            if (this.ParentObject.GetTag("MissileFireSound") == "none")
+            if (ParentObject.GetTag("MissileFireSound") == "none")
             {
                 //TODO: Use groups of various fire sounds for all shots
-                SingleFireSound = this.ParentObject.GetTag("FireSoundSingle");
-                FireBurstSound = this.ParentObject.GetTag("FireBurstSound");
-                FireBurstHighRateSound = this.ParentObject.GetTag("FireBurstHighRateSound");
+                SingleFireSound = ParentObject.GetTag("FireSoundSingle");
+                FireBurstSound = ParentObject.GetTag("FireBurstSound");
+                FireBurstHighRateSound = ParentObject.GetTag("FireBurstHighRateSound");
             }
-            MagazineAmmoLoader mal = this.ParentObject.GetPart<MagazineAmmoLoader>();
+            MagazineAmmoLoader mal = ParentObject.GetPart<MagazineAmmoLoader>();
             if (mal != null)
             {
-                if (this.ParentObject.HasIntProperty("ExtendedMagCapacity"))
+                if (ParentObject.HasIntProperty("ExtendedMagCapacity"))
                 {
-                    HighCapacityMagSize = this.ParentObject.GetIntProperty("ExtendedMagCapacity");
+                    HighCapacityMagSize = ParentObject.GetIntProperty("ExtendedMagCapacity");
                     //if (HighCapacityMagSize == -1)
                     //    HighCapacityMagSize = (int)(mal.MaxAmmo * 1.5f);
                     //MessageQueue.AddPlayerMessage(ParentObject.ShortDisplayName + ": " + HighCapacityMagSize.ToString());
                 }
-                if (this.ParentObject.HasIntProperty("DrumMagCapacity"))
+                if (ParentObject.HasIntProperty("DrumMagCapacity"))
                 {
-                    DrumMagCapacity = this.ParentObject.GetIntProperty("DrumMagCapacity");
+                    DrumMagCapacity = ParentObject.GetIntProperty("DrumMagCapacity");
                     //if (DrumMagCapacity == -1)
                     //    DrumMagCapacity = (int)(mal.MaxAmmo * 3.0f);
                     //MessageQueue.AddPlayerMessage(ParentObject.ShortDisplayName + ": " + DrumMagCapacity.ToString());
                 }
             }
-            MissileWeapon mw2 = this.ParentObject.GetPart<MissileWeapon>();
+            MissileWeapon mw2 = ParentObject.GetPart<MissileWeapon>();
             if (mw2 != null)
             {
                 DefaultFireRate = mw2.ShotsPerAction;

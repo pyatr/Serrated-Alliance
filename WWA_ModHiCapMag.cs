@@ -17,7 +17,7 @@ namespace XRL.World.Parts
 
         public override void Configure()
         {
-            this.WorksOnSelf = true;
+            WorksOnSelf = true;
         }
 
         public override bool ModificationApplicable(GameObject Object)
@@ -45,7 +45,7 @@ namespace XRL.World.Parts
 
         public override bool HandleEvent(GetDisplayNameEvent E)
         {
-            if (this.ParentObject.Understood() && !this.ParentObject.HasProperName)
+            if (ParentObject.Understood() && !ParentObject.HasProperName)
                 E.AddAdjective("hi-cap", 0);
             return true;
         }

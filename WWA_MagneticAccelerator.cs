@@ -15,7 +15,7 @@ namespace XRL.World.Parts
 
         public override void Register(GameObject Object, IEventRegistrar Registrar)
         {
-            Object.RegisterPartEvent(this, "WeaponMissileWeaponHit");            
+            Registrar.Register("WeaponMissileWeaponHit");            
             base.Register(Object, Registrar);
         }
 
@@ -29,7 +29,7 @@ namespace XRL.World.Parts
         {
             if (E.ID == "WeaponMissileWeaponHit")
             {
-				if (!this.ParentObject.HasEffect("ElectromagneticPulsed"))
+				if (!ParentObject.HasEffect("ElectromagneticPulsed"))
 				{
 					int p = E.GetIntParameter("Penetrations");
 					int pc = E.GetIntParameter("PenetrationCap");

@@ -23,7 +23,7 @@ namespace XRL.World.Parts
         {
             get
             {
-                return this.ParentObject.ID + "::" + this.ParentObject.ShortDisplayName + ":glowsphere";
+                return ParentObject.ID + "::" + ParentObject.ShortDisplayName + ":glowsphere";
             }
         }
 
@@ -34,13 +34,13 @@ namespace XRL.World.Parts
 
         public override void Write(GameObject basis,SerializationWriter Writer)
         {
-            Writer.WriteGameObject(this.glowsphereObject);
+            Writer.WriteGameObject(glowsphereObject);
             base.Write(basis, Writer);
         }
 
         public override void Read(GameObject basis,SerializationReader Reader)
         {
-            this.glowsphereObject = Reader.ReadGameObject(null);
+            glowsphereObject = Reader.ReadGameObject(null);
             base.Read(basis, Reader);
         }
 
@@ -53,7 +53,7 @@ namespace XRL.World.Parts
 
         public override bool HandleEvent(GetInventoryActionsEvent E)
         {
-            if (this.ParentObject.Equipped != null)
+            if (ParentObject.Equipped != null)
             {
                 if (!attachmentInstalled)
                     E.AddAction("Attach glowsphere", "attach glowsphere", "AttachGlowsphere", null, 'n', false);
@@ -65,12 +65,12 @@ namespace XRL.World.Parts
 
         public override bool HandleEvent(InventoryActionEvent E)
         {
-            if (this.ParentObject.Equipped != null)
+            if (ParentObject.Equipped != null)
             {
                 if (E.Command == "AttachGlowsphere")
-                    this.FireEvent(Event.New("AttachGlowsphere", "Actor", E.Actor));
+                    FireEvent(Event.New("AttachGlowsphere", "Actor", E.Actor));
                 if (E.Command == "RemoveGlowsphere")
-                    this.FireEvent(Event.New("RemoveGlowsphere", "Actor", E.Actor));
+                    FireEvent(Event.New("RemoveGlowsphere", "Actor", E.Actor));
             }
             return true;
         }
@@ -79,14 +79,14 @@ namespace XRL.World.Parts
         {
             if (!attachmentInstalled)
             {
-                GameObject equipped = this.ParentObject.Equipped;
+                GameObject equipped = ParentObject.Equipped;
                 if (equipped != null)
                 {
                     BodyPart body = equipped.Body.GetBody();
                     if (body != null)
                     {
                         glowsphereObject = glowsphere;
-                        BodyPart UBslot = body.AddPartAt("Glowsphere", 0, null, null, null, null, this.ManagerID, new int?(), new int?(), new int?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), "Missile Weapon", new string[3]
+                        BodyPart UBslot = body.AddPartAt("Glowsphere", 0, null, null, null, null, ManagerID, new int?(), new int?(), new int?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), "Missile Weapon", new string[3]
                         {
                         "Hands",
                         "Feet",
@@ -107,7 +107,7 @@ namespace XRL.World.Parts
                 glowsphereObject.RemovePart("Cursed");
                 glowsphereObject.ForceUnequip(true);
                 attachmentInstalled = false;
-                this.ParentObject.Equipped.RemoveBodyPartsByManager(this.ManagerID);
+                ParentObject.Equipped.RemoveBodyPartsByManager(ManagerID);
             }
         }
 
@@ -152,7 +152,7 @@ namespace XRL.World.Parts
                 else
                 {
                     if (owner.IsPlayer())
-                        MessageQueue.AddPlayerMessage("You don't have any glowspheres to attach on " + this.ParentObject.ShortDisplayName + ".");
+                        MessageQueue.AddPlayerMessage("You don't have any glowspheres to attach on " + ParentObject.ShortDisplayName + ".");
                 }
                 return true;
             }

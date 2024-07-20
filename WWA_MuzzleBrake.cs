@@ -13,8 +13,8 @@ namespace XRL.World.Parts
 
         public override void Register(GameObject Object, IEventRegistrar Registrar)
         {
-            Object.RegisterPartEvent(this, "WeaponMissleWeaponFiring");
-            Object.RegisterPartEvent(this, "ShotComplete");
+            Registrar.Register("WeaponMissleWeaponFiring");
+            Registrar.Register("ShotComplete");
             base.Register(Object, Registrar);
         }
         
@@ -28,24 +28,24 @@ namespace XRL.World.Parts
         {
             if (E.ID == "WeaponMissleWeaponFiring")
             {
-                WWA_GunFeatures gf = this.ParentObject.GetPart<WWA_GunFeatures>();
+                WWA_GunFeatures gf = ParentObject.GetPart<WWA_GunFeatures>();
                 if (gf != null)
                 {
                     if (gf.FireMode)
                     {
-                        this.ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", 1, true);
+                        ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", 1, true);
                     }
                 }
                 return true;
             }
             if (E.ID == "ShotComplete")
             {
-                WWA_GunFeatures gf = this.ParentObject.GetPart<WWA_GunFeatures>();
+                WWA_GunFeatures gf = ParentObject.GetPart<WWA_GunFeatures>();
                 if (gf != null)
                 {
                     if (gf.FireMode)
                     {
-                        this.ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", -1, true);
+                        ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", -1, true);
                     }
                 }
                 return true;

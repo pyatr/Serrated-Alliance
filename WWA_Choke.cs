@@ -20,7 +20,7 @@ namespace XRL.World.Parts
 
         public override bool OnInstall()
         {
-            MissileWeapon mw = this.ParentObject.GetPart("MissileWeapon") as MissileWeapon;
+            MissileWeapon mw = ParentObject.GetPart("MissileWeapon") as MissileWeapon;
             if (mw != null)
                 mw.WeaponAccuracy -= accuracyBonus;
             return base.OnInstall();
@@ -28,7 +28,7 @@ namespace XRL.World.Parts
 
         public override bool OnUninstall()
         {
-            MissileWeapon mw = this.ParentObject.GetPart("MissileWeapon") as MissileWeapon;
+            MissileWeapon mw = ParentObject.GetPart("MissileWeapon") as MissileWeapon;
             if (mw != null)
                 mw.WeaponAccuracy += accuracyBonus;
             return base.OnUninstall();

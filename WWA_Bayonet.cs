@@ -23,7 +23,7 @@ namespace XRL.World.Parts
         {
             get
             {
-                return this.ParentObject.ID + "::" + this.ParentObject.ShortDisplayName + ":bayonet";
+                return ParentObject.ID + "::" + ParentObject.ShortDisplayName + ":bayonet";
             }
         }
 
@@ -39,13 +39,13 @@ namespace XRL.World.Parts
 
         public override void Write(GameObject basis,SerializationWriter Writer)
         {
-            Writer.WriteGameObject(this.bayonetObject);
+            Writer.WriteGameObject(bayonetObject);
             base.Write(basis, Writer);
         }
 
         public override void Read(GameObject basis,SerializationReader Reader)
         {
-            this.bayonetObject = Reader.ReadGameObject(null);
+            bayonetObject = Reader.ReadGameObject(null);
             base.Read(basis, Reader);
         }
 
@@ -58,7 +58,7 @@ namespace XRL.World.Parts
 
         public override bool HandleEvent(GetInventoryActionsEvent E)
         {
-            if (this.ParentObject.Equipped != null)
+            if (ParentObject.Equipped != null)
             {
                 if (!attachmentInstalled)
                     E.AddAction("Add bayonet", "add bayonet", "AddBayonet", null, 'm', false);
@@ -70,12 +70,12 @@ namespace XRL.World.Parts
 
         public override bool HandleEvent(InventoryActionEvent E)
         {
-            if (this.ParentObject.Equipped != null)
+            if (ParentObject.Equipped != null)
             {
                 if (E.Command == "AddBayonet")
-                    this.FireEvent(Event.New("AddBayonet", "Actor", E.Actor));
+                    FireEvent(Event.New("AddBayonet", "Actor", E.Actor));
                 if (E.Command == "RemoveBayonet")
-                    this.FireEvent(Event.New("RemoveBayonet", "Actor", E.Actor));
+                    FireEvent(Event.New("RemoveBayonet", "Actor", E.Actor));
             }
             return true;
         }
@@ -84,7 +84,7 @@ namespace XRL.World.Parts
         {
             if (!attachmentInstalled)
             {
-                GameObject equipped = this.ParentObject.Equipped;
+                GameObject equipped = ParentObject.Equipped;
                 if (equipped != null)
                 {
                     BodyPart body = equipped.Body.GetBody();
@@ -92,7 +92,7 @@ namespace XRL.World.Parts
                     {
                         bayonetObject = bayonet;
                         BodyPart UBslot = null;
-                        UBslot = body.AddPartAt("Bayonet", 0, null, null, null, null, this.ManagerID, new int?(), new int?(), new int?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), "Missile Weapon", new string[3]
+                        UBslot = body.AddPartAt("Bayonet", 0, null, null, null, null, ManagerID, new int?(), new int?(), new int?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), new bool?(), "Missile Weapon", new string[3]
                         {
                         "Hands",
                         "Feet",
@@ -105,8 +105,8 @@ namespace XRL.World.Parts
                         ActivatedAbilities pAA = equipped.GetPart<ActivatedAbilities>();
                         if (pAA != null)
                         {
-                            this.SwitchToBayonetAbilityID = pAA.AddAbility("Switch to " + bayonetObject.ShortDisplayName, "CommandSwitchToBayonet", "Tactics", "Switch to " + bayonetObject.ShortDisplayName + ".", "\a", null, false, true, false, false, false, true);
-                            this.SwitchToBayonetAbility = pAA.AbilityByGuid[this.SwitchToBayonetAbilityID];
+                            SwitchToBayonetAbilityID = pAA.AddAbility("Switch to " + bayonetObject.ShortDisplayName, "CommandSwitchToBayonet", "Tactics", "Switch to " + bayonetObject.ShortDisplayName + ".", "\a", null, false, true, false, false, false, true);
+                            SwitchToBayonetAbility = pAA.AbilityByGuid[SwitchToBayonetAbilityID];
                         }
                     }
                 }
@@ -120,13 +120,13 @@ namespace XRL.World.Parts
                 bayonetObject.RemovePart("Cursed");
                 bayonetObject.ForceUnequip(true);
                 attachmentInstalled = false;
-                this.ParentObject.Equipped.RemoveBodyPartsByManager(this.ManagerID);
-                this.ParentObject.Equipped.UnregisterPartEvent(this, "CommandSwitchToBayonet");
-                if (this.SwitchToBayonetAbilityID != Guid.Empty)
+                ParentObject.Equipped.RemoveBodyPartsByManager(ManagerID);
+                ParentObject.Equipped.UnregisterPartEvent(this, "CommandSwitchToBayonet");
+                if (SwitchToBayonetAbilityID != Guid.Empty)
                 {
-                    ActivatedAbilities pAA = this.ParentObject.Equipped.GetPart<ActivatedAbilities>();
-                    pAA.RemoveAbility(this.SwitchToBayonetAbilityID);
-                    this.SwitchToBayonetAbilityID = Guid.Empty;
+                    ActivatedAbilities pAA = ParentObject.Equipped.GetPart<ActivatedAbilities>();
+                    pAA.RemoveAbility(SwitchToBayonetAbilityID);
+                    SwitchToBayonetAbilityID = Guid.Empty;
                 }
             }
         }
@@ -174,7 +174,7 @@ namespace XRL.World.Parts
                 if (shortBlades.Count > 0)
                     InstallBayonet(shortBlades.Values.ElementAt(Popup.PickOption("Choose short blade", null, "", null, shortBlades.Keys.ToArray())));
                 else if (owner.IsPlayer())
-                    MessageQueue.AddPlayerMessage("You don't have any short blades to attach on " + this.ParentObject.ShortDisplayName + " bayonet lug.");
+                    MessageQueue.AddPlayerMessage("You don't have any short blades to attach on " + ParentObject.ShortDisplayName + " bayonet lug.");
                 return true;
             }
             if (E.ID == "RemoveBayonet")

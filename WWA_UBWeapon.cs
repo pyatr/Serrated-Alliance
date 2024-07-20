@@ -21,19 +21,19 @@ namespace XRL.World.Parts
 
         public override void Write(GameObject basis, SerializationWriter Writer)
         {
-            Writer.WriteGameObject(this.weaponObject);
+            Writer.WriteGameObject(weaponObject);
             base.Write(basis, Writer);
         }
 
         public override void Read(GameObject basis, SerializationReader Reader)
         {
-            this.weaponObject = Reader.ReadGameObject(null);
+            weaponObject = Reader.ReadGameObject(null);
             base.Read(basis, Reader);
         }
 
         public string ManagerID
         {
-            get { return this.ParentObject.ID + "::" + this.ParentObject.ShortDisplayName; }
+            get { return ParentObject.ID + "::" + ParentObject.ShortDisplayName; }
         }
 
         public WWA_UBWeapon()
@@ -79,7 +79,7 @@ namespace XRL.World.Parts
                             null,
                             null,
                             null,
-                            this.ManagerID,
+                            ManagerID,
                             new int?(),
                             new int?(),
                             new int?(),
@@ -128,7 +128,7 @@ namespace XRL.World.Parts
                         mal.SetAmmo(null);
                     }
                     weaponObject.Destroy(null, true);
-                    unequipper.RemoveBodyPartsByManager(this.ManagerID);
+                    unequipper.RemoveBodyPartsByManager(ManagerID);
                 }
             }
             return base.OnUnequip(unequipper);
@@ -155,7 +155,7 @@ namespace XRL.World.Parts
                             null,
                             null,
                             null,
-                            this.ManagerID,
+                            ManagerID,
                             new int?(),
                             new int?(),
                             new int?(),
@@ -175,14 +175,14 @@ namespace XRL.World.Parts
                         );
                         selector.ForceEquipObject(weaponObject, UBslot, true);
                         selector.RegisterPartEvent(this, "CommandFireUBWeapon");
-                        this.FireUBWeaponAbilityID = pAA.AddAbility(
+                        FireUBWeaponAbilityID = pAA.AddAbility(
                             "Fire " + weaponObject.ShortDisplayName,
                             "CommandFireUBWeapon",
                             "Tactics",
                             "Fire "
                                 + weaponObject.ShortDisplayName
                                 + " of "
-                                + this.ParentObject.ShortDisplayName
+                                + ParentObject.ShortDisplayName
                                 + ".",
                             "\a",
                             null,
@@ -193,7 +193,8 @@ namespace XRL.World.Parts
                             false,
                             true
                         );
-                        this.FireUBWeaponAbility = pAA.AbilityByGuid[this.FireUBWeaponAbilityID];
+
+                        FireUBWeaponAbility = pAA.AbilityByGuid[FireUBWeaponAbilityID];
                     }
                 }
             }
@@ -202,12 +203,12 @@ namespace XRL.World.Parts
 
         public override bool OnDeselect()
         {
-            if (!AddOnEquip)
+            if (!AddOnEquip && ParentObject.Equipped != null)
             {
                 MagazineAmmoLoader mal = weaponObject.GetPart("MagazineAmmoLoader") as MagazineAmmoLoader;
                 if (mal != null)
                 {
-                    this.ParentObject.Equipped.TakeObject(
+                    ParentObject.Equipped.TakeObject(
                         mal.Ammo,
                         false,
                         true,
@@ -218,14 +219,14 @@ namespace XRL.World.Parts
                     mal.SetAmmo(null);
                 }
                 weaponObject.Destroy(null, true);
-                this.ParentObject.Equipped.RemoveBodyPartsByManager(this.ManagerID);
-                this.ParentObject.Equipped.UnregisterPartEvent(this, "CommandFireUBWeapon");
-                if (this.FireUBWeaponAbilityID != Guid.Empty)
+                ParentObject.Equipped.RemoveBodyPartsByManager(ManagerID);
+                ParentObject.Equipped.UnregisterPartEvent(this, "CommandFireUBWeapon");
+
+                if (FireUBWeaponAbilityID != Guid.Empty)
                 {
-                    ActivatedAbilities pAA =
-                        this.ParentObject.Equipped.GetPart<ActivatedAbilities>();
-                    pAA.RemoveAbility(this.FireUBWeaponAbilityID);
-                    this.FireUBWeaponAbilityID = Guid.Empty;
+                    ActivatedAbilities pAA = ParentObject.Equipped.GetPart<ActivatedAbilities>();
+                    pAA.RemoveAbility(FireUBWeaponAbilityID);
+                    FireUBWeaponAbilityID = Guid.Empty;
                 }
             }
             return base.OnDeselect();
@@ -238,8 +239,8 @@ namespace XRL.World.Parts
                 MagazineAmmoLoader mal = weaponObject.GetPart("MagazineAmmoLoader") as MagazineAmmoLoader;
                 if (mal.Ammo != null)
                 {
-                    Combat combat = this.ParentObject.Equipped.GetPart("Combat") as Combat;
-                    MissileWeapon mw = this.ParentObject.GetPart("MissileWeapon") as MissileWeapon;
+                    Combat combat = ParentObject.Equipped.GetPart("Combat") as Combat;
+                    MissileWeapon mw = ParentObject.GetPart("MissileWeapon") as MissileWeapon;
                     MissileWeapon UBWmw = weaponObject.GetPart("MissileWeapon") as MissileWeapon;
                     combat.LastFired = mw;
                     string cachedSkill = UBWmw.Skill;

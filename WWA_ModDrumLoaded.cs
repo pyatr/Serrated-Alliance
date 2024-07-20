@@ -17,7 +17,7 @@ namespace XRL.World.Parts
 
         public override void Configure()
         {
-            this.WorksOnSelf = true;
+            WorksOnSelf = true;
         }
 
         public override bool ModificationApplicable(GameObject Object)
@@ -33,7 +33,7 @@ namespace XRL.World.Parts
             WWA_GunFeatures gf = Object.GetPart<WWA_GunFeatures>();
             if (part != null)
                 part.MaxAmmo = gf.DrumMagCapacity;
-            this.IncreaseDifficultyAndComplexity(1, 1, null);
+            IncreaseDifficultyAndComplexity(1, 1, null);
         }
 
         public override bool WantEvent(int ID, int cascade)
@@ -45,7 +45,7 @@ namespace XRL.World.Parts
 
         public override bool HandleEvent(GetDisplayNameEvent E)
         {
-            if (this.ParentObject.Understood() && !this.ParentObject.HasProperName)
+            if (ParentObject.Understood() && !ParentObject.HasProperName)
                 E.AddAdjective("drum-loaded", 0);
             return true;
         }

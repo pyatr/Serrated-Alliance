@@ -15,7 +15,7 @@ namespace XRL.World.Parts
 
         public override void Register(GameObject Object, IEventRegistrar Registrar)
         {
-            Object.RegisterPartEvent(this, "ModifyAimVariance");
+            Registrar.Register("ModifyAimVariance");
             base.Register(Object, Registrar);
         }
 
@@ -29,7 +29,7 @@ namespace XRL.World.Parts
         {
             if (E.ID == "ModifyAimVariance")
             {
-				if (!this.ParentObject.HasEffect("ElectromagneticPulsed"))
+				if (!ParentObject.HasEffect("ElectromagneticPulsed"))
 				{
 					int amount = E.GetIntParameter("Amount");
 					E.SetParameter("Amount", amount + aimBonus);

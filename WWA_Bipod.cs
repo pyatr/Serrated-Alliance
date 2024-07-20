@@ -13,8 +13,8 @@ namespace XRL.World.Parts
 
         public override void Register(GameObject Object, IEventRegistrar Registrar)
         {
-            Object.RegisterPartEvent(this, "WeaponMissleWeaponFiring");
-            Object.RegisterPartEvent(this, "ShotComplete");
+            Registrar.Register("WeaponMissleWeaponFiring");
+            Registrar.Register("ShotComplete");
             base.Register(Object, Registrar);
         }
 
@@ -28,19 +28,19 @@ namespace XRL.World.Parts
         {
             if (E.ID == "WeaponMissleWeaponFiring")
             {
-                if (this.ParentObject.Equipped.HasEffect("WWA_ProneStance"))
+                if (ParentObject.Equipped.HasEffect("WWA_ProneStance"))
                 {
-                    WWA_GunFeatures gf = this.ParentObject.GetPart<WWA_GunFeatures>();
+                    WWA_GunFeatures gf = ParentObject.GetPart<WWA_GunFeatures>();
                     if (gf != null)
                     {
                         if (gf.FireMode)
                         {
-                            this.ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", 2, true);
+                            ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", 2, true);
                             //MessageQueue.AddPlayerMessage("Bipod accuracy bonus (2) applied to " + this.ParentObject.ShortDisplayName + ".");
                         }
                         else
                         {
-                            this.ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", 1, true);
+                            ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", 1, true);
                             //MessageQueue.AddPlayerMessage("Bipod accuracy bonus (1) applied to " + this.ParentObject.ShortDisplayName + ".");
                         }
                     }
@@ -49,19 +49,19 @@ namespace XRL.World.Parts
             }
             if (E.ID == "ShotComplete")
             {
-                if (this.ParentObject.Equipped.HasEffect("WWA_ProneStance"))
+                if (ParentObject.Equipped.HasEffect("WWA_ProneStance"))
                 {
-                    WWA_GunFeatures gf = this.ParentObject.GetPart<WWA_GunFeatures>();
+                    WWA_GunFeatures gf = ParentObject.GetPart<WWA_GunFeatures>();
                     if (gf != null)
                     {
                         if (gf.FireMode)
                         {
-                            this.ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", -2, true);
+                            ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", -2, true);
                             //MessageQueue.AddPlayerMessage("Bipod accuracy bonus (2) unapplied to " + this.ParentObject.ShortDisplayName + ".");
                         }
                         else
                         {
-                            this.ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", -1, true);
+                            ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", -1, true);
                             //MessageQueue.AddPlayerMessage("Bipod accuracy bonus (1) unapplied to " + this.ParentObject.ShortDisplayName + ".");
                         }
                     }

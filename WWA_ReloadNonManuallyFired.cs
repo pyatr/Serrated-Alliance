@@ -12,7 +12,7 @@ namespace XRL.World.Parts
             get
             {
                 if (parentWeapon == null)
-                    parentWeapon = this.ParentObject.GetPart("MissileWeapon") as MissileWeapon;
+                    parentWeapon = ParentObject.GetPart("MissileWeapon") as MissileWeapon;
                 return parentWeapon;
             }
         }
@@ -25,7 +25,7 @@ namespace XRL.World.Parts
         public override void Register(GameObject Object, IEventRegistrar Registrar)
         {
             //Doesn't matter what event this is, it's required for FireEvent to be called at all
-            Object.RegisterPartEvent(this, "EndTurn");
+            Registrar.Register("EndTurn");
             base.Register(Object, Registrar);
         }
 

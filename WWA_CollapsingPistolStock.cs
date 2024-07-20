@@ -47,9 +47,9 @@ namespace XRL.World.Parts
         public override bool HandleEvent(InventoryActionEvent E)
         {
             if (E.Command == "CollapseStock")
-                this.FireEvent(Event.New("CollapseStock", "Actor", E.Actor));
+                FireEvent(Event.New("CollapseStock", "Actor", E.Actor));
             if (E.Command == "RetractStock")
-                this.FireEvent(Event.New("RetractStock", "Actor", E.Actor));
+                FireEvent(Event.New("RetractStock", "Actor", E.Actor));
             return true;
         }
 
@@ -58,9 +58,9 @@ namespace XRL.World.Parts
             if (!retracted)
             {
                 retracted = true;
-                this.ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", aimingBonus, true);
-                this.ParentObject.Physics.UsesTwoSlots = true;
-                MissileWeapon mw = this.ParentObject.GetPart<MissileWeapon>();
+                ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", aimingBonus, true);
+                ParentObject.Physics.UsesTwoSlots = true;
+                MissileWeapon mw = ParentObject.GetPart<MissileWeapon>();
                 if (mw != null)
                 {
                     mw.Skill = "Rifle";
@@ -68,8 +68,8 @@ namespace XRL.World.Parts
                 if (actor != null)
                 {
                     actor.UseEnergy(energyUse, "Physical");
-                    if (this.ParentObject.Equipped != null)//If the weapon is equipped and not somewhere else
-                        actor.ForceEquipObject(this.ParentObject, this.ParentObject.EquippedOn(), true);
+                    if (ParentObject.Equipped != null)//If the weapon is equipped and not somewhere else
+                        actor.ForceEquipObject(ParentObject, ParentObject.EquippedOn(), true);
                 }
             }
         }
@@ -79,9 +79,9 @@ namespace XRL.World.Parts
             if (retracted)
             {
                 retracted = false;
-                this.ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", -aimingBonus, true);
-                this.ParentObject.Physics.UsesTwoSlots = false;
-                MissileWeapon mw = this.ParentObject.GetPart<MissileWeapon>();
+                ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", -aimingBonus, true);
+                ParentObject.Physics.UsesTwoSlots = false;
+                MissileWeapon mw = ParentObject.GetPart<MissileWeapon>();
                 if (mw != null)
                 {
                     mw.Skill = "Pistol";
@@ -89,8 +89,8 @@ namespace XRL.World.Parts
                 if (actor != null)
                 {
                     actor.UseEnergy(energyUse, "Physical");
-                    if (this.ParentObject.Equipped != null)
-                        actor.ForceEquipObject(this.ParentObject, this.ParentObject.EquippedOn(), true);
+                    if (ParentObject.Equipped != null)
+                        actor.ForceEquipObject(ParentObject, ParentObject.EquippedOn(), true);
                 }
             }
         }

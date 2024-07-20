@@ -35,7 +35,7 @@ namespace XRL.World.Parts
 
         public override bool HandleEvent(GetShortDescriptionEvent E)
         {
-            E.Postfix.AppendRules(this.GetDescription());
+            E.Postfix.AppendRules(GetDescription());
             return true;
         }
 

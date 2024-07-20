@@ -22,29 +22,29 @@ namespace XRL.World.Parts
 
         public override bool OnInstall()
         {
-            this.ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", aimingBonus, true);
-            this.ParentObject.Physics.UsesTwoSlots = true;
-            MissileWeapon mw = this.ParentObject.GetPart<MissileWeapon>();
+            ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", aimingBonus, true);
+            ParentObject.Physics.UsesTwoSlots = true;
+            MissileWeapon mw = ParentObject.GetPart<MissileWeapon>();
             if (mw != null)
             {
                 mw.Skill = "Rifle";
             }
-            if (this.ParentObject.Equipped != null)
-                this.ParentObject.Equipped.ForceEquipObject(this.ParentObject, this.ParentObject.EquippedOn(), true);
+            if (ParentObject.Equipped != null)
+                ParentObject.Equipped.ForceEquipObject(ParentObject, ParentObject.EquippedOn(), true);
             return base.OnInstall();
         }
 
         public override bool OnUninstall()
         {
-            this.ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", -aimingBonus, true);
-            this.ParentObject.Physics.UsesTwoSlots = false;
-            MissileWeapon mw = this.ParentObject.GetPart<MissileWeapon>();
+            ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", -aimingBonus, true);
+            ParentObject.Physics.UsesTwoSlots = false;
+            MissileWeapon mw = ParentObject.GetPart<MissileWeapon>();
             if (mw != null)
             {
                 mw.Skill = "Pistol";
             }
-            if (this.ParentObject.Equipped != null)
-                this.ParentObject.Equipped.ForceEquipObject(this.ParentObject, this.ParentObject.EquippedOn(), true);
+            if (ParentObject.Equipped != null)
+                ParentObject.Equipped.ForceEquipObject(ParentObject, ParentObject.EquippedOn(), true);
             return base.OnUninstall();
         }
 
