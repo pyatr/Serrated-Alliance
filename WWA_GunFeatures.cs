@@ -286,8 +286,8 @@ namespace XRL.World.Parts
 
                 if (partToCopy != null)
                 {
-                    weapon.AddPart(partToCopy);
-                    WWA_Attachment part = weapon.GetPart(partToCopy.Name) as WWA_Attachment;
+                    selectedAttachment.RemovePart(partToCopy);
+                    WWA_Attachment part = weapon.AddPart(partToCopy) as WWA_Attachment;
                     part.OnInstall();
 
                     if (!noEnergyUse)
