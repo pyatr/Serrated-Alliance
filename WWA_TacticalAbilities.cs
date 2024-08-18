@@ -131,11 +131,19 @@ namespace XRL.World.Parts
 
         public void SwitchAutomatic()
         {
-            if (chosenWeapon != null)
+            if (chosenWeapon == null)
             {
-                WWA_GunFeatures gf = chosenWeapon.GetPart<WWA_GunFeatures>();
-                gf.SwitchAutomatic();
+                return;
             }
+
+            WWA_GunFeatures gf = chosenWeapon.GetPart<WWA_GunFeatures>();
+
+            if (gf == null)
+            {
+                return;
+            }
+
+            gf.SwitchAutomatic();
         }
 
         void SelectWeapon(GameObject GO)
