@@ -123,10 +123,10 @@
 	</object>
 	<object Name="WWA_CollapsingPistolStockAttachment" Inherits="Item">
 		<part Name="Render" Tile="items/WWA_CollapsingPistolStock.png" DisplayName="collapsing pistol stock" ColorString="&amp;K" DetailColor="y" />
-		<part Name="Description" Short="A metallic stock which aids your pistol aim. It is able to quickly retract and collapse." />
+		<part Name="Description" Short="A metallic stock which aids your pistol aim. It is able to quickly retract and collapse. It requires both hands to be used." />
 		<part Name="Physics" Weight="1" Category="Weapon Attachments" />
 		<part Name="WWA_CollapsingPistolStock" AttachmentBlueprintName="WWA_CollapsingPistolStockAttachment" />
-		<part Name="Commerce" Value="28" />
+		<part Name="Commerce" Value="35" />
 	</object>
 	<object Name="WWA_LAMAttachment" Inherits="Item">
 		<part Name="Render" Tile="items/WWA_LAM.png" DisplayName="laser aiming module" ColorString="&amp;K" DetailColor="y" />
