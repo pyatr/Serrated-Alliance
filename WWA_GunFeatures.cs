@@ -57,6 +57,7 @@ namespace XRL.World.Parts
 
         public bool FireMode; //semi-automatic, automatic
         public bool AutomaticOnly;
+        public bool DefaultFiresManually = false;
         public Dictionary<string, string[]> AttachmentSlots;
         public Dictionary<string, string> SlotNames;
         public string SingleFireSound, FireBurstSound, FireBurstHighRateSound;
@@ -355,7 +356,6 @@ namespace XRL.World.Parts
             {
                 MessageQueue.AddPlayerMessage("You can't remove integral attachments.");
             }
-
         }
 
         public void UninstallAttachmentFromSlot(GameObject weapon, string slot)
@@ -685,6 +685,7 @@ namespace XRL.World.Parts
             {
                 DefaultFireRate = mw2.ShotsPerAction;
                 DefaultAmmoPerShot = mw2.AmmoPerAction;
+                DefaultFiresManually = mw2.FiresManually;
                 FireMode = DefaultFireRate != 1;
             }
             return true;

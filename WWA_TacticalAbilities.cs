@@ -35,6 +35,10 @@ namespace XRL.World.Parts
 
         public bool ProneBonusApplied = false;
 
+        public bool IsMissileWeapon(GameObject GO) => GO != null && GO.HasTag("MissileWeapon");
+        public MissileWeapon GetMissileWeaponPart(GameObject GO) => GO.GetPart<MissileWeapon>();
+        public WWA_GunFeatures GetGunFeaturesPart(GameObject GO) => GO.GetPart<WWA_GunFeatures>();
+
         public WWA_TacticalAbilities()
         {
             activeWeapons = new List<GameObject>();
@@ -194,40 +198,19 @@ namespace XRL.World.Parts
             }
         }
 
-        public MissileWeapon GetMissileWeaponPart(GameObject GO)
-        {
-            return GO.GetPart<MissileWeapon>();
-        }
-
-        public bool WeaponFiresManually(GameObject GO)
-        {
-            if (GO != null)
-            {
-                GameObject item = GameObject.Create(GO.Blueprint);
-                MissileWeapon mw = GetMissileWeaponPart(item);
-                if (mw != null)
-                    if (mw.FiresManually == false)
-                        return false;
-                item.Destroy(null, true);
-            }
-            return true;
-        }
-
         //Won't change weapons that don't fire manually by default like point-defense laser
         public void SetFiresManually(bool b, GameObject GO)
         {
             if (GO != null)
-                if (WeaponFiresManually(GO))
-                    if (GetMissileWeaponPart(GO) != null)
-                        GetMissileWeaponPart(GO).FiresManually = b;
-        }
+            {
+                WWA_GunFeatures gf = GetGunFeaturesPart(GO);
+                MissileWeapon mw = GetMissileWeaponPart(GO);
 
-        public bool IsFirearm(GameObject GO)
-        {
-            if (GO != null)
-                if (GO.HasTag("IsFirearm"))
-                    return true;
-            return false;
+                if (gf != null && mw != null && gf.DefaultFiresManually)
+                {
+                    mw.FiresManually = b;
+                }
+            }
         }
 
         public override bool FireEvent(Event E)
@@ -235,10 +218,8 @@ namespace XRL.World.Parts
             if (E.ID == "BeginTakeAction")
             {
                 if (
-                    (
-                        ParentObject.HasEffect("Flying")
-                        || ParentObject.HasEffect("Sprinting")
-                    ) && ParentObject.HasEffect("WWA_ProneStance")
+                    (ParentObject.HasEffect("Flying") || ParentObject.HasEffect("Sprinting"))
+                    && ParentObject.HasEffect("WWA_ProneStance")
                 )
                 {
                     ParentObject.RemoveEffect(typeof(WWA_ProneStance));
@@ -251,16 +232,20 @@ namespace XRL.World.Parts
             if (E.ID == "BeginEquip")
             {
                 GameObject equipped = E.GetParameter("Object") as GameObject;
-                if (!equipped.HasTag("IsUnderbarrelWeapon"))
+
+                if (
+                    equipped != null
+                    && !equipped.HasTag("IsUnderbarrelWeapon")
+                    && IsMissileWeapon(equipped)
+                )
                 {
-                    if (equipped != null && IsFirearm(equipped))
-                    {
-                        activeWeapons.Add(equipped);
-                        if (activeWeapons.Count == 1)
-                            SelectWeapon(equipped);
-                        if (chosenWeapon != null && chosenWeapon != equipped)
-                            SetFiresManually(false, equipped);
-                    }
+                    activeWeapons.Add(equipped);
+
+                    if (activeWeapons.Count == 1)
+                        SelectWeapon(equipped);
+
+                    if (chosenWeapon != null && chosenWeapon != equipped)
+                        SetFiresManually(false, equipped);
                 }
                 //In case BeginEquip happens before object is fully generated
                 ActivatedAbilities pAA = ParentObject.GetPart<ActivatedAbilities>();
@@ -280,18 +265,23 @@ namespace XRL.World.Parts
             {
                 BodyPart bodyPart = E.GetParameter("BodyPart") as BodyPart;
                 GameObject equipped = bodyPart.Equipped;
-                if (!equipped.HasTag("IsUnderbarrelWeapon"))
+
+                if (
+                    equipped != null
+                    && !equipped.HasTag("IsUnderbarrelWeapon")
+                    && IsMissileWeapon(equipped)
+                )
                 {
-                    if (equipped != null && IsFirearm(equipped))
-                    {
-                        SetFiresManually(true, equipped);
-                        if (equipped == chosenWeapon)
-                            DeselectWeapon();
-                        activeWeapons.Remove(equipped);
-                        activeWeapons.TrimExcess();
-                        if (activeWeapons.Count == 1) //Selecting the only remaining weapon
-                            SelectWeapon(activeWeapons[0]);
-                    }
+                    SetFiresManually(true, equipped);
+
+                    if (equipped == chosenWeapon)
+                        DeselectWeapon();
+
+                    activeWeapons.Remove(equipped);
+                    activeWeapons.TrimExcess();
+
+                    if (activeWeapons.Count == 1) //Selecting the only remaining weapon
+                        SelectWeapon(activeWeapons[0]);
                 }
                 return true;
             }
