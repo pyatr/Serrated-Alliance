@@ -256,7 +256,7 @@
 	<!-- New weapons -->
 	<object Name="WWA_AutoPistol" Inherits="BaseMagazinePistol">
 		<part Name="Render" DisplayName="automatic pistol" RenderString=")" Tile="items/WWA_AutomaticPistol.png" />
-		<part Name="Physics" Weight="7" />
+		<part Name="Physics" Weight="5" />
 		<part Name="Commerce" Value="140" />
 		<part Name="MissileWeapon" AnimationDelay="1" Skill="Pistol" ShotsPerAction="3" AmmoPerAction="3" ShotsPerAnimation="1" WeaponAccuracy="13" RangeIncrement="6" />
 		<part Name="MagazineAmmoLoader" ProjectileObject="WWA_AutoPistolShell" AmmoPart="AmmoSlug" MaxAmmo="20" />
@@ -351,7 +351,7 @@
 		<intproperty Name="DrumMagCapacity" Value="90" />
 	</object>
 	<object Name="WWA_LSWShell" Inherits="BaseLeadSlugProjectile">
-		<part Name="Projectile" BasePenetration="4" BaseDamage="1d8" />
+		<part Name="Projectile" BasePenetration="5" BaseDamage="1d8" />
 	</object>
 	<object Name="WWA_DoubleBarrelMG" Inherits="BaseMagazineRifle">
 		<part Name="Render" DisplayName="double barreled machinegun" Tile="items/WWA_DBMG.png" RenderString=")" ColorString="&amp;K" DetailColor="y" />
@@ -461,7 +461,7 @@
 	</object>
 	<object Name="WWA_HeavyAssaultRifleSlug" Inherits="TemporaryProjectile">
 		<part Name="Render" DisplayName="lead slug" />
-		<part Name="Projectile" BasePenetration="6" BaseDamage="2d5" ColorString="&amp;y" PassByVerb="whiz" />
+		<part Name="Projectile" BasePenetration="6" BaseDamage="2d6" ColorString="&amp;y" PassByVerb="whiz" />
 		<tag Name="Slug" />
 	</object>
 	<object Name="WWA_LMG" Inherits="BaseHeavyWeapon">
@@ -547,7 +547,7 @@
 		<part Name="Render" Tile="items/WWA_AntiMaterielRifle.png" DisplayName="anti-materiel rifle" RenderString=")" ColorString="&amp;K" />
 		<part Name="Physics" UsesTwoSlots="true" Weight="20" />
 		<part Name="Commerce" Value="720" />
-		<part Name="MissileWeapon" Skill="Rifle" ShotsPerAction="1" AmmoPerAction="1" ShotsPerAnimation="1" WeaponAccuracy="1" />
+		<part Name="MissileWeapon" Skill="Rifle" ShotsPerAction="1" AmmoPerAction="1" ShotsPerAnimation="1" WeaponAccuracy="0" />
 		<part Name="MagazineAmmoLoader" ProjectileObject="WWA_ProjectileAMRifleShell" AmmoPart="WWA_HighCalibreAmmoSlug" MaxAmmo="1" />
 		<part Name="Description" Short="Have you seen what one of those anti-materiel rifles can do to a rhinox?" />
 		<part Name="Metal" />
