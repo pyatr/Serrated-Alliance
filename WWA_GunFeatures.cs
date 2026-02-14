@@ -652,18 +652,30 @@ namespace XRL.World.Parts
             Dictionary<string, string> blueprintTags = blueprint.Tags;
             AttachmentSlots = new Dictionary<string, string[]>();
             SlotNames = new Dictionary<string, string>();
+
             foreach (KeyValuePair<string, string> kvp in blueprintTags)
             {
-                if (kvp.Key.Contains("AttachmentSlot") && kvp.Value != "")
+                if (!kvp.Key.StartsWith("AttachmentSlot"))
                 {
-                    string[] newSlot = kvp.Key.Split(':');
-                    if (newSlot.Length == 3)
-                    {
-                        AttachmentSlots.Add(newSlot[1], kvp.Value.Split(','));
-                        SlotNames.Add(newSlot[1], newSlot[2]);
-                    }
+                    continue;
+                }
+
+                string[] newSlot = kvp.Key.Split(':');
+                string slotType = newSlot[1];
+                string slotDisplayName = newSlot[2];
+
+                if (kvp.Value != "")
+                {
+                    AttachmentSlots.Add(slotType, kvp.Value.Split(','));
+                    SlotNames.Add(slotType, slotDisplayName);
+                }
+                else
+                {
+                    AttachmentSlots.Remove(slotType);
+                    SlotNames.Remove(slotType);
                 }
             }
+
             AutomaticOnly = false;
             if (ParentObject.GetTag("AutomaticOnly") == "true")
                 AutomaticOnly = true;
