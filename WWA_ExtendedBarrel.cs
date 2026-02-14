@@ -32,7 +32,7 @@ namespace XRL.World.Parts
                 MissileWeapon mw = ParentObject.GetPart("MissileWeapon") as MissileWeapon;
                 if (gf != null && mw != null)
                 {
-                    if (!gf.FireMode)
+                    if (!gf.AutomaticFireMode)
                         mw.WeaponAccuracy += 1;
 
                 }
@@ -44,7 +44,7 @@ namespace XRL.World.Parts
                 MissileWeapon mw = ParentObject.GetPart("MissileWeapon") as MissileWeapon;
                 if (gf != null && mw != null)
                 {
-                    if (!gf.FireMode)
+                    if (!gf.AutomaticFireMode)
                         mw.WeaponAccuracy -= 1;
 
                 }

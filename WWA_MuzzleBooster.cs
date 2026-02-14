@@ -51,7 +51,7 @@ namespace XRL.World.Parts
                 WWA_GunFeatures gf = ParentObject.GetPart<WWA_GunFeatures>();
                 if (gf != null)
                 {
-                    if (gf.FireMode)
+                    if (gf.AutomaticFireMode)
                     {
                         ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", -2, true);
                     }
@@ -64,7 +64,7 @@ namespace XRL.World.Parts
                 WWA_GunFeatures gf = ParentObject.GetPart<WWA_GunFeatures>();
                 if (gf != null)
                 {
-                    if (gf.FireMode)
+                    if (gf.AutomaticFireMode)
                     {
                         ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", 2, true);
                     }

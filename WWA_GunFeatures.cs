@@ -55,7 +55,7 @@ namespace XRL.World.Parts
         flechette (+4 to penetration)
         */
 
-        public bool FireMode; //semi-automatic, automatic
+        public bool AutomaticFireMode; //semi-automatic, automatic
         public bool AutomaticOnly;
         public bool DefaultFiresManually = false;
         public Dictionary<string, string[]> AttachmentSlots;
@@ -87,12 +87,17 @@ namespace XRL.World.Parts
             }
         }
 
+        public bool PartIsAttachment(IPart part) => part.GetType().BaseType.Name == "WWA_Attachment";
+        public bool IsGunAutomatic() => DefaultFireRate > 1;
+
         public void ModFireRate(int mod)
         {
             FireRate += mod;
-            if (FireMode)
+
+            if (AutomaticFireMode)
             {
                 MissileWeapon mw = ParentObject.GetPart<MissileWeapon>();
+
                 if (mw != null)
                 {
                     mw.ShotsPerAction = DefaultFireRate + FireRate;
@@ -170,45 +175,47 @@ namespace XRL.World.Parts
                 return ID == ZoneBuiltEvent.ID;//I have no idea what that means
             return true;
         }
-
         public override bool HandleEvent(GetShortDescriptionEvent E)
         {
             if (DefaultAmmoPerShot == 1)
             {
                 E.Postfix.AppendRules("Fire mode: semi-automatic\n");
             }
+            else if (!AutomaticFireMode)
+            {
+                E.Postfix.AppendRules($"Fire mode: semi-automatic, +{SemiAutoAccuracyBonus} to player accuracy\n");
+            }
+            else if (ParentObject.GetTag("AutomaticOnly") == "true")
+            {
+                E.Postfix.AppendRules("Fire mode: automatic only\n");
+            }
             else
             {
-                if (!FireMode)
-                {
-                    E.Postfix.AppendRules($"Fire mode: semi-automatic, +{SemiAutoAccuracyBonus} to player accuracy\n");
-                }
-                else
-                {
-                    if (ParentObject.GetTag("AutomaticOnly") == "false")
-                        E.Postfix.AppendRules("Fire mode: automatic\n");
-                    else
-                        E.Postfix.AppendRules("Fire mode: automatic only\n");
-                }
+                E.Postfix.AppendRules("Fire mode: automatic\n");
             }
+
             if (AttachmentSlots.Count == SlotNames.Count && AttachmentSlots.Count > 0)
             {
                 string description = "Possible attachments: \n";
+
                 foreach (KeyValuePair<string, string[]> attachmentSlot in AttachmentSlots)
                 {
-                    string name = "", displayName = "";
-                    name = attachmentSlot.Key;
-                    displayName = SlotNames[name];
+                    string displayName = SlotNames[attachmentSlot.Key];
                     description += "\t " + displayName + ": ";
                     string[] attachments = attachmentSlot.Value;
+
                     for (int i = 0; i < attachments.Length; i++)
                     {
                         description += attachments[i];
+
                         if (i < attachments.Length - 1)
+                        {
                             description += ", ";
+                        }
                     }
                     description += '\n';
                 }
+
                 E.Postfix.AppendRules(description);
             }
             return true;
@@ -217,7 +224,10 @@ namespace XRL.World.Parts
         public override bool HandleEvent(GetInventoryActionsEvent E)
         {
             if (AttachmentSlots.Count > 0)
+            {
                 E.AddAction("Attachments", "attachments", "ViewAttachments", null, 'a', false);
+            }
+
             return true;
         }
 
@@ -228,8 +238,6 @@ namespace XRL.World.Parts
             return true;
         }
 
-        public bool IsGunAutomatic() => DefaultFireRate > 1;
-
         public void SwitchAutomatic()
         {
             if (IsGunAutomatic())
@@ -239,8 +247,8 @@ namespace XRL.World.Parts
                     MissileWeapon mw = ParentObject.GetPart<MissileWeapon>();
                     if (mw != null)
                     {
-                        FireMode = !FireMode;
-                        if (!FireMode)
+                        AutomaticFireMode = !AutomaticFireMode;
+                        if (!AutomaticFireMode)
                         {
                             //TODO: Fix for autoshotgun and DBMG
                             mw.ShotsPerAction = 1;
@@ -398,24 +406,30 @@ namespace XRL.World.Parts
         /// </summary>
         public void UninstallAllAttachments(GameObject weapon)
         {
-            string s;
-            while (WeaponHasAttachment(out s, weapon, true))
+            int uninstalledAttachmentCount = 0;
+            string slot;
+
+            while (WeaponHasAttachment(out slot, weapon, true))
             {
-                if (s != "none")
-                    UninstallAttachmentFromSlot(weapon, s);
+                if (slot != "none")
+                {
+                    UninstallAttachmentFromSlot(weapon, slot);
+                    uninstalledAttachmentCount++;
+                }
             }
-            MessageQueue.AddPlayerMessage($"Uninstalled all attachments from {weapon.ShortDisplayName}.");
+
+            MessageQueue.AddPlayerMessage($"Uninstalled ${uninstalledAttachmentCount} attachments from {weapon.ShortDisplayName}.");
         }
 
         /// <summary>
         /// Does weapon have an attachment in slot?
         /// </summary>
-        /// <param name="s">Slot name</param>
+        /// <param name="slot">Slot name</param>
         /// <param name="removeableOnly">Can attachment be removed from weapon or is it integral?</param>
         /// <returns></returns>
-        public bool WeaponHasAttachment(out string s, GameObject weapon, bool removeableOnly = false)
+        public bool WeaponHasAttachment(out string slot, GameObject weapon, bool removeableOnly = false)
         {
-            s = "none";
+            slot = "none";
             PartRack parts = weapon.PartsList;
             foreach (IPart part in parts)
             {
@@ -424,7 +438,7 @@ namespace XRL.World.Parts
                     WWA_Attachment attachment = part as WWA_Attachment;
                     foreach (KeyValuePair<string, string[]> kvp in AttachmentSlots)
                         if (kvp.Value.Contains(attachment.displayName))
-                            s = kvp.Key;
+                            slot = kvp.Key;
                     if (removeableOnly)
                     {
                         if (attachment.integral)
@@ -438,8 +452,6 @@ namespace XRL.World.Parts
             }
             return false;
         }
-
-        public bool PartIsAttachment(IPart part) => part.GetType().BaseType.Name == "WWA_Attachment";
 
         public Dictionary<string, GameObject> FindAttachmentsForSlot(string slot, List<string> possibleAttachments)
         {
@@ -490,7 +502,7 @@ namespace XRL.World.Parts
             //Single shot weapons use default MissileFireSound sound
             if (DefaultFireRate > 1)
             {
-                if (!FireMode)
+                if (!AutomaticFireMode)
                     ParentObject.Equipped.Physics.PlayWorldSound(SingleFireSound, 0.5f, 0.0f, true, null);
                 else if (FireRate < 1)
                     ParentObject.Equipped.Physics.PlayWorldSound(FireBurstSound, 0.5f, 0.0f, true, null);
@@ -509,7 +521,7 @@ namespace XRL.World.Parts
             }
             if (E.ID == "BeginTakeAction")
             {
-                if (!FireMode && DefaultFireRate == 1)
+                if (!AutomaticFireMode && DefaultFireRate == 1)
                 {
                     //If in semi-automode fire rate was increased the increase will go to fire rate instead
                     MissileWeapon mw = ParentObject.GetPart<MissileWeapon>();
@@ -686,7 +698,7 @@ namespace XRL.World.Parts
                 DefaultFireRate = mw2.ShotsPerAction;
                 DefaultAmmoPerShot = mw2.AmmoPerAction;
                 DefaultFiresManually = mw2.FiresManually;
-                FireMode = DefaultFireRate != 1;
+                AutomaticFireMode = DefaultFireRate != 1;
             }
             return true;
         }
