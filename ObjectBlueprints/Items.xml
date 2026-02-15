@@ -302,7 +302,7 @@
 		<part Name="Commerce" Value="140" />
 		<part Name="MissileWeapon" AnimationDelay="1" Skill="Rifle" ShotsPerAction="5" AmmoPerAction="5" ShotsPerAnimation="1" WeaponAccuracy="15" RangeIncrement="6" />
 		<part Name="MagazineAmmoLoader" ProjectileObject="WWA_SMG_slug" AmmoPart="AmmoSlug" MaxAmmo="30" />
-		<part Name="Description" Short="Simple rugged automatic carbine." />
+		<part Name="Description" Short="Rugged automatic carbine made of stamped steel." />
 		<part Name="Metal" />
 		<part Name="TinkerItem" Bits="0013" CanDisassemble="true" CanBuild="true" />
 		<part Name="Examiner" Alternate="rifle" Complexity="4" />
@@ -591,7 +591,7 @@
 	</object>
 	<object Name="WWA_HVMGSlug" Inherits="TemporaryProjectile">
 		<part Name="Render" DisplayName="lead slug" />
-		<part Name="Projectile" BasePenetration="9" BaseDamage="2d6" ColorString="&amp;y" PassByVerb="whiz" />
+		<part Name="Projectile" BasePenetration="10" BaseDamage="2d6" ColorString="&amp;y" PassByVerb="whiz" />
 	</object>
 	<object Name="WWA_UBGLWeapon" Inherits="BaseHeavyWeapon">
 		<part Name="Render" DisplayName="underbarrel grenade launcher" RenderString=")" Tile="items/WWA_UBGL.png" ColorString="&amp;K" />
@@ -619,7 +619,7 @@
 		<part Name="Render" DisplayName="underbarrel shotgun" RenderString=")" Tile="items/WWA_UBShotgun.png" ColorString="&amp;K" />
 		<part Name="Physics" Weight="6" UsesTwoSlots="false" />
 		<part Name="Commerce" Value="80" />
-		<part Name="MissileWeapon" Skill="Rifle" NoWildfire="true" ShotsPerAction="8" AmmoPerAction="1" ShotsPerAnimation="8" WeaponAccuracy="50" RangeIncrement="6" FiresManually="false" />
+		<part Name="MissileWeapon" Skill="Rifle" NoWildfire="true" ShotsPerAction="8" AmmoPerAction="1" ShotsPerAnimation="8" WeaponAccuracy="45" RangeIncrement="6" FiresManually="false" />
 		<part Name="WWA_ReloadNonManuallyFired" />
 		<part Name="MagazineAmmoLoader" ProjectileObject="ProjectileShotgunPellet" AmmoPart="AmmoShotgunShell" MaxAmmo="4" />
 		<part Name="Description" Short="Underbarrel shotgun, useful in short distances." />
