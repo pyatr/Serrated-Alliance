@@ -23,7 +23,7 @@ namespace XRL.World.Parts
         {
             get
             {
-                return ParentObject.ID + "::" + ParentObject.ShortDisplayName + ":bayonet";
+                return ParentObject.ID + "::bayonet";
             }
         }
 
@@ -37,13 +37,13 @@ namespace XRL.World.Parts
             base.Register(Object, Registrar);
         }
 
-        public override void Write(GameObject basis,SerializationWriter Writer)
+        public override void Write(GameObject basis, SerializationWriter Writer)
         {
             Writer.WriteGameObject(bayonetObject);
             base.Write(basis, Writer);
         }
 
-        public override void Read(GameObject basis,SerializationReader Reader)
+        public override void Read(GameObject basis, SerializationReader Reader)
         {
             bayonetObject = Reader.ReadGameObject(null);
             base.Read(basis, Reader);

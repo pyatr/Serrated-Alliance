@@ -33,7 +33,10 @@ namespace XRL.World.Parts
 
         public string ManagerID
         {
-            get { return ParentObject.ID + "::" + ParentObject.ShortDisplayName; }
+            get
+            {
+                return ParentObject.ID + "::" + ParentObject.ShortDisplayName;
+            }
         }
 
         public WWA_UBWeapon()
