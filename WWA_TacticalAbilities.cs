@@ -264,6 +264,17 @@ namespace XRL.World.Parts
             }
             if (E.ID == "CommandSelectWeapon")
             {
+                List<GameObject> activeWeaponsForValidation = activeWeapons;
+
+                foreach (GameObject activeWeapon in activeWeaponsForValidation)
+                {
+                    if (!GameObject.Validate(activeWeapon))
+                    {
+                        activeWeapons.Remove(activeWeapon);
+                        activeWeapons.TrimExcess();
+                    }
+                }
+
                 if (activeWeapons.Count == 0)
                 {
                     MessageQueue.AddPlayerMessage("You don't have any missile weapons equipped.");
@@ -283,23 +294,24 @@ namespace XRL.World.Parts
 
                     foreach (GameObject GO in activeWeapons)
                     {
-                        if (
-                            GetMissileWeaponPart(GO) != null /* && GO != this.chosenWeapon*/
-                        )
+                        if (GetMissileWeaponPart(GO) != null)
                         {
                             names.Add(GO, GO.DisplayName);
                         }
                     }
-                    string[] _names = names.Values.ToArray();
-                    if (_names.Length == 1)
+
+                    string[] nameValues = names.Values.ToArray();
+
+                    if (nameValues.Length == 1)
                     {
                         SelectWeapon(activeWeapons[0]);
+
                         return true;
                     }
-                    else if (_names.Length > 1)
+                    else if (nameValues.Length > 1)
                         SelectWeapon(
                             names.Keys.ElementAt(
-                                Popup.PickOption("Choose your weapon", null, "", null, _names)
+                                Popup.PickOption("Choose your weapon", null, "", null, nameValues)
                             )
                         );
                 }
