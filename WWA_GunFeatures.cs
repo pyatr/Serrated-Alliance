@@ -123,6 +123,31 @@ namespace XRL.World.Parts
             base.ApplyUnregistrar(Object, Active);
         }
 
+        // There doesn't seem to be an explicit disassembly event but this event covers everything tinkering related
+        public override bool HandleEvent(GetTinkeringBonusEvent E)
+        {
+            if (E.Type == "Disassemble")
+            {
+                bool inventoryViewerWasNull = false;
+
+                if (inventoryViewer == null)
+                {
+                    inventoryViewer = E.Actor;
+                    inventoryViewerWasNull = true;
+                }
+
+                UninstallAllAttachments(E.Item);
+
+                if (inventoryViewerWasNull)
+                {
+                    // Restoring inventoryViewer back to null just in case
+                    inventoryViewer = null;
+                }
+            }
+
+            return base.HandleEvent(E);
+        }
+
         private List<WWA_Attachment> GetAttachments(GameObject forWeapon)
         {
             PartRack weaponParts = forWeapon.PartsList;
@@ -171,10 +196,17 @@ namespace XRL.World.Parts
 
         public override bool WantEvent(int ID, int cascade)
         {
-            if (!base.WantEvent(ID, cascade) && ID != GetInventoryActionsEvent.ID && ID != InventoryActionEvent.ID && ID != GetShortDescriptionEvent.ID)
-                return ID == ZoneBuiltEvent.ID;//I have no idea what that means
+            if (!base.WantEvent(ID, cascade) && ID != GetShortDescriptionEvent.ID)
+            {
+                if (ID != GetInventoryActionsEvent.ID && ID != InventoryActionEvent.ID && ID != GetTinkeringBonusEvent.ID)
+                {
+                    return ID == ZoneBuiltEvent.ID;
+                }
+            }
+
             return true;
         }
+
         public override bool HandleEvent(GetShortDescriptionEvent E)
         {
             if (DefaultAmmoPerShot == 1)
@@ -330,7 +362,7 @@ namespace XRL.World.Parts
         {
             if (!attachment.integral)
             {
-                string name = attachment.Name;
+                string name = attachment.displayName;
                 string blueprintName = attachment.AttachmentBlueprintName;
 
                 if (weapon.Equipped != null)
@@ -346,7 +378,7 @@ namespace XRL.World.Parts
 
                 if (inventoryViewer.IsPlayer() && !Silent)
                 {
-                    MessageQueue.AddPlayerMessage($"Detached {uninstalled.ShortDisplayName} from {weapon.ShortDisplayName}.");
+                    MessageQueue.AddPlayerMessage($"Detached {name} from {weapon.ShortDisplayName}.");
                 }
 
                 //Can't remember why FlushTransient is null
@@ -371,15 +403,17 @@ namespace XRL.World.Parts
             PartRack parts = weapon.PartsList;
             foreach (IPart part in parts)
             {
-                if (PartIsAttachment(part))
+                if (!PartIsAttachment(part))
                 {
-                    WWA_Attachment attachment = part as WWA_Attachment;
+                    continue;
+                }
 
-                    if (AttachmentFitsInSlot(attachment.displayName, slot))
-                    {
-                        UninstallAttachment(weapon, attachment);
-                        break;
-                    }
+                WWA_Attachment attachment = part as WWA_Attachment;
+
+                if (AttachmentFitsInSlot(attachment.displayName, slot))
+                {
+                    UninstallAttachment(weapon, attachment);
+                    break;
                 }
             }
         }
@@ -418,7 +452,10 @@ namespace XRL.World.Parts
                 }
             }
 
-            MessageQueue.AddPlayerMessage($"Uninstalled ${uninstalledAttachmentCount} attachments from {weapon.ShortDisplayName}.");
+            if (uninstalledAttachmentCount > 0)
+            {
+                MessageQueue.AddPlayerMessage($"Uninstalled {uninstalledAttachmentCount} attachments from {weapon.ShortDisplayName}.");
+            }
         }
 
         /// <summary>
