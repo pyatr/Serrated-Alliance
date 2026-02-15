@@ -82,13 +82,13 @@ namespace XRL.World.Parts
 
         public virtual string GetDescription()
         {
-            string s = "\n";
+            string s = "";
             if (integral && !worksOnSelect)
-                s += "This attachment is integral and cannot be removed.";
+                s += " This attachment is integral and cannot be removed.";
             if (worksOnSelect && !integral)
-                s += "This attachment functions only when its weapon is selected.";
+                s += " This attachment functions only when its weapon is selected.";
             if (worksOnSelect && integral)
-                s += "This attachment is integral and cannot be removed. It only functions when its weapon is selected.";
+                s += " This attachment is integral and cannot be removed. It only functions when its weapon is selected.";
             return s;
         }
 
