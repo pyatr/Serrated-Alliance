@@ -105,7 +105,7 @@ namespace XRL.World.Parts
                         ActivatedAbilities pAA = equipped.GetPart<ActivatedAbilities>();
                         if (pAA != null)
                         {
-                            SwitchToBayonetAbilityID = pAA.AddAbility("Switch to " + bayonetObject.ShortDisplayName, "CommandSwitchToBayonet", "Tactics", "Switch to " + bayonetObject.ShortDisplayName + ".", "\a", null, false, true, false, false, false, true);
+                            SwitchToBayonetAbilityID = pAA.AddAbility("Switch to " + bayonetObject.ShortDisplayName, "CommandSwitchToBayonet", "Tactics", "Switch to " + bayonetObject.ShortDisplayName + ".", bayonetObject.GetTile(), null, false, true, false, false, false, true, UITileDefault: new Renderable(bayonetObject.Render));
                             SwitchToBayonetAbility = pAA.AbilityByGuid[SwitchToBayonetAbilityID];
                         }
                     }

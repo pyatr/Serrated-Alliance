@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ConsoleLib.Console;
 using XRL.Messages;
 using XRL.World.Anatomy;
 
@@ -194,7 +195,8 @@ namespace XRL.World.Parts
                             false,
                             false,
                             false,
-                            true
+                            true,
+                            UITileDefault: new Renderable(weaponObject.Render)
                         );
 
                         FireUBWeaponAbility = pAA.AbilityByGuid[FireUBWeaponAbilityID];
