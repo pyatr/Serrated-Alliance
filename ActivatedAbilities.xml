@@ -1,0 +1,14 @@
+<activatedabilities>
+	<ability Command="CommandSelectWeapon">
+		<UITile Tile="abilities/select_weapon.png" Foreground="K" Detail="W" />
+	</ability>
+	<ability Command="CommandDeselectWeapon">
+		<UITile Tile="abilities/deselect_weapon.png" Foreground="K" Detail="W" />
+	</ability>
+	<ability Command="CommandSwitchFireMode">
+		<UITile Tile="abilities/fire_mode_switch.png" Foreground="K" Detail="r" />
+	</ability>
+	<ability Command="CommandGoProne">
+		<UITile Tile="abilities/go_prone.png" Foreground="Y" Detail="K" />
+	</ability>
+</activatedabilities>
