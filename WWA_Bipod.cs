@@ -1,5 +1,6 @@
 ﻿using System;
 using XRL.Messages;
+using XRL.World.Effects;
 
 namespace XRL.World.Parts
 {
@@ -28,20 +29,21 @@ namespace XRL.World.Parts
         {
             if (E.ID == "WeaponMissleWeaponFiring")
             {
-                if (ParentObject.Equipped.HasEffect("WWA_ProneStance"))
+                if (ParentObject.Equipped.HasEffect(typeof(WWA_ProneStance)))
                 {
                     WWA_GunFeatures gf = ParentObject.GetPart<WWA_GunFeatures>();
+
                     if (gf != null)
                     {
                         if (gf.AutomaticFireMode)
                         {
                             ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", 2, true);
-                            //MessageQueue.AddPlayerMessage("Bipod accuracy bonus (2) applied to " + this.ParentObject.ShortDisplayName + ".");
+                            // MessageQueue.AddPlayerMessage("Bipod accuracy bonus (2) applied to " + this.ParentObject.ShortDisplayName + ".");
                         }
                         else
                         {
                             ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", 1, true);
-                            //MessageQueue.AddPlayerMessage("Bipod accuracy bonus (1) applied to " + this.ParentObject.ShortDisplayName + ".");
+                            // MessageQueue.AddPlayerMessage("Bipod accuracy bonus (1) applied to " + this.ParentObject.ShortDisplayName + ".");
                         }
                     }
                 }
@@ -49,20 +51,21 @@ namespace XRL.World.Parts
             }
             if (E.ID == "ShotComplete")
             {
-                if (ParentObject.Equipped.HasEffect("WWA_ProneStance"))
+                if (ParentObject.Equipped.HasEffect(typeof(WWA_ProneStance)))
                 {
                     WWA_GunFeatures gf = ParentObject.GetPart<WWA_GunFeatures>();
+
                     if (gf != null)
                     {
                         if (gf.AutomaticFireMode)
                         {
                             ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", -2, true);
-                            //MessageQueue.AddPlayerMessage("Bipod accuracy bonus (2) unapplied to " + this.ParentObject.ShortDisplayName + ".");
+                            // MessageQueue.AddPlayerMessage("Bipod accuracy bonus (2) unapplied to " + this.ParentObject.ShortDisplayName + ".");
                         }
                         else
                         {
                             ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", -1, true);
-                            //MessageQueue.AddPlayerMessage("Bipod accuracy bonus (1) unapplied to " + this.ParentObject.ShortDisplayName + ".");
+                            // MessageQueue.AddPlayerMessage("Bipod accuracy bonus (1) unapplied to " + this.ParentObject.ShortDisplayName + ".");
                         }
                     }
                 }

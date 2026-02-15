@@ -2,6 +2,7 @@ using System;
 using XRL.Core;
 using XRL.Messages;
 using XRL.Rules;
+using XRL.World.Parts;
 
 namespace XRL.World.Effects
 {
@@ -11,6 +12,10 @@ namespace XRL.World.Effects
         public int AccuracyBonus;
         public int DVPenalty = 15;
         public int IncomingProjectileToHitPenalty = 10;
+        public int MinProneDVDistance = 5;
+        public int MovementSpeedPenalty = 50;
+
+        public bool ProneBonusApplied = false;
 
         public WWA_ProneStance()
         {
@@ -29,7 +34,7 @@ namespace XRL.World.Effects
         public override bool Apply(GameObject Object)
         {
             Object.Statistics["DV"].Penalty += DVPenalty;
-            StatShifter.SetStatShift("MoveSpeed", 50);
+            StatShifter.SetStatShift("MoveSpeed", MovementSpeedPenalty);
             return true;
         }
 
@@ -42,14 +47,18 @@ namespace XRL.World.Effects
 
         public override string GetDetails()
         {
-            return "Rifles and lead-based heavy weapons fire as if your agility was " + (AccuracyBonus * 2).ToString() + " points higher.\n"
-                + DVPenalty.ToString() + " DV penalty in melee combat, " + IncomingProjectileToHitPenalty + " DV bonus in ranged combat if distance between you and attacker is larger than 5.\n"
-                + "-50 to movement speed.";
+            return "Rifles and lead-based heavy weapons have accuracy bonus as if your agility was " + (AccuracyBonus * 2).ToString() + " points higher.\n"
+                + $"{DVPenalty} DV penalty in melee combat, {IncomingProjectileToHitPenalty} DV bonus in ranged combat if distance between you and attacker is larger than {MinProneDVDistance}.\n"
+                + $"-{MovementSpeedPenalty} to movement speed.";
         }
 
         public override void Register(GameObject Object, IEventRegistrar Registrar)
         {
             Object.RegisterEffectEvent(this, "BeginMove");
+            Object.RegisterEffectEvent(this, "BeginTakeAction");
+            Object.RegisterEffectEvent(this, "WeaponGetDefenderDV");
+            Object.RegisterEffectEvent(this, "FiringMissile");
+            Object.RegisterEffectEvent(this, "FiredMissileWeapon");
             base.Register(Object, Registrar);
         }
 
@@ -78,6 +87,104 @@ namespace XRL.World.Effects
 
                 return true;
             }
+
+            if (E.ID == "BeginTakeAction")
+            {
+                // After effect removal it still seems to exist without object
+                if (Object == null)
+                {
+                    return true;
+                }
+
+                if (Object.HasEffect(typeof(Flying)) || Object.HasEffect(typeof(Running)))
+                {
+                    Object.RemoveEffect(typeof(WWA_ProneStance));
+                    Object.UseEnergy(1000, "Physical");
+
+                    if (Object.IsPlayer())
+                    {
+                        MessageQueue.AddPlayerMessage("You get up.");
+                    }
+                }
+
+                return true;
+            }
+
+            if (E.ID == "FiringMissile")
+            {
+                if (Object == null)
+                {
+                    return true;
+                }
+
+                WWA_TacticalAbilities tactics = Object.GetPart<WWA_TacticalAbilities>();
+                GameObject chosenWeapon = tactics.chosenWeapon;
+
+                if (!ProneBonusApplied && chosenWeapon != null)
+                {
+                    MissileWeapon mw = tactics.GetMissileWeaponPart(chosenWeapon);
+                    bool weaponIsPistol = false;
+
+                    if (mw != null && mw.Skill == "Pistol")
+                    {
+                        weaponIsPistol = true;
+                    }
+
+                    if (chosenWeapon.HasPart("MagazineAmmoLoader") && !weaponIsPistol)
+                    {
+                        // MessageQueue.AddPlayerMessage("Prone accuracy bonus applied to " + chosenWeapon.ShortDisplayName + ".");
+                        Object.ModIntProperty("MissileWeaponAccuracyBonus", AccuracyBonus, true);
+                        ProneBonusApplied = true;
+                    }
+                }
+
+                return true;
+            }
+
+            if (E.ID == "FiredMissileWeapon")
+            {
+                if (Object == null)
+                {
+                    return true;
+                }
+
+                if (ProneBonusApplied)
+                {
+                    // WWA_TacticalAbilities tactics = Object.GetPart<WWA_TacticalAbilities>();
+                    // GameObject chosenWeapon = tactics.chosenWeapon;
+                    // MessageQueue.AddPlayerMessage("Prone accuracy bonus unapplied to " + chosenWeapon.ShortDisplayName + ".");
+                    Object.ModIntProperty("MissileWeaponAccuracyBonus", -AccuracyBonus, true);
+                    ProneBonusApplied = false;
+                }
+
+                return true;
+            }
+
+            if (E.ID == "WeaponGetDefenderDV")
+            {
+                if (Object == null)
+                {
+                    return true;
+                }
+
+                GameObject attackerWeapon = E.GetParameter("Weapon") as GameObject;
+                GameObject attacker = attackerWeapon.Equipped;
+
+                int dif = attacker.CurrentCell.DistanceTo(Object);
+
+                if (dif > MinProneDVDistance)
+                {
+                    // MessageQueue.AddPlayerMessage(Object.ShortDisplayName + " is far enough from " + attacker.ShortDisplayName + " to gain DV bonus. " + dif.ToString() + "/" + MinProneDVDistance.ToString());
+                    E.SetParameter("Amount", (DVPenalty + IncomingProjectileToHitPenalty) * -1);
+                }
+                else
+                {
+                    // MessageQueue.AddPlayerMessage(Object.ShortDisplayName + " is too close to " + attacker.ShortDisplayName + " to gain DV bonus." + dif.ToString() + "/" + MinProneDVDistance.ToString());
+                }
+
+                return true;
+            }
+
             return base.FireEvent(E);
         }
     }

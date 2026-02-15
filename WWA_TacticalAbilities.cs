@@ -29,11 +29,6 @@ namespace XRL.World.Parts
         public ActivatedAbilityEntry GoProne = null;
 
         public int ProneAimBonus = 1;
-        public int ProneDVPenalty = 15;
-        public int IncomingProjectileToHitPenalty = 10;
-        public int MinProneDVDistance = 5;
-
-        public bool ProneBonusApplied = false;
 
         public bool IsMissileWeapon(GameObject GO) => GO != null && GO.HasTag("MissileWeapon");
         public MissileWeapon GetMissileWeaponPart(GameObject GO) => GO.GetPart<MissileWeapon>();
@@ -65,19 +60,15 @@ namespace XRL.World.Parts
             Registrar.Register("CommandDeselectWeapon");
             Registrar.Register("CommandSwitchFireMode");
             Registrar.Register("CommandGoProne");
-            Registrar.Register("BeginTakeAction");
             Registrar.Register("ObjectCreated");
             Registrar.Register("BeginEquip");
             Registrar.Register("BeginUnequip");
-            Registrar.Register("WeaponGetDefenderDV");
-            Registrar.Register("FiringMissile");
-            Registrar.Register("FiredMissileWeapon");
             base.Register(Object, Registrar);
         }
 
         public override bool HandleEvent(AIGetDefensiveAbilityListEvent E)
         {
-            //If AI
+            // If AI
             // has weapon
             // is a humanoid
             // smart enough to go prone
@@ -86,7 +77,7 @@ namespace XRL.World.Parts
             if (chosenWeapon != null &&
                 ParentObject.GetPart<Body>().Anatomy == "Humanoid" &&
                 ParentObject.GetStat("Intelligence").Value >= 16 &&
-                E.Distance > MinProneDVDistance &&
+                E.Distance > 5 &&
                 E.Distance > chosenWeapon.GetPart<MissileWeapon>().WeaponAccuracy)
             {
                 E.Add("CommandGoProne");
@@ -215,20 +206,6 @@ namespace XRL.World.Parts
 
         public override bool FireEvent(Event E)
         {
-            if (E.ID == "BeginTakeAction")
-            {
-                if (
-                    (ParentObject.HasEffect("Flying") || ParentObject.HasEffect("Sprinting"))
-                    && ParentObject.HasEffect("WWA_ProneStance")
-                )
-                {
-                    ParentObject.RemoveEffect(typeof(WWA_ProneStance));
-                    ParentObject.UseEnergy(1000, "Physical");
-                    if (ParentObject.IsPlayer())
-                        MessageQueue.AddPlayerMessage("You get up.");
-                }
-                return true;
-            }
             if (E.ID == "BeginEquip")
             {
                 GameObject equipped = E.GetParameter("Object") as GameObject;
@@ -340,86 +317,37 @@ namespace XRL.World.Parts
             }
             if (E.ID == "CommandGoProne")
             {
-                if (!ParentObject.OnWorldMap())
+                if (!ParentObject.HasEffect(typeof(WWA_ProneStance)))
                 {
-                    if (!ParentObject.HasEffect("WWA_ProneStance"))
-                    {
-                        WWA_ProneStance prone = new WWA_ProneStance(1);
+                    WWA_ProneStance prone = new WWA_ProneStance(2);
 
-                        if (!ParentObject.IsPlayer())
-                        {
-                            prone.Duration = 30;
-                        }
+                    if (!ParentObject.IsPlayer())
+                    {
+                        prone.Duration = 30;
+                    }
 
-                        ParentObject.ApplyEffect(prone);
-                        ParentObject.UseEnergy(1000, "Physical");
-                        if (ParentObject.IsPlayer())
-                            MessageQueue.AddPlayerMessage("You lie down.");
-                    }
-                    else
+                    ParentObject.ApplyEffect(prone);
+                    ParentObject.UseEnergy(1000, "Physical");
+
+                    if (ParentObject.IsPlayer())
                     {
-                        ParentObject.RemoveEffect(typeof(WWA_ProneStance));
-                        ParentObject.UseEnergy(1000, "Physical");
-                        if (ParentObject.IsPlayer())
-                            MessageQueue.AddPlayerMessage("You get up.");
+                        MessageQueue.AddPlayerMessage("You lie down.");
                     }
                 }
-                return true;
-            }
-            if (E.ID == "FiringMissile")
-            {
-                if (!ProneBonusApplied && chosenWeapon != null)
+                else
                 {
-                    MissileWeapon mw = GetMissileWeaponPart(chosenWeapon);
-                    bool weaponIsPistol = false;
-                    if (mw != null)
-                        if (mw.Skill == "Pistol")
-                            weaponIsPistol = true;
-                    if (
-                        ParentObject.HasEffect("WWA_ProneStance")
-                        && chosenWeapon.HasPart("MagazineAmmoLoader")
-                        && !weaponIsPistol
-                    )
+                    ParentObject.RemoveEffect(typeof(WWA_ProneStance));
+                    ParentObject.UseEnergy(1000, "Physical");
+
+                    if (ParentObject.IsPlayer())
                     {
-                        //MessageQueue.AddPlayerMessage("Prone accuracy bonus applied to " + this.chosenWeapon.ShortDisplayName + ".");
-                        ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", 2, true);
-                        ProneBonusApplied = true;
+                        MessageQueue.AddPlayerMessage("You get up.");
                     }
                 }
+
                 return true;
             }
-            if (E.ID == "FiredMissileWeapon")
-            {
-                if (ProneBonusApplied)
-                {
-                    //MessageQueue.AddPlayerMessage("Prone accuracy bonus unapplied to " + this.chosenWeapon.ShortDisplayName + ".");
-                    ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", -2, true);
-                    ProneBonusApplied = false;
-                }
-                return true;
-            }
-            if (E.ID == "WeaponGetDefenderDV")
-            {
-                if (ParentObject.HasEffect("WWA_ProneStance"))
-                {
-                    GameObject attackerWeapon = E.GetParameter("Weapon") as GameObject;
-                    GameObject attacker = attackerWeapon.Equipped;
-                    int dif = attacker.CurrentCell.DistanceTo(ParentObject);
-                    if (dif > MinProneDVDistance)
-                    {
-                        //MessageQueue.AddPlayerMessage(this.ParentObject.ShortDisplayName + " is far enough from " + attacker.ShortDisplayName + " to gain DV bonus. " + dif.ToString() + "/" + minProneDVDistance.ToString());
-                        E.SetParameter(
-                            "Amount",
-                            (ProneDVPenalty + IncomingProjectileToHitPenalty) * -1
-                        );
-                    }
-                    else
-                    {
-                        //MessageQueue.AddPlayerMessage(this.ParentObject.ShortDisplayName + " is too close to " + attacker.ShortDisplayName + " to gain DV bonus." + dif.ToString() + "/" + minProneDVDistance.ToString());
-                    }
-                }
-                return true;
-            }
+
             if (!(E.ID == "ObjectCreated"))
                 return true;
             AddAbilities();
