@@ -214,6 +214,8 @@ namespace XRL.World.Parts
                     equipped != null
                     && !equipped.HasTag("IsUnderbarrelWeapon")
                     && IsMissileWeapon(equipped)
+                    && !equipped.IsBroken()
+                    && equipped.Understood()
                 )
                 {
                     activeWeapons.Add(equipped);
