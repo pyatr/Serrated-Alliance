@@ -1,9 +1,12 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<bodies>  
-  <bodyparttypevariants>
-    <bodyparttypevariant VariantOf="Missile Weapon" Type="Underbarrel Weapon" Abstract="true" Plural="false" UsuallyOn="Body" />
-    <bodyparttypevariant VariantOf="Hand" Type="Bayonet" DefaultBehavior="" Abstract="true" Plural="false"  UsuallyOn="Body" />
-    <bodyparttypevariant VariantOf="Hand" Type="Glowsphere" DefaultBehavior="" Abstract="true" Plural="false"  UsuallyOn="Body" />
-    <!--<bodyparttypevariant VariantOf="Hand" Type="Attachment Power Source" Abstract="true" Plural="false" UsuallyOn="Body" />-->
-  </bodyparttypevariants>
+<?xml version="1.0" encoding="utf-8"?>
+<bodies>
+	<bodyparttypes>
+		<bodyparttype Type="WeaponAttachment" Abstract="true" Appendage="false" UsuallyOn="Body" />
+	</bodyparttypes>
+	<bodyparttypevariants>
+		<bodyparttypevariant VariantOf="Missile Weapon" Type="Underbarrel Weapon" Appendage="false" Abstract="true" Plural="false" UsuallyOn="Body" />
+		<bodyparttypevariant VariantOf="Hand" Type="Bayonet" DefaultBehavior="" Appendage="false" Abstract="true" Plural="false" UsuallyOn="Body" />
+		<bodyparttypevariant VariantOf="WeaponAttachment" Type="Glowsphere" DefaultBehavior="" Plural="false" />
+		<!-- <bodyparttypevariant VariantOf="Hand" Type="Attachment Power Source" Abstract="true" Plural="false" UsuallyOn="Body" /> -->
+	</bodyparttypevariants>
 </bodies>
