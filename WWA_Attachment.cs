@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using XRL.Messages;
 
 namespace XRL.World.Parts
@@ -83,13 +82,13 @@ namespace XRL.World.Parts
 
         public virtual string GetDescription()
         {
-            string s = "";
+            string s = "\n";
             if (integral && !worksOnSelect)
-                s += " This attachment is integral and cannot be removed.";
+                s += "This attachment is integral and cannot be removed.";
             if (worksOnSelect && !integral)
-                s += " This attachment functions only when its weapon is selected.";
+                s += "This attachment functions only when its weapon is selected.";
             if (worksOnSelect && integral)
-                s += " This attachment is integral and cannot be removed. It only functions when its weapon is selected.";
+                s += "This attachment is integral and cannot be removed. It only functions when its weapon is selected.";
             return s;
         }
 

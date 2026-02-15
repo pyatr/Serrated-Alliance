@@ -1,14 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.IO;
 using XRL.UI;
 using XRL.Messages;
-using XRL.World;
-using XRL.World.Effects;
-using ConsoleLib.Console;
-using UnityEngine;
-using System.Reflection;
 
 namespace XRL.World.Parts
 {
