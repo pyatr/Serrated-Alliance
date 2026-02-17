@@ -455,7 +455,7 @@ namespace XRL.World.Parts
 
             if (uninstalledAttachmentCount > 0)
             {
-                MessageQueue.AddPlayerMessage($"Uninstalled {uninstalledAttachmentCount} attachments from {weapon.ShortDisplayName}.");
+                Popup.Show($"Uninstalled {uninstalledAttachmentCount} attachments from {weapon.ShortDisplayName}.");
             }
         }
 
@@ -676,7 +676,7 @@ namespace XRL.World.Parts
                             }
                             else
                             {
-                                MessageQueue.AddPlayerMessage($"You don't have any attachments to install on {weapon.ShortDisplayName} {fullSlotName}.");
+                                Popup.Show($"You don't have any attachments to install on {weapon.ShortDisplayName} {fullSlotName}.");
                             }
 
                             break;
