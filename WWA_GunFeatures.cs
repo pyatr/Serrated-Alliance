@@ -354,6 +354,11 @@ namespace XRL.World.Parts
 
         public void UninstallAttachment(GameObject weapon, WWA_Attachment attachment, bool useEnergy = true, bool Silent = false)
         {
+            if (!weapon.HasPart(attachment.GetType()))
+            {
+                return;
+            }
+
             if (!attachment.integral)
             {
                 string name = attachment.displayName;
@@ -487,20 +492,24 @@ namespace XRL.World.Parts
         public Dictionary<string, GameObject> FindAttachmentsForSlot(string slot, List<string> possibleAttachments)
         {
             Dictionary<string, GameObject> attachments = new Dictionary<string, GameObject>();
-            List<GameObject> inventory = inventoryViewer.GetInventory();
-            foreach (GameObject GO in inventory)
+            List<GameObject> currentWeaponAttachments = inventoryViewer.GetInventory(GO => GO.Physics.Category == "Weapon Attachments");
+
+            foreach (GameObject GO in currentWeaponAttachments)
             {
-                if (GO.Physics.Category == "Weapon Attachments")
+                PartRack parts = GO.PartsList;
+
+                foreach (IPart part in parts)
                 {
-                    PartRack parts = GO.PartsList;
-                    foreach (IPart part in parts)
+                    if (!PartIsAttachment(part))
                     {
-                        if (PartIsAttachment(part))
-                        {
-                            WWA_Attachment possibleAttachment = part as WWA_Attachment;
-                            if (AttachmentFitsInSlot(possibleAttachment.displayName, slot) && possibleAttachments.Contains(possibleAttachment.displayName))
-                                attachments.Add(possibleAttachment.displayName, GO);
-                        }
+                        continue;
+                    }
+
+                    WWA_Attachment possibleAttachment = part as WWA_Attachment;
+
+                    if (AttachmentFitsInSlot(possibleAttachment.displayName, slot) && possibleAttachments.Contains(possibleAttachment.displayName))
+                    {
+                        attachments.Add(possibleAttachment.displayName, GO);
                     }
                 }
             }
