@@ -307,6 +307,8 @@ namespace XRL.World.Parts
 
             if (selectedAttachment != null)
             {
+                selectedAttachment = selectedAttachment.SplitFromStack();
+
                 PartRack parts = selectedAttachment.PartsList;
                 IPart partToCopy = null;
 
