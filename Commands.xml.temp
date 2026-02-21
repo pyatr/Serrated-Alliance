@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<commands>
+	<command ID="CmdReloadPreferred" DisplayText="Reload missile weapon with currently loaded ammo type" Category="Adventuring" Layer="Adventure" Auto="Down">
+		<keyboardBind Modifier="shift" Key="r" />
+	</command>
+</commands>

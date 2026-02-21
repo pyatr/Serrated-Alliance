@@ -10,7 +10,7 @@ namespace XRL.World.Parts
         {
             base.Register(Object, Registrar);
         }
-        
+
         public override bool HandleEvent(GetDisplayNameEvent E)
         {
             return true;
@@ -18,7 +18,6 @@ namespace XRL.World.Parts
 
         public override bool OnLoad(GameObject loader)
         {
-            
             return true;
         }
 

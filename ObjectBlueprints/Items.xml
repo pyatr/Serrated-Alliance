@@ -22,6 +22,21 @@
 	<object Name="Creature" Load="Merge">
 		<part Name="WWA_TacticalAbilities" />
 	</object>
+	<!-- <object Name="WWA_HP_Lead_Slug" Inherits="Lead Slug">
+	  <part Name="Render" DisplayName="hollow point lead slug" />
+	  <part Name="Description" Short="Common lead slug hollowed out at the tip for extra expansion on impact at cost of lower penetration." />
+	  <part Name="WWA_AmmoHP" />
+	</object>
+	<object Name="WWA_AP_Lead_Slug" Inherits="Lead Slug">
+	  <part Name="Render" DisplayName="armor piercing lead slug" />
+	  <part Name="Description" Short="Lead slug with a tip of hardened steel for additional penetration." />
+	  <part Name="WWA_AmmoAP" />
+	</object>
+	<object Name="WWA_Match_Lead_Slug" Inherits="Lead Slug">
+	  <part Name="Render" DisplayName="match lead slug" />
+	  <part Name="Description" Short="High quality lead slug with improved stability." />
+	  <part Name="WWA_AmmoMatch" />
+	</object> -->
 	<!-- Attachments -->
 	<object Name="WWA_ScopeAttachment" Inherits="Item">
 		<part Name="Render" Tile="items/WWA_Scope.png" DisplayName="scope" ColorString="&amp;K" DetailColor="y" />

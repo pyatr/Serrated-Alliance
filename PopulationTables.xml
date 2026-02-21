@@ -158,6 +158,9 @@
       <object Blueprint="WWA_GlowSphereSlotAttachment" Number="2"></object>
 
       <object Blueprint="Lead Slug" Number="1000"></object>
+      <!-- <object Blueprint="WWA_HP_Lead_Slug" Number="1000"></object>
+      <object Blueprint="WWA_AP_Lead_Slug" Number="1000"></object>
+      <object Blueprint="WWA_Match_Lead_Slug" Number="1000"></object> -->
       <object Blueprint="Shotgun Shell" Number="1000"></object>
       <object Blueprint="WWA_MediumLeadSlug" Number="1000"></object>
       <object Blueprint="WWA_HighCalibreLeadSlug" Number="1000"></object>

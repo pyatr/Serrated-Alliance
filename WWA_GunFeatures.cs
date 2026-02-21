@@ -105,6 +105,7 @@ namespace XRL.World.Parts
             Registrar.Register("BeginTakeAction");
             Registrar.Register("ObjectCreated");
             Registrar.Register("WeaponMissleWeaponFiring");
+            Registrar.Register("CmdReloadPreferred");
             base.Register(Object, Registrar);
         }
 
@@ -114,6 +115,7 @@ namespace XRL.World.Parts
             Object.UnregisterPartEvent(this, "BeginTakeAction");
             Object.UnregisterPartEvent(this, "ObjectCreated");
             Object.UnregisterPartEvent(this, "WeaponMissleWeaponFiring");
+            Object.UnregisterPartEvent(this, "CmdReloadPreferred");
             base.ApplyUnregistrar(Object, Active);
         }
 
@@ -251,7 +253,7 @@ namespace XRL.World.Parts
         {
             if (AttachmentSlots.Count > 0)
             {
-                E.AddAction("Attachments", "attachments", "ViewAttachments", null, 'a', false);
+                E.AddAction("Attachments", "attachments", "ViewAttachments", null, 'a');
             }
 
             return true;
@@ -260,7 +262,10 @@ namespace XRL.World.Parts
         public override bool HandleEvent(InventoryActionEvent E)
         {
             if (E.Command == "ViewAttachments")
+            {
                 FireEvent(Event.New("ViewAttachments", "Viewer", E.Actor));
+            }
+
             return true;
         }
 
@@ -572,6 +577,18 @@ namespace XRL.World.Parts
                 }
                 return true;
             }
+
+            // TODO: doesn't actually react to command
+            // This reloads weapon with its current ammo type because who doesn't want to be asked what ammo they want every time they reload?
+            // If no ammo this should behave like regular reload
+            if (E.ID == "CmdReloadPreferred")
+            {
+                MagazineAmmoLoader mal2 = ParentObject.GetPart<MagazineAmmoLoader>();
+                CommandReloadEvent.Execute(ParentObject.Equipped, ParentObject, mal2?.Ammo);
+
+                return true;
+            }
+
             if (E.ID == "ViewAttachments")
             {
                 if (AttachmentSlots.Count != SlotNames.Count || AttachmentSlots.Count == 0)

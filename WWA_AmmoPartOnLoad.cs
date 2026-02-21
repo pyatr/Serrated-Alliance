@@ -15,7 +15,7 @@ namespace XRL.World.Parts
             Registrar.Register("ObjectCreated");
             base.Register(Object, Registrar);
         }
-        
+
         public override bool HandleEvent(GetDisplayNameEvent E)
         {
             return true;
