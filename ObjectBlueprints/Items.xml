@@ -17,26 +17,30 @@
 		<tag Name="AttachmentSlot:scope:Scope mount" Value="scope,reflex sight" />
 		<tag Name="AttachmentSlot:underbarrel:Under barrel" Value="foregrip,bipod" />
 	</object>
-	<object Name="BaseMagazineRifle" Load="Merge">
+	<object Name="BaseHeavyWeapon" Load="Merge">
+		<tag Name="AttachmentSlot:scope:Scope mount" Value="" />
+		<tag Name="AttachmentSlot:underbarrel:Under barrel" Value="" />
 	</object>
 	<object Name="Creature" Load="Merge">
 		<part Name="WWA_TacticalAbilities" />
 	</object>
-	<!-- <object Name="WWA_HP_Lead_Slug" Inherits="Lead Slug">
-	  <part Name="Render" DisplayName="hollow point lead slug" />
-	  <part Name="Description" Short="Common lead slug hollowed out at the tip for extra expansion on impact at cost of lower penetration." />
-	  <part Name="WWA_AmmoHP" />
+	<!--
+	<object Name="WWA_HP_Lead_Slug" Inherits="Lead Slug">
+	<part Name="Render" DisplayName="hollow point lead slug" />
+	<part Name="Description" Short="Common lead slug hollowed out at the tip for extra expansion on impact at cost of lower penetration." />
+	<part Name="WWA_AmmoHP" />
 	</object>
 	<object Name="WWA_AP_Lead_Slug" Inherits="Lead Slug">
-	  <part Name="Render" DisplayName="armor piercing lead slug" />
-	  <part Name="Description" Short="Lead slug with a tip of hardened steel for additional penetration." />
-	  <part Name="WWA_AmmoAP" />
+	<part Name="Render" DisplayName="armor piercing lead slug" />
+	<part Name="Description" Short="Lead slug with a tip of hardened steel for additional penetration." />
+	<part Name="WWA_AmmoAP" />
 	</object>
 	<object Name="WWA_Match_Lead_Slug" Inherits="Lead Slug">
-	  <part Name="Render" DisplayName="match lead slug" />
-	  <part Name="Description" Short="High quality lead slug with improved stability." />
-	  <part Name="WWA_AmmoMatch" />
-	</object> -->
+	<part Name="Render" DisplayName="match lead slug" />
+	<part Name="Description" Short="High quality lead slug with improved stability." />
+	<part Name="WWA_AmmoMatch" />
+	</object>
+	-->
 	<!-- Attachments -->
 	<object Name="WWA_ScopeAttachment" Inherits="Item">
 		<part Name="Render" Tile="items/WWA_Scope.png" DisplayName="scope" ColorString="&amp;K" DetailColor="y" />
@@ -262,11 +266,56 @@
 		<tag Name="AttachmentSlot:underbarrel:Under barrel" Value="foregrip,underbarrel grenade launcher,underbarrel shotgun,bayonet lug" />
 		<tag Name="AttachmentSlot:muzzle:Muzzle" Value="choke" />
 	</object>
-	<object Name="Grenade Launcher" Load="Merge">
+	<!--
+	<object Name="Laser Rifle" Load="Merge">
+	</object>
+	<object Name="Chain Laser" Load="Merge">
+	</object>
+	<object Name="Eigenrifle" Load="Merge">
+	</object>
+	-->
+	<object Name="Light Rail" Load="Merge">
+		<tag Name="AttachmentSlot:barrelside:Barrel side" Value="laser aiming module,glowsphere slot" />
+		<tag Name="AttachmentSlot:underbarrel:Under barrel" Value="foregrip,bipod,underbarrel grenade launcher" />
+	</object>
+	<object Name="Spaser Rifle" Load="Merge">
+		<tag Name="AttachmentSlot:barrelside:Barrel side" Value="laser aiming module,glowsphere slot" />
+		<tag Name="AttachmentSlot:underbarrel:Under barrel" Value="foregrip,bipod,underbarrel grenade launcher" />
+	</object>
+	<object Name="Phase Cannon" Load="Merge">
+		<tag Name="AttachmentSlot:barrelside:Barrel side" Value="glowsphere slot" />
+	</object>
+	<object Name="Missile Launcher" Load="Merge">
+		<tag Name="AttachmentSlot:scope:Scope mount" Value="scope,reflex sight" />
+		<tag Name="AttachmentSlot:underbarrel:Foregrip" Value="foregrip" />
+	</object>
+	<object Name="Linear Cannon" Load="Merge">
+		<tag Name="AttachmentSlot:scope:Scope mount" Value="scope" />
+		<tag Name="AttachmentSlot:underbarrel:Under barrel" Value="bipod" />
+	</object>
+	<object Name="Arc Winder" Load="Merge">
 		<tag Name="AttachmentSlot:scope:Scope mount" Value="" />
-		<tag Name="AttachmentSlot:underbarrel:Under barrel" Value="" />
-		<intproperty Name="ExtendedMagCapacity" Value="12" />
-		<intproperty Name="DrumMagCapacity" Value="20" />
+		<tag Name="AttachmentSlot:barrelside:Barrel side" Value="" />
+	</object>
+	<object Name="Grappling Gun" Load="Merge">
+		<tag Name="AttachmentSlot:scope:Scope mount" Value="" />
+		<tag Name="AttachmentSlot:barrelside:Barrel side" Value="" />
+	</object>
+	<object Name="Di-Thermo Beam" Load="Merge">
+		<tag Name="AttachmentSlot:scope:Scope mount" Value="" />
+		<tag Name="AttachmentSlot:barrelside:Barrel side" Value="" />
+	</object>
+	<object Name="Nullray Pistol" Load="Merge">
+		<tag Name="AttachmentSlot:scope:Scope mount" Value="" />
+		<tag Name="AttachmentSlot:barrelside:Barrel side" Value="" />
+	</object>
+	<object Name="Blood-Gradient Hand Vacuum" Load="Merge">
+		<tag Name="AttachmentSlot:scope:Scope mount" Value="" />
+		<tag Name="AttachmentSlot:barrelside:Barrel side" Value="" />
+	</object>
+	<object Name="Psychal Fleshgun" Load="Merge">
+		<tag Name="AttachmentSlot:scope:Scope mount" Value="" />
+		<tag Name="AttachmentSlot:barrelside:Barrel side" Value="" />
 	</object>
 	<!-- New weapons -->
 	<object Name="WWA_AutoPistol" Inherits="BaseMagazinePistol">
