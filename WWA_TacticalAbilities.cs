@@ -128,6 +128,11 @@ namespace XRL.World.Parts
         {
             if (chosenWeapon == null)
             {
+                if (ParentObject.IsPlayer())
+                {
+                    MessageQueue.AddPlayerMessage("You need to select a specific weapon to switch its firemode.");
+                }
+
                 return;
             }
 
@@ -266,16 +271,16 @@ namespace XRL.World.Parts
             }
             if (E.ID == "CommandSelectWeapon")
             {
-                List<GameObject> activeWeaponsForValidation = activeWeapons;
-
-                foreach (GameObject activeWeapon in activeWeaponsForValidation)
+                for (int i = 0; i < activeWeapons.Count; i++)
                 {
-                    if (!GameObject.Validate(activeWeapon))
+                    if (!GameObject.Validate(activeWeapons[i]))
                     {
-                        activeWeapons.Remove(activeWeapon);
-                        activeWeapons.TrimExcess();
+                        activeWeapons.RemoveAt(i);
+                        i--;
                     }
                 }
+
+                activeWeapons.TrimExcess();
 
                 if (activeWeapons.Count == 0)
                 {
