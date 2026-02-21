@@ -347,6 +347,8 @@ namespace XRL.World.Parts
                     {
                         MessageQueue.AddPlayerMessage("You lie down.");
                     }
+
+                    ParentObject.Physics.PlayWorldSound("prone.wav");
                 }
                 else
                 {
@@ -357,6 +359,7 @@ namespace XRL.World.Parts
                     {
                         MessageQueue.AddPlayerMessage("You get up.");
                     }
+                    ParentObject.Physics.PlayWorldSound("stand.wav");
                 }
 
                 return true;

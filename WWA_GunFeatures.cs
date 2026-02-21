@@ -297,12 +297,18 @@ namespace XRL.World.Parts
                             ParentObject.ModIntProperty("MissileWeaponAccuracyBonus", -SemiAutoAccuracyBonus, true);
                             MessageQueue.AddPlayerMessage($"Switched {ParentObject.ShortDisplayName} to automatic mode.");
                         }
+
+                        ParentObject.PlayWorldSound("fire_mode.ogg");
                     }
                 }
                 else
                 {
                     MessageQueue.AddPlayerMessage(ParentObject.ShortDisplayName + " only has automatic mode.");
                 }
+            }
+            else
+            {
+                MessageQueue.AddPlayerMessage(ParentObject.ShortDisplayName + " has no automatic mode.");
             }
         }
 
@@ -342,6 +348,11 @@ namespace XRL.World.Parts
                     if (inventoryViewer.IsPlayer() && !Silent)
                     {
                         MessageQueue.AddPlayerMessage($"{part.displayName} attached to {weapon.ShortDisplayName}.");
+                    }
+
+                    if (!Silent)
+                    {
+                        ParentObject.PlayWorldSound("attachment_install.ogg");
                     }
 
                     WWA_TacticalAbilities abilities = GetCharacterAbilities();
@@ -385,6 +396,11 @@ namespace XRL.World.Parts
                 if (inventoryViewer.IsPlayer() && !Silent)
                 {
                     MessageQueue.AddPlayerMessage($"Detached {name} from {weapon.ShortDisplayName}.");
+                }
+
+                if (!Silent)
+                {
+                    ParentObject.PlayWorldSound("attachment_uninstall.ogg");
                 }
 
                 //Can't remember why FlushTransient is null
