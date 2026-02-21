@@ -17,6 +17,19 @@ namespace XRL.World.Parts
             displayName = "collapsing pistol stock";
         }
 
+        public override bool SameAs(IPart p)
+        {
+            if (p is WWA_CollapsingPistolStock)
+            {
+                if ((p as WWA_CollapsingPistolStock).retracted != retracted)
+                {
+                    return false;
+                }
+            }
+
+            return base.SameAs(p);
+        }
+
         public override bool WantEvent(int ID, int cascade)
         {
             if (!base.WantEvent(ID, cascade) && ID != GetInventoryActionsEvent.ID && ID != InventoryActionEvent.ID)

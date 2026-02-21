@@ -335,6 +335,7 @@
 		<tag Name="FireBurstSound" Value="autopistol_burst" />
 		<tag Name="FireBurstHighRateSound" Value="autopistol_burst_high_rate" />
 		<tag Name="ReloadSound" Value="reload_generic" />
+		<tag Name="AttachmentSlot:stocklug:Stock" Value="pistol stock" />
 		<intproperty Name="ExtendedMagCapacity" Value="30" />
 		<intproperty Name="DrumMagCapacity" Value="60" />
 	</object>
