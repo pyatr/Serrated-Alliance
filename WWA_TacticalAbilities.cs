@@ -301,7 +301,8 @@ namespace XRL.World.Parts
 
                     foreach (GameObject GO in activeWeapons)
                     {
-                        if (GetMissileWeaponPart(GO) != null)
+                        // FIXME: temp fix for weapons somehow bypassing validation check like flamethrower
+                        if (GetMissileWeaponPart(GO) != null && !names.ContainsKey(GO))
                         {
                             names.Add(GO, GO.DisplayName);
                         }
